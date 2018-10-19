@@ -1,0 +1,13 @@
+[ignore]
+<PROJECT_ROOT>/node_modules/re-resizable
+<PROJECT_ROOT>/node_modules/react-rnd
+
+[include]
+
+[libs]
+
+[lints]
+
+[options]
+
+[strict]

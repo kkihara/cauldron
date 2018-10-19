@@ -1,0 +1,39 @@
+{
+  "name": "electron-react-webpack",
+  "version": "1.0.0",
+  "description": "Electron + React 16 + Webpack 4 template.",
+  "main": "main_process.js",
+  "scripts": {
+    "bundle": "webpack --mode development",
+    "serve": "electron .",
+    "start": "npm-run-all --parallel bundle serve",
+    "flow": "flow"
+  },
+  "author": "J. Renato Ramos González <renato.etc.etc.etc@gmail.com>",
+  "repository": "pastahito/electron-react-webpack",
+  "license": "WTFPL",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.10",
+    "electron": "^1.8.2",
+    "electron-reload": "^1.2.2",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "file-loader": "^1.1.10",
+    "flow-bin": "^0.83.0",
+    "npm-run-all": "^4.1.2",
+    "resolve-url-loader": "^3.0.0",
+    "webpack": "^4.1.1",
+    "webpack-cli": "^3.1.2"
+  },
+  "dependencies": {
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-pdf-highlighter": "^2.1.1",
+    "react-split-pane": "^0.1.84"
+  }
+}
