@@ -151,7 +151,7 @@ export default class PdfPage extends Component<Props, State> {
   }
 
   enableAreaSelection(event: MouseEvent) {
-    return false
+    return event.altKey;
   }
 
   renderPdf(pdfDocument: T_PDFJS_Document) {
