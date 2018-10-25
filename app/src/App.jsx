@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import SplitPane from 'react-split-pane';
-import PdfPage from './components/PdfPage/';
+import PdfPage from './components/PdfPage';
 import styles from './App.css';
 const fs = require('fs');
 const { dialog } = require('electron').remote;
