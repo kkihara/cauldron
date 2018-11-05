@@ -1,20 +1,15 @@
 // @flow
 
 import { NEW_PAGE } from '../actions';
-
-type Page = {
-  id: string,
-  created: string,
-  title: string
-};
+import type { T_PageSelector } from '../types';
 
 type Action = {
   type: string,
-  ...Page
+  ...T_PageSelector
 };
 
 const pages = (
-  state: Array<?Page> = [],
+  state: Array<?T_PageSelector> = [],
   action: Action) => {
 
   switch (action.type) {

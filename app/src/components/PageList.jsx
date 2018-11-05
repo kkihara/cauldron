@@ -1,17 +1,17 @@
 // @flow
 
 import React from 'react';
-import Page from './Page';
-import type { PageProps } from './Page';
+import PageSelector from './PageSelector';
+import type { T_PageSelector } from '../types';
 
 type Props = {
-  pages: Array<PageProps>;
+  pages: Array<T_PageSelector>;
 };
 
 const PageList = ({ pages }: Props) => (
   <ul>
     {pages.map(page => (
-      <Page id={ page.id }title={ page.title } created={ page.created }/>
+      <PageSelector id={ page.id }title={ page.title } created={ page.created }/>
     ))}
   </ul>
 );
