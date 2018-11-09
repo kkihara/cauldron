@@ -106,83 +106,56 @@ type State = {
   highlights: Array<T_Highlight>,
 };
 
-export default class PdfPage extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      highlights: []
-    };
-  }
-
-  highlightTransform(
+const highlightTransform = (
+    highlight: T_ViewportHighlight,
+    index: number,
+    setTip: (
       highlight: T_ViewportHighlight,
-      index: number,
-      setTip: (
-        highlight: T_ViewportHighlight,
-        callback: (highlight: T_ViewportHighlight) => React$Element<*>
-      ) => void,
-      hideTip: () => void,
-      viewportToScaled: (rect: T_LTWH) => T_Scaled,
-      screenshot: (position: T_LTWH) => string,
-      isScrolledTo: boolean
-  ) {
-    return (
-      <div>Hello</div>
-    )
-  }
+      callback: (highlight: T_ViewportHighlight) => React$Element<*>
+    ) => void,
+    hideTip: () => void,
+    viewportToScaled: (rect: T_LTWH) => T_Scaled,
+    screenshot: (position: T_LTWH) => string,
+    isScrolledTo: boolean
+) => (
+    <div>Hello</div>
+)
 
-  onScrollChange() {
-    return
-  }
+const onScrollChange = () => undefined;
 
-  scrollRef(scrollTo: (highlight: T_Highlight) => void) {
-    return
-  }
+const scrollRef = (scrollTo: (highlight: T_Highlight) => void) => undefined;
 
-  onSelectionFinished(
+const enableAreaSelection = (event: MouseEvent) => event.altKey;
+
+const PdfPage = ({ highlights, addHighlight }: any) => {
+  const onSelectionFinished = (
       position: T_ScaledPosition,
       content: { text?: string, image?: string },
       hideTipAndSelection: () => void,
       transformSelection: () => void
-  ) {
-    return (
-      <div>Selection Finished!</div>
-    )
-  }
+  ) => {
+    addHighlight(position);
+    return (<div>ADD HIGHLIGHT</div>);
+  };
 
-  enableAreaSelection(event: MouseEvent) {
-    return event.altKey;
-  }
-
-  renderPdf(pdfDocument: T_PDFJS_Document) {
-    return (
+  return (
+    <PdfLoader url={ '/Users/panda/Downloads/1512.03385.pdf' } beforeLoad={ <div>Loading...</div> }>
+    { pdfDocument => (
       <PdfHighlighter
         pdfDocument={ pdfDocument }
-        highlights={ this.state.highlights }
+        highlights={ highlights }
         highlightTransform={ (i0, i1, i2, i3, i4, i5, i6) =>
-          this.highlightTransform(i0, i1, i2, i3, i4, i5, i6)
+          highlightTransform(i0, i1, i2, i3, i4, i5, i6)
         }
-        onScrollChange={ () => this.onScrollChange() }
-        scrollRef={ (scrollTo) => this.scrollRef(scrollTo) }
+        onScrollChange={ () => onScrollChange() }
+        scrollRef={ (scrollTo) => scrollRef(scrollTo) }
         onSelectionFinished={ (i0, i1, i2, i3) =>
-          this.onSelectionFinished(i0, i1, i2, i3) }
-        enableAreaSelection={ (event) => this.enableAreaSelection(event) }
+          onSelectionFinished(i0, i1, i2, i3) }
+        enableAreaSelection={ (event) => enableAreaSelection(event) }
       />
-    )
-  }
-
-  render() {
-    console.log('path' + this.props.path)
-    if (this.props.path !== '') {
-      return (
-        <PdfLoader url={ this.props.path } beforeLoad={ <div>Loading...</div> }>
-          { pdfDocument => this.renderPdf(pdfDocument) }
-        </PdfLoader>
-      )
-    } else {
-      return (
-        <div>Upload a file</div>
-      )
-    }
-  }
+    )}
+    </PdfLoader>
+  )
 }
+
+export default PdfPage;

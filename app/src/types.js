@@ -5,4 +5,3 @@ export type T_PageSelector = {
   title: string,
   created: string
 };
-
