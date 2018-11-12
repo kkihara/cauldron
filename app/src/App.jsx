@@ -1,24 +1,29 @@
 // @flow
 
-import React, { Component } from 'react';
-import { render } from 'react-dom';
+import React from 'react';
+import thunkMiddleware from 'redux-thunk';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 // import AddPage from './containers/AddPage';
 // import FilteredPageList from './containers/FilteredPageList';
-import PdfPage from './containers/PdfPage';
-import styles from './App.css';
+// import styles from './App.css';
+import DisplayPdfPage from './containers/DisplayPdfPage';
 import rootReducer from './reducers';
+import { loadPdf } from './actions';  // TODO: load from a page click
+
 const fs = require('fs');
 const { dialog } = require('electron').remote;
 
-const store = createStore(rootReducer);
+const store = createStore(
+  rootReducer,
+  applyMiddleware(thunkMiddleware)
+);
 
 const App = () => {
 
   return (
     <Provider store={ store }>
-      <PdfPage/>
+      <DisplayPdfPage/>
     </Provider>
   )
 
@@ -96,5 +101,10 @@ const App = () => {
   //   )
   // }
 }
+
+// TODO: load from a page click
+const pdfFile = '/Users/panda/Downloads/1512.03385.pdf';
+store.dispatch(loadPdf(pdfFile));
+  // .then(() => console.log('PDF LOADED!!!'));
 
 export default App;

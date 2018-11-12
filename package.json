@@ -35,6 +35,7 @@
     "react-dom": "^16.2.0",
     "react-pdf-highlighter": "^2.1.1",
     "react-redux": "^5.0.7",
-    "redux": "^4.0.1"
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
   }
 }
