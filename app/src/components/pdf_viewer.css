@@ -1,0 +1,337 @@
+/* Copyright 2014 Mozilla Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+:global .textLayer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  opacity: 0.2;
+  line-height: 1.0;
+}
+
+:global .textLayer > div {
+  color: transparent;
+  position: absolute;
+  white-space: pre;
+  cursor: text;
+  -webkit-transform-origin: 0% 0%;
+          transform-origin: 0% 0%;
+}
+
+:global .textLayer :global .highlight {
+  margin: -1px;
+  padding: 1px;
+
+  background-color: rgb(180, 0, 170);
+  border-radius: 4px;
+}
+
+:global .textLayer :global .highlight.begin {
+  border-radius: 4px 0px 0px 4px;
+}
+
+:global .textLayer :global .highlight.end {
+  border-radius: 0px 4px 4px 0px;
+}
+
+:global .textLayer :global .highlight.middle {
+  border-radius: 0px;
+}
+
+:global .textLayer :global .highlight.selected {
+  background-color: rgb(0, 100, 0);
+}
+
+:global .textLayer ::-moz-selection { background: rgb(0,0,255); }
+
+:global .textLayer ::selection { background: rgb(0,0,255); }
+
+:global .textLayer :global .endOfContent {
+  display: block;
+  position: absolute;
+  left: 0px;
+  top: 100%;
+  right: 0px;
+  bottom: 0px;
+  z-index: -1;
+  cursor: default;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+:global .textLayer :global .endOfContent.active {
+  top: 0px;
+}
+
+
+:global .annotationLayer section {
+  position: absolute;
+}
+
+:global .annotationLayer :global .linkAnnotation > a,
+:global .annotationLayer :global .buttonWidgetAnnotation.pushButton > a {
+  position: absolute;
+  font-size: 1em;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+:global .annotationLayer :global .linkAnnotation > a:hover,
+:global .annotationLayer :global .buttonWidgetAnnotation.pushButton > a:hover {
+  opacity: 0.2;
+  background: #ff0;
+  box-shadow: 0px 2px 10px #ff0;
+}
+
+:global .annotationLayer :global .textAnnotation img {
+  position: absolute;
+  cursor: pointer;
+}
+
+:global .annotationLayer :global .textWidgetAnnotation input,
+:global .annotationLayer :global .textWidgetAnnotation textarea,
+:global .annotationLayer :global .choiceWidgetAnnotation select,
+:global .annotationLayer :global .buttonWidgetAnnotation.checkBox input,
+:global .annotationLayer :global .buttonWidgetAnnotation.radioButton input {
+  background-color: rgba(0, 54, 255, 0.13);
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  font-size: 9px;
+  height: 100%;
+  margin: 0;
+  padding: 0 3px;
+  vertical-align: top;
+  width: 100%;
+}
+
+:global .annotationLayer :global .choiceWidgetAnnotation select option {
+  padding: 0;
+}
+
+:global .annotationLayer :global .buttonWidgetAnnotation.radioButton input {
+  border-radius: 50%;
+}
+
+:global .annotationLayer :global .textWidgetAnnotation textarea {
+  font: message-box;
+  font-size: 9px;
+  resize: none;
+}
+
+:global .annotationLayer :global .textWidgetAnnotation input[disabled],
+:global .annotationLayer :global .textWidgetAnnotation textarea[disabled],
+:global .annotationLayer :global .choiceWidgetAnnotation select[disabled],
+:global .annotationLayer :global .buttonWidgetAnnotation.checkBox input[disabled],
+:global .annotationLayer :global .buttonWidgetAnnotation.radioButton input[disabled] {
+  background: none;
+  border: 1px solid transparent;
+  cursor: not-allowed;
+}
+
+:global .annotationLayer :global .textWidgetAnnotation input:hover,
+:global .annotationLayer :global .textWidgetAnnotation textarea:hover,
+:global .annotationLayer :global .choiceWidgetAnnotation select:hover,
+:global .annotationLayer :global .buttonWidgetAnnotation.checkBox input:hover,
+:global .annotationLayer :global .buttonWidgetAnnotation.radioButton input:hover {
+  border: 1px solid #000;
+}
+
+:global .annotationLayer :global .textWidgetAnnotation input:focus,
+:global .annotationLayer :global .textWidgetAnnotation textarea:focus,
+:global .annotationLayer :global .choiceWidgetAnnotation select:focus {
+  background: none;
+  border: 1px solid transparent;
+}
+
+:global .annotationLayer :global .buttonWidgetAnnotation.checkBox input:checked:before,
+:global .annotationLayer :global .buttonWidgetAnnotation.checkBox input:checked:after,
+:global .annotationLayer :global .buttonWidgetAnnotation.radioButton input:checked:before {
+  background-color: #000;
+  content: '';
+  display: block;
+  position: absolute;
+}
+
+:global .annotationLayer :global .buttonWidgetAnnotation.checkBox input:checked:before,
+:global .annotationLayer :global .buttonWidgetAnnotation.checkBox input:checked:after {
+  height: 80%;
+  left: 45%;
+  width: 1px;
+}
+
+:global .annotationLayer :global .buttonWidgetAnnotation.checkBox input:checked:before {
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+}
+
+:global .annotationLayer :global .buttonWidgetAnnotation.checkBox input:checked:after {
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+}
+
+:global .annotationLayer :global .buttonWidgetAnnotation.radioButton input:checked:before {
+  border-radius: 50%;
+  height: 50%;
+  left: 30%;
+  top: 20%;
+  width: 50%;
+}
+
+:global .annotationLayer :global .textWidgetAnnotation input.comb {
+  font-family: monospace;
+  padding-left: 2px;
+  padding-right: 0;
+}
+
+:global .annotationLayer :global .textWidgetAnnotation input.comb:focus {
+  /*
+   * Letter spacing is placed on the right side of each character. Hence, the
+   * letter spacing of the last character may be placed outside the visible
+   * area, causing horizontal scrolling. We avoid this by extending the width
+   * when the element has focus and revert this when it loses focus.
+   */
+  width: 115%;
+}
+
+:global .annotationLayer :global .buttonWidgetAnnotation.checkBox input,
+:global .annotationLayer :global .buttonWidgetAnnotation.radioButton input {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  padding: 0;
+}
+
+:global .annotationLayer :global .popupWrapper {
+  position: absolute;
+  width: 20em;
+}
+
+:global .annotationLayer :global .popup {
+  position: absolute;
+  z-index: 200;
+  max-width: 20em;
+  background-color: #FFFF99;
+  box-shadow: 0px 2px 5px #333;
+  border-radius: 2px;
+  padding: 0.6em;
+  margin-left: 5px;
+  cursor: pointer;
+  font: message-box;
+  word-wrap: break-word;
+}
+
+:global .annotationLayer :global .popup h1 {
+  font-size: 1em;
+  border-bottom: 1px solid #000000;
+  margin: 0;
+  padding-bottom: 0.2em;
+}
+
+:global .annotationLayer :global .popup p {
+  margin: 0;
+  padding-top: 0.2em;
+}
+
+:global .annotationLayer :global .highlightAnnotation,
+:global .annotationLayer :global .underlineAnnotation,
+:global .annotationLayer :global .squigglyAnnotation,
+:global .annotationLayer :global .strikeoutAnnotation,
+:global .annotationLayer :global .lineAnnotation svg line,
+:global .annotationLayer :global .squareAnnotation svg rect,
+:global .annotationLayer :global .circleAnnotation svg ellipse,
+:global .annotationLayer :global .polylineAnnotation svg polyline,
+:global .annotationLayer :global .polygonAnnotation svg polygon,
+:global .annotationLayer :global .stampAnnotation,
+:global .annotationLayer :global .fileAttachmentAnnotation {
+  cursor: pointer;
+}
+
+:global .pdfViewer :global .canvasWrapper {
+  overflow: hidden;
+  z-index: -1;
+}
+
+:global .pdfViewer :global .page {
+  direction: ltr;
+  width: 816px;
+  height: 1056px;
+  margin: 1px auto -8px auto;
+  position: relative;
+  overflow: visible;
+  border: 9px solid transparent;
+  background-clip: content-box;
+  -o-border-image: url(images/shadow.png) 9 9 repeat;
+     border-image: url(images/shadow.png) 9 9 repeat;
+  background-color: white;
+}
+
+:global .pdfViewer.removePageBorders :global .page {
+  margin: 0px auto 10px auto;
+  border: none;
+}
+
+:global .pdfViewer.singlePageView {
+  display: inline-block;
+}
+
+:global .pdfViewer.singlePageView :global .page {
+  margin: 0;
+  border: none;
+}
+
+:global .pdfViewer :global .page canvas {
+  margin: 0;
+  display: block;
+}
+
+:global .pdfViewer :global .page canvas[hidden] {
+  display: none;
+}
+
+:global .pdfViewer :global .page :global .loadingIcon {
+  position: absolute;
+  display: block;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: url('images/loading-icon.gif') center no-repeat;
+}
+
+:global .pdfPresentationMode:-ms-fullscreen :global .pdfViewer :global .page {
+  margin-bottom: 100% !important;
+}
+
+:global .pdfPresentationMode:-webkit-full-screen :global .pdfViewer :global .page {
+  margin-bottom: 100%;
+  border: 0;
+}
+
+:global .pdfPresentationMode:-moz-full-screen :global .pdfViewer :global .page {
+  margin-bottom: 100%;
+  border: 0;
+}
+
+:global .pdfPresentationMode:fullscreen :global .pdfViewer :global .page {
+  margin-bottom: 100%;
+  border: 0;
+}

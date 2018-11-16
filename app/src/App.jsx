@@ -6,7 +6,6 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 // import AddPage from './containers/AddPage';
 // import FilteredPageList from './containers/FilteredPageList';
-// import styles from './App.css';
 import DisplayPdfPage from './containers/DisplayPdfPage';
 import rootReducer from './reducers';
 import { loadPdf } from './actions';  // TODO: load from a page click
