@@ -46,8 +46,6 @@ export default class PdfPage extends Component<Props> {
     });
   }
 
-  // connectedComponent =>
-  // this.container = connectedComponent.getWrappedInstance()
   render() {
     const { pdfDocument } = this.props;
     if (!pdfDocument) {
