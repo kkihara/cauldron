@@ -21,7 +21,6 @@ export const newPage = (title: string) => ({
 });
 
 export const receivePdf = (pdfDocument: any) => {
-  console.log('RECEIVE PDF!');
   return {
   type: RECEIVE_PDF,
   pdfDocument
@@ -30,7 +29,6 @@ export const receivePdf = (pdfDocument: any) => {
 
 export const loadPdf = (path: string) => (
   function(dispatch: any) {
-    console.log('Loading PDF');
     pdfjs.getDocument(path)
       .then(pdfDocument => dispatch(receivePdf(pdfDocument)))
       .catch(() => console.log('ERROR READING PDF: ' + path))
