@@ -13,6 +13,10 @@
  * limitations under the License.
  */
 
+:global .page {
+  position: relative;
+}
+
 :global .textLayer {
   position: absolute;
   left: 0;
