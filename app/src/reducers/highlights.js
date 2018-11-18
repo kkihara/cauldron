@@ -1,15 +1,15 @@
 // @flow
 
 import { NEW_HIGHLIGHT } from '../actions';
+import type { T_Highlight } from '../types';
 
 type Action = {
   type: string,
-  id: string,
-  position: any
+  ...T_Highlight
 }
 
 const highlights = (
-    state: Array<any> = [],
+    state: Array<T_Highlight> = [],
     action: Action) => {
 
   switch(action.type) {
@@ -18,9 +18,8 @@ const highlights = (
         ...state,
         {
           id: action.id,
-          position: action.position,
-          content: {},
-          comment: 'comment'
+          startNode: action.startNode,
+          endNode: action.endNode
         }
       ];
     default:

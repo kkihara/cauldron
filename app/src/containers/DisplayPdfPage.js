@@ -10,7 +10,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addHighlight: highlight => dispatch(newHighlight(highlight))
+  addHighlight: (start, end) => dispatch(newHighlight(start, end))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps, null, { withRef: true })(PdfPage);

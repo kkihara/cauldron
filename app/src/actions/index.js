@@ -2,9 +2,10 @@
 
 import uuid from 'uuid';
 import pdfjs from 'pdfjs-dist/webpack';
+import type { T_HighlightNode } from '../types';
 
 /*
- * Types
+ * Action Types
  */
 export const NEW_PAGE = 'NEW_PAGE';
 export const RECEIVE_PDF = 'RECEIVE_PDF';
@@ -35,8 +36,9 @@ export const loadPdf = (path: string) => (
   }
 );
 
-export const newHighlight = (position: any) => ({
+export const newHighlight = (startNode: T_HighlightNode, endNode: T_HighlightNode) => ({
   type: NEW_HIGHLIGHT,
   id: uuid.v4(),
-  position
+  startNode,
+  endNode
 });
