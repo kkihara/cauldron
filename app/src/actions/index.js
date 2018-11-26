@@ -17,10 +17,10 @@ export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 /*
  * Creators
  */
-export const newPage = (title: string, pageType: T_PageTypes) => ({
+export const newPage = (title: string) => ({
   type: NEW_PAGE,
   id: uuid.v4(),
-  pageType,
+  pageType: pageTypes.none,
   created: Date.now(),
   title
 });
