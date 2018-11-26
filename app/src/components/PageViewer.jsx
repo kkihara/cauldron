@@ -2,6 +2,7 @@
 
 import React from 'react';
 import AddPage from '../containers/AddPage';
+import PdfPageContainer from '../containers/PdfPageContainer';
 import Loading from './Loading';
 import { pageTypes, progressTypes } from '../types';
 import type { T_CurrentPage } from '../types';
@@ -25,7 +26,12 @@ const PageViewer = ({ currentPage }: Props) => {
   if (pageType == pageTypes.none) {
     return <AddPage/>;
   } else if (pageType == pageTypes.pdf) {
-    // TODO: PdfPageContainer
+    let container = React.createRef();
+    return (
+      <div ref={ container }>
+        <PdfPageContainer container={ container }/>
+      </div>
+    );
   } else {
     throw new Error('Unrecognized page type: ' + pageType);
   }

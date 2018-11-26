@@ -2,10 +2,13 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { newPage } from '../actions';
+import { setPdfPage } from '../actions';
 
-const AddPage = ({ dispatch }) => {
+const AddPage = ({ dispatch, getState }) => {
   let input: { value: any };
+  // TODO: validate state here?
+  const state = getState();
+  const id = state.currentPage.id;
 
   return (
     <div>
@@ -15,7 +18,7 @@ const AddPage = ({ dispatch }) => {
           if (!input.value.trim()) {
             return
           }
-          dispatch(newPage(input.value))
+          dispatch(setPdfPage(id, input.value))
           input.value = ''
         }}
       >

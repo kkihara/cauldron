@@ -4,11 +4,8 @@ import React from 'react';
 import thunkMiddleware from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
-// import AddPage from './containers/AddPage';
-// import FilteredPageList from './containers/FilteredPageList';
-import DisplayPdfPage from './containers/DisplayPdfPage';
+import PageViewerContainer from './containers/PageViewerContainer';
 import rootReducer from './reducers';
-import { loadPdf } from './actions';  // TODO: load from a page click
 
 const fs = require('fs');
 const { dialog } = require('electron').remote;
@@ -22,29 +19,9 @@ const App = () => {
 
   return (
     <Provider store={ store }>
-      <DisplayPdfPage/>
+      <PageViewerContainer/>
     </Provider>
   )
-
-  // readFile() {
-  //   dialog.showOpenDialog((fileNames) => {
-  //     if(fileNames === undefined){
-  //       console.log("No file selected");
-  //       return;
-  //     }
-
-  //     fs.readFile(fileNames[0], 'utf-8', (err, data) => {
-  //       if(err){
-  //         alert("An error ocurred reading the file :" + err.message);
-  //         return;
-  //       }
-
-  //       // handle displaying the file contents
-  //       console.log("The file content is : " + data);
-  //       this.setState({ pagePath: fileNames[0] });
-  //     });
-  //   });
-  // }
 
   // react-split
   // render() {
@@ -100,10 +77,5 @@ const App = () => {
   //   )
   // }
 }
-
-// TODO: load from a page click
-const pdfFile = '/Users/panda/Downloads/1512.03385.pdf';
-store.dispatch(loadPdf(pdfFile));
-  // .then(() => console.log('PDF LOADED!!!'));
 
 export default App;
