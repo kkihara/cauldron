@@ -1,12 +1,14 @@
 // @flow
 
 import { combineReducers } from 'redux';
-import pages from './pages';
-import highlights from './highlights';
-import pdfDocument from './pdfDocument';
+import pagesById from './pagesById';
+import pdfPathsById from './pdfPathsById';
+import currentPage from './currentPage';
+import highlightsById from './highlightsById';
 
 export default combineReducers({
-  pages,
-  highlights,
-  pdfDocument
+  pagesById,
+  pdfPathsById,
+  currentPage,
+  highlightsById
 });
