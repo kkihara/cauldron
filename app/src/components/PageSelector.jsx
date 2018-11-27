@@ -1,10 +1,15 @@
 // @flow
 
 import React from 'react';
-import type { T_PageSelector } from '../types';
+import type { T_Page } from '../types';
 
-const PageSelector = ({ id, title, created }: T_PageSelector) => (
-  <li>
+type Props = {
+  ...T_Page,
+  onClick: any
+}
+
+const PageSelector = ({ id, pageType, created, title, onClick }: Props) => (
+  <li onClick={ onClick }>
     { created } | { title }
   </li>
 );

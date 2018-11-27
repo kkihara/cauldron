@@ -40,7 +40,7 @@ const _setCurrentPage = (id: string, progress: string, pageType: string, content
 });
 
 export const setCurrentPage = (id: string) => (
-  function(dispatch: any, getState: any) {
+  (dispatch: any, getState: any) => {
     const state = getState();
     const page = state.pagesById[id];
 
@@ -48,11 +48,12 @@ export const setCurrentPage = (id: string) => (
       // TODO: convert this to DB query to get encoded pdf
       const path = state.pdfPathsById[id];
       dispatch(_setCurrentPage(id, progressTypes.loading, pageTypes.pdf));
-      dispatch(loadPdf(path));
+      return dispatch(loadPdf(path));
     } else {
       if (page.pageType != pageTypes.none) {
         throw new Error('Unrecognized page type: ' + page.pageType);
       }
+      return dispatch(_setCurrentPage(id, progressTypes.done, pageTypes.none))
     }
   }
 );
@@ -65,11 +66,11 @@ export const receivePdf = (pdfDocument: any) => {
 };
 
 export const loadPdf = (path: string) => (
-  function(dispatch: any) {
+  (dispatch: any) => (
     pdfjs.getDocument(path)
       .then(pdfDocument => dispatch(receivePdf(pdfDocument)))
       .catch(() => console.log('ERROR READING PDF: ' + path))
-  }
+  )
 );
 
 export const updatePdfHighlight = (id: string, encoded: string) => ({

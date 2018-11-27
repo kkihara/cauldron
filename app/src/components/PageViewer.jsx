@@ -1,7 +1,6 @@
 // @flow
 
 import React from 'react';
-import AddPage from '../containers/AddPage';
 import PdfPageContainer from '../containers/PdfPageContainer';
 import Loading from './Loading';
 import { pageTypes, progressTypes } from '../types';
@@ -24,7 +23,8 @@ const PageViewer = ({ currentPage }: Props) => {
 
   // progress == done
   if (pageType == pageTypes.none) {
-    return <AddPage/>;
+    // TODO: Upload PDF.
+    return null;
   } else if (pageType == pageTypes.pdf) {
     let container = React.createRef();
     return (

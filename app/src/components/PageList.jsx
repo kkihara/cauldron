@@ -2,16 +2,24 @@
 
 import React from 'react';
 import PageSelector from './PageSelector';
-import type { T_PageSelector } from '../types';
+import type { T_Page } from '../types';
 
 type Props = {
-  pages: Array<T_PageSelector>;
+  pages: Array<T_Page>;
+  setPage: any;
 };
 
-const PageList = ({ pages }: Props) => (
+const PageList = ({ pages, setPage }: Props) => (
   <ul>
     {pages.map(page => (
-      <PageSelector id={ page.id }title={ page.title } created={ page.created }/>
+      <PageSelector
+        key={ page.id }
+        id={ page.id }
+        pageType={ page.pageType }
+        created={ page.created }
+        title={ page.title }
+        onClick={ () => setPage(page.id) }
+      />
     ))}
   </ul>
 );

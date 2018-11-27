@@ -1,17 +1,18 @@
 // @flow
 import { connect } from 'react-redux';
 import PageList from '../components/PageList';
+import { setCurrentPage } from '../actions';
 
-const filterPages = (pages) => {
-  return pages;
+const filterPages = state => {
+  return Object.values(state.pagesById);
 };
 
 const mapStateToProps = state => ({
-  pages: filterPages(state.pages)
+  pages: filterPages(state)
 });
 
 const mapDispatchToProps = dispatch => ({
-  // onClick: display pdfPage
+  setPage: (id: string) => dispatch(setCurrentPage(id))
 });
 
-export default connect(mapStateToProps)(PageList);
+export default connect(mapStateToProps, mapDispatchToProps)(PageList);
