@@ -1,3 +1,10 @@
+## TODO
+
+How to store PDFs?
+
+- copy under the application directory and save path
+- store encoded base64 string in store/DB
+
 ## Reference
 
 ![electron-react-webpack](https://github.com/pastahito/electron-react-webpack)
