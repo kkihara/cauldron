@@ -45,7 +45,6 @@ type Props = {
 export default class PdfPage extends Component<Props> {
 
   componentDidMount() {
-    console.log('mount pdf page');
     const { pdfDocument, highlights, updatePdfHighlight } = this.props;
 
     this.linkService = new PDFLinkService();
@@ -67,9 +66,7 @@ export default class PdfPage extends Component<Props> {
     this.highlighter.addClassApplier(rangy.createClassApplier('highlight'));
 
     document.addEventListener('mouseup', () => {
-      console.log('mouse up!');
       this.highlighter.highlightSelection('highlight');
-      console.log(updatePdfHighlight.toString());
       updatePdfHighlight(this.highlighter.serialize());
     });
 

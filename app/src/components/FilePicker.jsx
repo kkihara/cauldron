@@ -2,8 +2,8 @@
 
 import React from 'react';
 import fs from 'fs';
-
-const { dialog } = require('electron').remote;
+import { remote } from 'electron';
+const dialog = remote.dialog;
 
 type Props = {
   id: string,
@@ -19,15 +19,6 @@ const readFile = (callback: any) => {
     }
 
     callback(fileNames[0]);
-    // fs.readFile(fileNames[0], 'utf-8', (err, data) => {
-    //   if(err){
-    //     alert("An error ocurred reading the file :" + err.message);
-    //     return;
-    //   }
-
-    //   // handle displaying the file contents
-    //   console.log("The file content is : " + data);
-    // });
   });
 };
 

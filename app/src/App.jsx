@@ -13,9 +13,6 @@ import './App.css';
 import PdfPageContainer from './containers/PdfPageContainer';
 import * as actions from './actions';
 
-const fs = require('fs');
-const { dialog } = require('electron').remote;
-
 const store = createStore(
   rootReducer,
   applyMiddleware(thunkMiddleware)
