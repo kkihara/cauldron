@@ -2,6 +2,10 @@
 
 import React, { Component } from 'react';
 import { PDFViewer, PDFLinkService } from "pdfjs-dist/web/pdf_viewer";
+import rangy from 'rangy';
+import 'rangy/lib/rangy-classapplier';
+import 'rangy/lib/rangy-highlighter';
+import 'rangy/lib/rangy-serializer';
 import './pdf_viewer.css';
 
 const clearContainer = (container: HTMLElement) => {
@@ -56,13 +60,28 @@ export default class PdfPage extends Component<Props> {
     this.linkService.setDocument(pdfDocument);
     this.linkService.setViewer(this.viewer);
 
+  rangy.init();
+
+    // let applier = rangy.createClassApplier('highlight');
+    this.highlighter = rangy.createHighlighter();
+    this.highlighter.addClassApplier(rangy.createClassApplier('highlight'));
+
     document.addEventListener('mouseup', () => {
       console.log('mouse up!');
+      this.highlighter.highlightSelection('highlight');
+      console.log(updatePdfHighlight.toString());
+      updatePdfHighlight(this.highlighter.serialize());
     });
+
+  }
+
+  componentDidUpdate() {
+    const { highlights } = this.props;
+    this.highlighter.removeAllHighlights();
+    this.highlighter.deserialize(highlights.encoded);
   }
 
   render() {
-    console.log('render pdf page');
     return (
       <div ref={ node => this.container = node }>
         <div id='viewer'></div>

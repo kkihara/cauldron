@@ -8,10 +8,17 @@ import PdfPage from '../components/PdfPage';
 const mapStateToProps = (state, ownProps) => ({
   pdfDocument: ownProps.pdfDocument,
   highlights: state.highlightsById[ownProps.id],
+  id: ownProps.id
 });
 
 const mapDispatchToProps = dispatch => ({
-  updatePdfHighlight: (id, encoded) => dispatch(updatePdfHighlight(id, encoded))
+  updatePdfHighlight: (id: string) => (encoded: string) => dispatch(updatePdfHighlight(id, encoded))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PdfPage);
+const mergeProps = (propsFromState, propsFromDispatch) => ({
+  pdfDocument: propsFromState.pdfDocument,
+  highlights: propsFromState.highlights,
+  updatePdfHighlight: propsFromDispatch.updatePdfHighlight(propsFromState.id)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(PdfPage);
