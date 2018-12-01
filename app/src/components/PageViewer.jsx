@@ -2,6 +2,7 @@
 
 import React from 'react';
 import PdfPageContainer from '../containers/PdfPageContainer';
+import UploadPdf from '../containers/UploadPdf';
 import Loading from './Loading';
 import { pageTypes, progressTypes } from '../types';
 import type { T_CurrentPage } from '../types';
@@ -23,15 +24,14 @@ const PageViewer = ({ currentPage }: Props) => {
 
   // progress == done
   if (pageType == pageTypes.none) {
-    // TODO: Upload PDF.
-    return null;
+    return <UploadPdf id={ id }/>;
   } else if (pageType == pageTypes.pdf) {
-    let container = React.createRef();
-    return (
-      <div ref={ container }>
-        <PdfPageContainer container={ container }/>
-      </div>
-    );
+      // <div ref={ container }>
+      //   <div id='viewer'>
+      //     <PdfPageContainer container={ container }/>
+      //   </div>
+      // </div>
+    return <PdfPageContainer id={ id } pdfDocument={ contents.pdfDocument }/>;
   } else {
     throw new Error('Unrecognized page type: ' + pageType);
   }

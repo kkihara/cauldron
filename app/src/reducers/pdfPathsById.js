@@ -1,6 +1,6 @@
 // @flow
 
-import { SET_PDF_PAGE } from '../actions';
+import { SET_PAGETYPE_PDF } from '../actions';
 import type { T_PdfPath, T_PdfPathsById } from '../types';
 
 type Action = {
@@ -13,7 +13,7 @@ const pdfPathsById = (
   action: Action
 ) => {
   switch (action.type) {
-    case SET_PDF_PAGE:
+    case SET_PAGETYPE_PDF:
       return {
         ...state,
         [action.id]: {

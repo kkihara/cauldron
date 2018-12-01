@@ -10,6 +10,8 @@ import FilteredPageList from './containers/FilteredPageList';
 import AddPage from './containers/AddPage';
 import rootReducer from './reducers';
 import './App.css';
+import PdfPageContainer from './containers/PdfPageContainer';
+import * as actions from './actions';
 
 const fs = require('fs');
 const { dialog } = require('electron').remote;
@@ -25,67 +27,13 @@ const App = () => {
     <Provider store={ store }>
       <SplitPane split='vertical' minSize={ 50 } defaultSize={ 200 }>
         <SplitPane split='horizontal' maxSize={ 50 } defaultSize={ 50 }>
-          <AddPage/>
+          <div><AddPage/></div>
           <div><FilteredPageList/></div>
         </SplitPane>
         <div><PageViewerContainer/></div>
       </SplitPane>
     </Provider>
   )
-
-  // react-split
-  // render() {
-  //   return (
-  //     <Provider store={ store }>
-  //       <Split direction="vertical" sizes={[25, 75]}>
-  //         <div>
-  //           <h1>Navigation!</h1>
-  //           <button type="button" onClick={() => this.readFile()}>
-  //             Choose file
-  //           </button>
-  //         </div>
-  //         <Split direction="vertical" size={[25, 75]}>
-  //           <div>
-  //             <AddPage />
-  //             <FilteredPageList />
-  //           </div>
-  //           <Split direction="horizontal" size={[10, 90]}>
-  //             <div>Tags and stuff</div>
-  //             <MyPdfPage />
-  //           </Split>
-  //         </Split>
-  //       </Split>
-  //     </Provider>
-  //   )
-  // }
-  // react-reflex
-  // render() {
-  //   return (
-  //     <Provider store={ store }>
-  //       <ReflexContainer orientation="vertical">
-  //         <ReflexElement className="left-pane" flex={ 0.25 }>
-  //           <div>
-  //             <h1>Navigation!</h1>
-  //             <button type="button" onClick={() => this.readFile()}>
-  //               Choose file
-  //             </button>
-  //           </div>
-  //         </ReflexElement>
-  //         <ReflexSplitter propagate={ true }/>
-  //         <ReflexElement flex={ 0.25 }>
-  //           <div>
-  //             <AddPage />
-  //             <FilteredPageList />
-  //           </div>
-  //         </ReflexElement>
-  //         <ReflexSplitter/>
-  //         <ReflexElement flex={ 0.75 }>
-  //           <div>YO</div>
-  //         </ReflexElement>
-  //       </ReflexContainer>
-  //     </Provider>
-  //   )
-  // }
 }
 
 export default App;

@@ -1,6 +1,6 @@
 // @flow
 
-import { NEW_PAGE, SET_PDF_PAGE } from '../actions';
+import { NEW_PAGE, SET_PAGETYPE_PDF } from '../actions';
 import { pageTypes } from '../types';
 import type { T_Page, T_PagesById } from '../types';
 
@@ -11,7 +11,7 @@ import type { T_Page, T_PagesById } from '../types';
 // |};
 //
 // type SetPdfAction = {|
-//   type: SET_PDF_PAGE,
+//   type: SET_PAGETYPE_PDF,
 //   id: string,
 //   path: string
 // |};
@@ -33,7 +33,7 @@ const pagesById = (
           title: action.title
         }
       };
-    case SET_PDF_PAGE:
+    case SET_PAGETYPE_PDF:
       if (!state[action.id]) throw new Error('Page does not exist: ' + action.id);
       if (state[action.id].pageType != pageTypes.none) {
         throw new Error('Page already set: ' + action.id);

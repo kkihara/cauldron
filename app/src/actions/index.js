@@ -9,7 +9,7 @@ import type { T_PageTypes } from '../types';
  * Action Types
  */
 export const NEW_PAGE = 'NEW_PAGE';
-export const SET_PDF_PAGE = 'SET_PDF_PAGE';
+export const SET_PAGETYPE_PDF = 'SET_PAGETYPE_PDF';
 export const RECEIVE_PDF = 'RECEIVE_PDF';
 export const UPDATE_HIGHLIGHT = 'ADD_HIGHLIGHT';
 export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
@@ -25,11 +25,24 @@ export const newPage = (title: string) => ({
   title
 });
 
-export const setPdfPage = (id: string, path: string) => ({
-  type: SET_PDF_PAGE,
+const _setPageTypePdf = (id: string, path: string) => ({
+  type: SET_PAGETYPE_PDF,
+  pageType: pageTypes.pdf,
   id,
   path
 });
+
+// TODO: split this action in 2?
+export const setPageTypePdf = (id: string, path: string) => (
+  (dispatch: any, getState: any) => {
+    const state = getState();
+    dispatch(_setPageTypePdf(id, path));
+
+    if (state.currentPage.id == id) {
+      dispatch(setCurrentPage(id));
+    }
+  }
+);
 
 const _setCurrentPage = (id: string, progress: string, pageType: string, contents: any = {}) => ({
   type: SET_CURRENT_PAGE,
@@ -46,7 +59,7 @@ export const setCurrentPage = (id: string) => (
 
     if (page.pageType == pageTypes.pdf) {
       // TODO: convert this to DB query to get encoded pdf
-      const path = state.pdfPathsById[id];
+      const path = state.pdfPathsById[id].path;
       dispatch(_setCurrentPage(id, progressTypes.loading, pageTypes.pdf));
       return dispatch(loadPdf(path));
     } else {
@@ -58,18 +71,16 @@ export const setCurrentPage = (id: string) => (
   }
 );
 
-export const receivePdf = (pdfDocument: any) => {
-  return {
+export const receivePdf = (pdfDocument: any) => ({
   type: RECEIVE_PDF,
   pdfDocument
-  }
-};
+});
 
 export const loadPdf = (path: string) => (
   (dispatch: any) => (
     pdfjs.getDocument(path)
       .then(pdfDocument => dispatch(receivePdf(pdfDocument)))
-      .catch(() => console.log('ERROR READING PDF: ' + path))
+      // .catch(() => console.log('ERROR READING PDF: ' + path))
   )
 );
 

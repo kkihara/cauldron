@@ -1,7 +1,7 @@
 // @flow
 
 import { SET_CURRENT_PAGE, RECEIVE_PDF } from '../actions';
-import { pageTypes } from '../types';
+import { pageTypes, progressTypes } from '../types';
 import type { T_CurrentPage } from '../types';
 
 // TODO: how to type this?
@@ -37,6 +37,7 @@ const currentPage = (
 
       return {
         ...state,
+        progress: progressTypes.done,
         contents: { pdfDocument: action.pdfDocument }
       };
     default:
