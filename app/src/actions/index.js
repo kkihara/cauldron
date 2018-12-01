@@ -13,6 +13,8 @@ export const SET_PAGETYPE_PDF = 'SET_PAGETYPE_PDF';
 export const RECEIVE_PDF = 'RECEIVE_PDF';
 export const UPDATE_HIGHLIGHT = 'ADD_HIGHLIGHT';
 export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
+export const ADD_TAG = 'ADD_TAG';
+export const DELETE_TAG = 'DELETE_TAG';
 
 /*
  * Creators
@@ -23,6 +25,18 @@ export const newPage = (title: string) => ({
   pageType: pageTypes.none,
   created: Date.now(),
   title
+});
+
+export const addTag = (id: string, tag: string) => ({
+  type: ADD_TAG,
+  id,
+  tag
+});
+
+export const deleteTag = (id: string, tag: string) => ({
+  type: DELETE_TAG,
+  id,
+  tag
 });
 
 const _setPageTypePdf = (id: string, path: string) => ({

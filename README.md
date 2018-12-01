@@ -22,6 +22,9 @@ How to store PDFs?
       title: string
     }
   },
+  tagsById: {
+    <id>: [tag: string]
+  },
   pdfPathsById: {  # TODO: replace this later with a DB query
     <id>: {
       id: string,

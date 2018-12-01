@@ -8,6 +8,8 @@ import SplitPane from 'react-split-pane';
 import PageViewerContainer from './containers/PageViewerContainer';
 import FilteredPageList from './containers/FilteredPageList';
 import AddPage from './containers/AddPage';
+import AddTag from './containers/AddTag';
+import TagListContainer from './containers/TagListContainer';
 import rootReducer from './reducers';
 import './App.css';
 import PdfPageContainer from './containers/PdfPageContainer';
@@ -27,7 +29,13 @@ const App = () => {
           <div><AddPage/></div>
           <div><FilteredPageList/></div>
         </SplitPane>
-        <div><PageViewerContainer/></div>
+        <SplitPane split='horizontal' maxSize={ 50 } defaultSize={ 50 }>
+          <div>
+            <AddTag/>
+            <TagListContainer/>
+          </div>
+          <div><PageViewerContainer/></div>
+        </SplitPane>
       </SplitPane>
     </Provider>
   )

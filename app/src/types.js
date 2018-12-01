@@ -11,6 +11,10 @@ export type T_PagesById = {
   [page_id: string]: T_Page
 };
 
+export type T_TagsById = {
+  [page_id: string]: Array<string>
+};
+
 export type T_Highlight = {
   id: string,
   encoded: string
