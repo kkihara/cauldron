@@ -44,8 +44,22 @@ type Props = {
 
 export default class PdfPage extends Component<Props> {
 
+  constructor(props: Props) {
+    super(props);
+    rangy.init();
+    this.highlighter = rangy.createHighlighter();
+    this.highlighter.addClassApplier(rangy.createClassApplier('highlight'));
+    this.onMouseUp = this.onMouseUp.bind(this);
+  }
+
+  onMouseUp() {
+    const { updatePdfHighlight } = this.props;
+    this.highlighter.highlightSelection('highlight');
+    updatePdfHighlight(this.highlighter.serialize());
+  }
+
   componentDidMount() {
-    const { pdfDocument, highlights, updatePdfHighlight } = this.props;
+    const { pdfDocument } = this.props;
 
     this.linkService = new PDFLinkService();
       // enhanceTextSelection: true,
@@ -59,16 +73,7 @@ export default class PdfPage extends Component<Props> {
     this.linkService.setDocument(pdfDocument);
     this.linkService.setViewer(this.viewer);
 
-  rangy.init();
-
-    // let applier = rangy.createClassApplier('highlight');
-    this.highlighter = rangy.createHighlighter();
-    this.highlighter.addClassApplier(rangy.createClassApplier('highlight'));
-
-    document.addEventListener('mouseup', () => {
-      this.highlighter.highlightSelection('highlight');
-      updatePdfHighlight(this.highlighter.serialize());
-    });
+    this.container.addEventListener('mouseup', this.onMouseUp);
 
   }
 
@@ -76,6 +81,10 @@ export default class PdfPage extends Component<Props> {
     const { highlights } = this.props;
     this.highlighter.removeAllHighlights();
     this.highlighter.deserialize(highlights.encoded);
+  }
+
+  componentWillUnmount() {
+    this.container.removeEventListener('mouseup', this.onMouseUp);
   }
 
   render() {
