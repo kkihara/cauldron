@@ -25,11 +25,21 @@ const App = () => {
   return (
     <Provider store={ store }>
       <SplitPane split='vertical' minSize={ 50 } defaultSize={ 200 }>
-        <SplitPane split='horizontal' maxSize={ 50 } defaultSize={ 50 }>
+        <SplitPane
+            split='horizontal'
+            maxSize={ 50 }
+            defaultSize={ 50 }
+            pane2Style={{ overflow: 'auto' }}
+        >
           <div><AddPage/></div>
           <div><FilteredPageList/></div>
         </SplitPane>
-        <SplitPane split='horizontal' maxSize={ 50 } defaultSize={ 50 }>
+        <SplitPane
+            split='horizontal'
+            maxSize={ 50 }
+            defaultSize={ 50 }
+            pane2Style={{ overflow: 'auto' }}
+        >
           <div>
             <AddTag/>
             <TagListContainer/>
