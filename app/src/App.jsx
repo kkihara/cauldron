@@ -27,8 +27,8 @@ const App = () => {
       <SplitPane split='vertical' minSize={ 50 } defaultSize={ 200 }>
         <SplitPane
             split='horizontal'
-            maxSize={ 50 }
-            defaultSize={ 50 }
+            maxSize={ 200 }
+            defaultSize={ 100 }
             pane2Style={{ overflow: 'auto' }}
         >
           <div><AddPage/></div>
@@ -36,8 +36,8 @@ const App = () => {
         </SplitPane>
         <SplitPane
             split='horizontal'
-            maxSize={ 50 }
-            defaultSize={ 50 }
+            maxSize={ 200 }
+            defaultSize={ 100 }
             pane2Style={{ overflow: 'auto' }}
         >
           <div>
