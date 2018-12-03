@@ -8,16 +8,16 @@ type Props = {
 
 const TagList = ({ tags }: Props) => (
   <ul style={{
-    'list-style-type': 'none',
-    'margin': '0px'
+    listStyleType: 'none',
+    margin: '0px'
   }}>
     {tags.map((tag, idx) =>
-      <li key={ idx } style={{ 'float': 'left', 'padding': '5px' }}>
+      <li key={ idx } style={{ float: 'left', padding: '5px' }}>
         <p style={{
-          'border-radius': '10px / 7px',
-          'border-color': '#000000',
-          'border-style': 'solid',
-          'padding': '10px'
+          borderRadius: '10px / 7px',
+          borderColor: '#000000',
+          borderStyle: 'solid',
+          padding: '10px'
         }}>
           { tag }
         </p>
