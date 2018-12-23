@@ -2,104 +2,35 @@
 
 import uuid from 'uuid';
 import pdfjs from 'pdfjs-dist/webpack';
-import { pageTypes, progressTypes } from '../types';
+import { pageTypes } from '../types';
 import type { T_PageTypes } from '../types';
 
 /*
- * Action Types
+ * Page Types
  */
-export const NEW_PAGE = 'NEW_PAGE';
-export const SET_PAGETYPE_PDF = 'SET_PAGETYPE_PDF';
-export const RECEIVE_PDF = 'RECEIVE_PDF';
-export const UPDATE_HIGHLIGHT = 'ADD_HIGHLIGHT';
-export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
-export const ADD_TAG = 'ADD_TAG';
-export const DELETE_TAG = 'DELETE_TAG';
+export const REQUEST_NEW_PAGE = 'REQUEST_NEW_PAGE';
+export const RECEIVE_NEW_PAGE = 'RECEIVE_NEW_PAGE';
+export const REQUEST_PUT_TITLE = 'REQUEST_PUT_TITLE';
+export const RECEIVE_PUT_TITLE = 'RECEIVE_PUT_TITLE';
+export const REQUEST_PUT_PAGETYPE = 'REQUEST_PUT_PAGETYPE';
+export const RECEIVE_PUT_PAGETYPE = 'RECEIVE_PUT_PAGETYPE';
+export const REQUEST_FETCH_ALL_PAGES = 'REQUEST_FETCH_ALL_PAGES';
+export const RECEIVE_FETCH_ALL_PAGES = 'RECEIVE_FETCH_ALL_PAGES';
 
 /*
- * Creators
+ * Tag Types
  */
-export const newPage = (title: string) => ({
-  type: NEW_PAGE,
-  id: uuid.v4(),
-  pageType: pageTypes.none,
-  created: Date.now(),
-  title
-});
+export const REQUEST_ADD_TAG = 'REQUEST_ADD_TAG';
+export const RECEIVE_ADD_TAG = 'RECEIVE_ADD_TAG';
+export const REQUEST_DELETE_TAG = 'REQUEST_DELETE_TAG';
+export const RECEIVE_DELETE_TAG = 'RECEIVE_DELETE_TAG';
+export const REQUEST_FETCH_TAGS_BY_PAGE = 'REQUEST_FETCH_TAGS_BY_PAGE';
+export const RECEIVE_FETCH_TAGS_BY_PAGE = 'RECEIVE_FETCH_TAGS_BY_PAGE';
 
-export const addTag = (id: string, tag: string) => ({
-  type: ADD_TAG,
-  id,
-  tag
-});
-
-export const deleteTag = (id: string, tag: string) => ({
-  type: DELETE_TAG,
-  id,
-  tag
-});
-
-const _setPageTypePdf = (id: string, path: string) => ({
-  type: SET_PAGETYPE_PDF,
-  pageType: pageTypes.pdf,
-  id,
-  path
-});
-
-// TODO: split this action in 2?
-export const setPageTypePdf = (id: string, path: string) => (
-  (dispatch: any, getState: any) => {
-    const state = getState();
-    dispatch(_setPageTypePdf(id, path));
-
-    if (state.currentPage.id == id) {
-      dispatch(setCurrentPage(id));
-    }
-  }
-);
-
-const _setCurrentPage = (id: string, progress: string, pageType: string, contents: any = {}) => ({
-  type: SET_CURRENT_PAGE,
-  id,
-  progress,
-  pageType,
-  contents
-});
-
-export const setCurrentPage = (id: string) => (
-  (dispatch: any, getState: any) => {
-    const state = getState();
-    const page = state.pagesById[id];
-
-    if (page.pageType == pageTypes.pdf) {
-      // TODO: convert this to DB query to get encoded pdf
-      const path = state.pdfPathsById[id].path;
-      dispatch(_setCurrentPage(id, progressTypes.loading, pageTypes.pdf));
-      return dispatch(loadPdf(path));
-    } else {
-      if (page.pageType != pageTypes.none) {
-        throw new Error('Unrecognized page type: ' + page.pageType);
-      }
-      return dispatch(_setCurrentPage(id, progressTypes.done, pageTypes.none))
-    }
-  }
-);
-
-export const receivePdf = (pdfDocument: any) => ({
-  type: RECEIVE_PDF,
-  pdfDocument
-});
-
-export const loadPdf = (path: string) => (
-  (dispatch: any) => (
-    pdfjs.getDocument(path)
-      .then(pdfDocument => dispatch(receivePdf(pdfDocument)))
-      // .catch(() => console.log('ERROR READING PDF: ' + path))
-  )
-);
-
-export const updatePdfHighlight = (id: string, encoded: string) => ({
-  type: UPDATE_HIGHLIGHT,
-  id,
-  encoded
-});
+/*
+ * PDF Types
+ */
+export const REQUEST_UPLOAD_PDF = 'REQUEST_UPLOAD_PDF';
+export const RECEIVE_UPLOAD_PDF = 'RECEIVE_UPLOAD_PDF';
+export const REQUEST_PUT_HIGHLIGHT = 'REQUEST_PUT_HIGHLIGHT';
+export const RECEIVE_PUT_HIGHLIGHT = 'RECEIVE_PUT_HIGHLIGHT';

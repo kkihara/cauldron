@@ -1,22 +1,8 @@
 // @flow
 
-import { NEW_PAGE, SET_PAGETYPE_PDF } from '../actions';
+import { NEW_PAGE, UPDATE_TITLE, SET_PAGETYPE_PDF } from '../actions';
 import { pageTypes } from '../types';
 import type { T_Page, T_PagesById } from '../types';
-
-// TODO: how to type this?
-// type NewPageAction = {|
-//   type: NEW_PAGE,
-//   ...T_Page
-// |};
-//
-// type SetPdfAction = {|
-//   type: SET_PAGETYPE_PDF,
-//   id: string,
-//   path: string
-// |};
-//
-// type Action = NewPageAction | SetPdfAction;
 
 const pagesById = (
   state: T_PagesById = {},
@@ -27,9 +13,19 @@ const pagesById = (
       return {
         ...state,
         [action.id]: {
-          id: action.id,
           pageType: action.pageType,
           created: action.created,
+          title: '',
+          tags: [],
+          highlights: null
+        }
+      };
+    case UPDATE_TITLE:
+      const page = state[action.id];
+      return {
+        ...state,
+        [action.id]: {
+          ...page,
           title: action.title
         }
       };
