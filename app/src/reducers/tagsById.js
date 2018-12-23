@@ -1,6 +1,6 @@
 // @flow
 
-import { NEW_PAGE, ADD_TAG, DELETE_TAG } from '../actions';
+import { ADD_TAG, DELETE_TAG } from '../actions';
 import type { T_TagsById } from '../types';
 
 const tagsById = (
@@ -8,11 +8,6 @@ const tagsById = (
   action: any
 ) => {
   switch (action.type) {
-    case NEW_PAGE:
-      return {
-        ...state,
-        [action.id]: []
-      };
     case ADD_TAG:
       return {
         ...state,
