@@ -19,6 +19,7 @@ const createWindow = () => {
   });
 
   mainWindow.loadURL(`file://${__dirname}/app/index.html`);
+  mainWindow.webContents.openDevTools();
 
   // Menu
   const menu = new electron.Menu();
@@ -27,7 +28,6 @@ const createWindow = () => {
       label: 'Dev Tools',
       click: () => mainWindow.webContents.openDevTools()
     });
-
     menu.append(menuItem);
   }
 

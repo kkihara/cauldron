@@ -1,4 +1,6 @@
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+// const externals = require('./app/package.json').dependencies;
+  // externals: [ 'commonjs' ] + Object.keys(externals || {}),
 
 module.exports = {
 
@@ -13,6 +15,8 @@ module.exports = {
     publicPath: 'build/',
     filename: 'bundle.js'
   },
+
+  externals: ['commonjs', 'better-sqlite3'],
 
   module: {
     rules: [

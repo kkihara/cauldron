@@ -1,18 +1,29 @@
 // @flow
 
 export type T_Page = {
-  _id: string,
-  pageType: string,
+  id: number,
+  pageType: T_PageTypes,
   created: number,
   title: string,
-  highlights: ?string,
-}
+};
 
 export type T_Tag = {
-  _id: string,
-  pageId: string,
-  value: string,
+  id: number,
+  pageId: number,
+  content: string,
+};
+
+export type T_PdfContent = {
+  pdf: Buffer,
+  highlights: string,
 }
+
+export type T_CurrentPage = {
+  id: ?number,
+  title: ?string,
+  pageType: T_PageTypes,
+  content: ?T_PdfContent,
+};
 
 export const pageTypes = {
   pdf: 'pdf',

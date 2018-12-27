@@ -1,4 +1,7 @@
+// @flow
+
 import {
+  REQUEST_NEW_PAGE,
   RECEIVE_NEW_PAGE,
   REQUEST_FETCH_ALL_PAGES,
   RECEIVE_FETCH_ALL_PAGES,
@@ -26,9 +29,10 @@ const pageList = (
         pageList: action.pageList,
       };
     case RECEIVE_NEW_PAGE:
+      const page: T_Page = action.page;
       return {
         ...state,
-        pageList: state.pageList.concat([action.page]),
+        pageList: state.pageList.concat([page]),
       };
     default:
       return state;

@@ -1,10 +1,10 @@
 // @flow
 import { connect } from 'react-redux';
 import PageList from '../components/PageList';
-import { setCurrentPage } from '../actions';
+import { fetchPage } from '../actions/page';
 
 const filterPages = state => {
-  return Object.values(state.pagesById);
+  return state.pageList.slice();
 };
 
 const mapStateToProps = state => ({
@@ -12,7 +12,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setPage: (id: string) => dispatch(setCurrentPage(id))
+  setPage: (id: number) => dispatch(fetchPage(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PageList);
