@@ -12,19 +12,30 @@ How to store PDFs?
 
 ## Document State
 
+page
 ```
 {
-  _id: string,
+  id: number,
   pageType: string,
   created: number,
   title: string,
-  tags: Array<string>,
-  highlights: ?string,  # serialized string of all highlights for id
-  _attachment: {
-    ?pdf: {
-      content_type: 'text/plain',
-      data: string     # Blob
-    }
-  }
+}
+```
+
+tags
+```
+{
+  id: number,
+  pageId: number,  # foreign key to page
+  content: string
+}
+```
+
+pdf
+```
+{
+  id: number,          # foreign key to page
+  highlights: ?string, # serialized string of all highlights for id
+  content: blob
 }
 ```

@@ -4,11 +4,11 @@ import pdfjs from 'pdfjs-dist/webpack';
 import {
 REQUEST_UPLOAD_PDF,
 RECEIVE_UPLOAD_PDF,
-REQUEST_PUT_HIGHLIGHT,
-RECEIVE_PUT_HIGHLIGHT,
+REQUEST_PUT_HIGHLIGHTS,
+RECEIVE_PUT_HIGHLIGHTS,
 } from './';
+import * as db from '../utils/db';
 import { putPageType } from './page';
-import { pageDB } from '../utils/db';
 import { pageTypes } from '../types';
 import type { T_Page } from '../types';
 
@@ -16,26 +16,24 @@ const requestUploadPdf = () => ({
   type: REQUEST_UPLOAD_PDF,
 });
 
-const receiveUploadPdf = () => ({
+const receiveUploadPdf = (id: number, content: Buffer) => ({
   type: RECEIVE_UPLOAD_PDF,
+  id,
+  content,
 });
 
 const PDF_ID = 'pdf';
-export const uploadPdf = (id: string, path: string) => (
+export const uploadPdf = (id: number, path: string) => (
   (dispatch: any) => {
     dispatch(requestUploadPdf());
 
     pdfjs.getDocument(path).then(pdfDocument => {
       pdfDocument.getData()
     }).then(pdfData => {
-      return new Blob([pdfData], {type: 'text/plain'});
-    }).then(blob => {
-      return pageDB.putAttachment(
-        id, PDF_ID, blob, 'text/plain'
-      );
-    }).then(res => {
+      // TODO: Does TypedArray need to be converted to Buffer?
+      db.insertPdf(id, pdfData);
       dispatch(putPageType(id, pageTypes.pdf));
-      dispatch(receiveUploadPdf());
+      dispatch(receiveUploadPdf(id, pdfData));
     }).catch(err => {
       console.log(err);
     })
@@ -43,28 +41,20 @@ export const uploadPdf = (id: string, path: string) => (
 );
 
 const requestPutHighlight = () => ({
-  type: REQUEST_PUT_HIGHLIGHT,
+  type: REQUEST_PUT_HIGHLIGHTS,
 });
 
-const receivePutHighlight = (id: string, highlight: string) => ({
-  type: RECEIVE_PUT_HIGHLIGHT,
+const receivePutHighlight = (id: number, highlights: string) => ({
+  type: RECEIVE_PUT_HIGHLIGHTS,
   id,
-  highlight,
+  highlights,
 });
 
-export const putHighlight = (id: string, highlight: string) => (
+export const putHighlight = (id: number, highlights: string) => (
   (dispatch: any) => {
     dispatch(requestPutHighlight());
 
-    pageDB.get(id).then(page => {
-      page.highlight = highlight;
-      return pageDB.put(page);
-    }).then(() => {
-      return pageDB.get(id);
-    }).then(page => {
-      return dispatch(receivePutHighlight(id, highlight));
-    }).catch(err => {
-      console.log(err);
-    })
+    db.updateHighlights(id, highlights);
+    return dispatch(receivePutHighlight(id, highlights));
   }
 );

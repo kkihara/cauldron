@@ -1,10 +1,5 @@
 // @flow
 
-import uuid from 'uuid';
-import pdfjs from 'pdfjs-dist/webpack';
-import { pageTypes } from '../types';
-import type { T_PageTypes } from '../types';
-
 /*
  * Page Types
  */
@@ -16,6 +11,8 @@ export const REQUEST_PUT_PAGETYPE = 'REQUEST_PUT_PAGETYPE';
 export const RECEIVE_PUT_PAGETYPE = 'RECEIVE_PUT_PAGETYPE';
 export const REQUEST_FETCH_ALL_PAGES = 'REQUEST_FETCH_ALL_PAGES';
 export const RECEIVE_FETCH_ALL_PAGES = 'RECEIVE_FETCH_ALL_PAGES';
+export const REQUEST_FETCH_PAGE = 'REQUEST_FETCH_PAGE';
+export const RECEIVE_FETCH_PAGE = 'RECEIVE_FETCH_PAGE';
 
 /*
  * Tag Types
@@ -32,5 +29,5 @@ export const RECEIVE_FETCH_TAGS_BY_PAGE = 'RECEIVE_FETCH_TAGS_BY_PAGE';
  */
 export const REQUEST_UPLOAD_PDF = 'REQUEST_UPLOAD_PDF';
 export const RECEIVE_UPLOAD_PDF = 'RECEIVE_UPLOAD_PDF';
-export const REQUEST_PUT_HIGHLIGHT = 'REQUEST_PUT_HIGHLIGHT';
-export const RECEIVE_PUT_HIGHLIGHT = 'RECEIVE_PUT_HIGHLIGHT';
+export const REQUEST_PUT_HIGHLIGHTS = 'REQUEST_PUT_HIGHLIGHTS';
+export const RECEIVE_PUT_HIGHLIGHTS = 'RECEIVE_PUT_HIGHLIGHTS';

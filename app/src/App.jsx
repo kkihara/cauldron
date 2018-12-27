@@ -12,7 +12,6 @@ import AddTag from './containers/AddTag';
 import TagListContainer from './containers/TagListContainer';
 import rootReducer from './reducers';
 import './App.css';
-import PdfPageContainer from './containers/PdfPageContainer';
 import * as actions from './actions';
 
 const store = createStore(

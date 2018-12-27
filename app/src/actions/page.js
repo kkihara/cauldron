@@ -1,6 +1,5 @@
 // @flow
 
-import uuid from 'uuid';
 import {
   REQUEST_NEW_PAGE,
   RECEIVE_NEW_PAGE,
@@ -10,10 +9,13 @@ import {
   RECEIVE_PUT_PAGETYPE,
   REQUEST_FETCH_ALL_PAGES,
   RECEIVE_FETCH_ALL_PAGES,
+  REQUEST_FETCH_PAGE,
+  RECEIVE_FETCH_PAGE,
 } from './';
-import { pageDB } from '../utils/db';
+import { fetchTagsByPage } from '../actions/tag';
 import { pageTypes } from '../types';
-import type { T_Page, T_PageTypes } from '../types'
+import type { T_Page, T_PageTypes, T_CurrentPage } from '../types';
+import * as db from '../utils/db';
 
 const requestNewPage = () => ({
   type: REQUEST_NEW_PAGE,
@@ -27,18 +29,8 @@ const receiveNewPage = (page: T_Page) => ({
 export const newPage = () => (
   (dispatch: any) => {
     dispatch(requestNewPage());
-
-    pageDB.put({
-      _id: uuid.v4(),
-      pageType: pageTypes.none,
-      created: Date.now(),
-      title: '',
-      highlights: null,
-    }).then(page => {
-      return dispatch(receiveNewPage(page));
-    }).catch(err => {
-      console.log(err);
-    });
+    const page = db.insertPage(pageTypes.none, Date.now(), '');
+    return dispatch(receiveNewPage(page));
   }
 );
 
@@ -46,26 +38,17 @@ const requestPutTitle = () => ({
   type: REQUEST_PUT_TITLE,
 });
 
-const receivePutTitle = (page: T_Page) => ({
+const receivePutTitle = (id: number, title: string) => ({
   type: RECEIVE_PUT_TITLE,
-  id: page._id,
-  title: page.title,
+  id,
+  title,
 });
 
-export const putTitle = (id: string, title: string) => (
+export const putTitle = (id: number, title: string) => (
   (dispatch: any) => {
     dispatch(requestPutTitle());
-
-    pageDB.get(id).then(page => {
-        page.title = title;
-        return pageDB.put(page);
-    }).then(() => {
-      return pageDB.get(id);
-    }).then(page => {
-      dispatch(receivePutTitle(page));
-    }).catch(err => {
-      console.log(err);
-    });
+    const page = db.updateTitle(id, title);
+    return dispatch(receivePutTitle(id, title));
   }
 );
 
@@ -73,27 +56,18 @@ const requestPutPageType = () => ({
   type: REQUEST_PUT_PAGETYPE,
 });
 
-const receivePutPageType = (page: T_Page) => ({
+const receivePutPageType = (id: number, pageType: T_PageTypes) => ({
   type: RECEIVE_PUT_PAGETYPE,
-  id: page._id,
-  pageType: page.pageType,
+  id,
+  pageType,
 });
 
-export const putPageType = (id: string, pageType: T_PageTypes) => (
+export const putPageType = (id: number, pageType: T_PageTypes) => (
   (dispatch: any) => {
     // TODO: error check current pageType is none
     dispatch(requestPutPageType());
-
-    pageDB.get(id).then(page => {
-        page.pageType = pageType;
-        return pageDB.put(page);
-    }).then(() => {
-      return pageDB.get(id);
-    }).then(page => {
-      return dispatch(receivePutPageType(page))
-    }).catch(err => {
-      console.log(err);
-    });
+    db.updatePageType(id, pageType);
+    return dispatch(receivePutPageType(id, pageType));
   }
 );
 
@@ -109,15 +83,25 @@ const receiveFetchAllPages = (pageList: Array<T_Page>) => ({
 export const fetchAllPages = () => (
   (dispatch: any) => {
     dispatch(requestFetchAllPages());
-
-    pageDB.allDocs({
-      include_docs: true,
-    }).then(res => {
-      return res.rows.map(row => row.doc);
-    }).then(pageList => {
-      return dispatch(receiveFetchAllPages(pageList));
-    }).catch(err => {
-      console.log(err);
-    });
+    const pageList = db.getAllPages();
+    return dispatch(receiveFetchAllPages(pageList));
   }
 );
+
+const requestFetchPage = () => ({
+  type: REQUEST_FETCH_PAGE,
+});
+
+const receiveFetchPage = (page: T_CurrentPage) => ({
+  type: RECEIVE_FETCH_PAGE,
+  page,
+});
+
+export const fetchPage = (id: number) => (
+  (dispatch: any) => {
+    dispatch(requestFetchPage());
+    const page = db.loadPageById(id);
+    dispatch(fetchTagsByPage(id));
+    return dispatch(receiveFetchPage(page));
+  }
+)

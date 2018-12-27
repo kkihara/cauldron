@@ -2,10 +2,10 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { addTag } from '../actions';
+import { addTag } from '../actions/tag';
 
 const mapStateToProps = state => ({
-  id: state.currentPage && state.currentPage.id || null
+  id: state.currentPage.pageContents.id || null
 })
 
 const AddTag = ({ id, dispatch }) => {

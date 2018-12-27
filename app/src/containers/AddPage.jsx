@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { newPage } from '../actions';
+import { newPage, putTitle } from '../actions/page';
 
 const AddPage = ({ dispatch }) => {
   let input: { value: any };
@@ -14,10 +14,11 @@ const AddPage = ({ dispatch }) => {
         onSubmit={e => {
           e.preventDefault()
           if (!input.value.trim()) {
-            return
+            return;
           }
-          dispatch(newPage(input.value))
-          input.value = ''
+          const page = dispatch(newPage());
+          dispatch(putTitle(page.id, input.value));
+          input.value = '';
         }}
       >
         <input ref={(node: any) => (input = node)} />
