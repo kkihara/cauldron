@@ -4,7 +4,7 @@ import PageList from '../components/PageList';
 import { fetchPage } from '../actions/page';
 
 const filterPages = state => {
-  return state.pageList.slice();
+  return state.pageList.pageList.slice();
 };
 
 const mapStateToProps = state => ({

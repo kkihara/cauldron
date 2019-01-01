@@ -2,6 +2,7 @@
 
 import React from 'react';
 import thunkMiddleware from 'redux-thunk';
+import logger from 'redux-logger';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import SplitPane from 'react-split-pane';
@@ -16,7 +17,7 @@ import * as actions from './actions';
 
 const store = createStore(
   rootReducer,
-  applyMiddleware(thunkMiddleware)
+  applyMiddleware(thunkMiddleware, logger),
 );
 
 const App = () => {

@@ -1,53 +1,48 @@
 // @flow
 
-const { Database } = require('better-sqlite3');
 // import Database from 'better-sqlite3';
+const sqlite3 = require('sqlite3').verbose();
 import type { T_PageTypes, T_CurrentPage } from '../types';
 
-const DB_PATH = './app_info.sqlite';
+const DB_PATH = ':memory:';
 const PAGE_TABLE_NAME = 'page';
 const TAG_TABLE_NAME = 'tag';
 const PDF_TABLE_NAME = 'pdf';
 
 
-const getDB = () => {
-  const db = new Database(DB_PATH);
+const db = new sqlite3.Database(DB_PATH);
 
-  db.prepare(`
-    CREATE TABLE IF NOT EXISTS ${ PAGE_TABLE_NAME }
-    (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      pageType TEXT NOT NULL,
-      created INTEGER NOT NULL,
-      title TEXT NOT NULL
-    )
-  `).run();
+db.prepare(`
+  CREATE TABLE IF NOT EXISTS ${ PAGE_TABLE_NAME }
+  (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    pageType TEXT NOT NULL,
+    created INTEGER NOT NULL,
+    title TEXT NOT NULL
+  )
+`).run();
 
-  db.prepare(`
-    CREATE TABLE IF NOT EXISTS ${ TAG_TABLE_NAME }
-    (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      pageId INTEGER NOT NULL,
-      content TEXT NOT NULL,
-      FOREIGN KEY(pageId) REFERENCES ${ PAGE_TABLE_NAME }(id)
-      ON DELETE CASCADE ON UPDATE CASCADE
-    )
-  `).run();
+db.prepare(`
+  CREATE TABLE IF NOT EXISTS ${ TAG_TABLE_NAME }
+  (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    pageId INTEGER NOT NULL,
+    content TEXT NOT NULL,
+    FOREIGN KEY(pageId) REFERENCES ${ PAGE_TABLE_NAME }(id)
+    ON DELETE CASCADE ON UPDATE CASCADE
+  )
+`).run();
 
-  db.prepare(`
-    CREATE TABLE IF NOT EXISTS ${ PDF_TABLE_NAME }
-    (
-      id INTEGER PRIMARY KEY,
-      highlights TEXT NOT NULL,
-      content BLOB NOT NULL,
-      FOREIGN KEY(id) REFERENCES ${ PAGE_TABLE_NAME }(id)
-      ON DELETE CASCADE ON UPDATE CASCADE
-    )
-  `).run();
-
-  return db;
-};
-const db = getDB();
+db.prepare(`
+  CREATE TABLE IF NOT EXISTS ${ PDF_TABLE_NAME }
+  (
+    id INTEGER PRIMARY KEY,
+    highlights TEXT NOT NULL,
+    content BLOB NOT NULL,
+    FOREIGN KEY(id) REFERENCES ${ PAGE_TABLE_NAME }(id)
+    ON DELETE CASCADE ON UPDATE CASCADE
+  )
+`).run();
 
 /*
  * Page Table
@@ -66,16 +61,22 @@ export const insertPage = (pageType: T_PageTypes, created: number, title: string
   };
 };
 
-const updatePageStmt = db.prepare(`
+const updateTitleStmt = db.prepare(`
   UPDATE ${ PAGE_TABLE_NAME }
-  SET @col = @title
+  SET title = @title
   WHERE id = @id
 `);
 export const updateTitle = (id: number, title: string) => {
-  updatePageStmt.run({ id, title, col: 'title' });
+  updateTitleStmt.run({ id, title });
 };
+
+const updatePageTypeStmt = db.prepare(`
+  UPDATE ${ PAGE_TABLE_NAME }
+  SET pageType = @pageType
+  WHERE id = @id
+`);
 export const updatePageType = (id: number, pageType: T_PageTypes) => {
-  updatePageStmt.run({ id, pageType, col: 'pageType' });
+  updatePageTypeStmt.run({ id, pageType });
 };
 
 const allPagesStmt = db.prepare(`
@@ -121,16 +122,16 @@ export const getAllTagsByPageId = (pageId: number) => {
  * Pdf Table
  */
 const insertPdfStmt = db.prepare(`
-  INSERT INTO ${ PDF_TABLE_NAME } (id, highlighlights, content)
+  INSERT INTO ${ PDF_TABLE_NAME } (id, highlights, content)
   VALUES (@pageId, @highlights, @content)
 `);
 export const insertPdf = (pageId: number, content: Buffer) => {
-  insertPdfStmt.run({ pageId, content, higlights: '' });
+  insertPdfStmt.run({ pageId, content, highlights: '' });
 };
 
 const updateHighlightsStmt = db.prepare(`
   UPDATE ${ PDF_TABLE_NAME }
-  SET higlights = @higlights
+  SET highlights = @highlights
   WHERE id = @pageId
 `);
 export const updateHighlights = (pageId: number, highlights: string) => {

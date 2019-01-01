@@ -13,10 +13,13 @@ module.exports = {
   output: {
     path: __dirname + '/app/build',
     publicPath: 'build/',
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    libraryTarget: 'commonjs2'
   },
 
-  externals: ['commonjs', 'better-sqlite3'],
+  externals: {
+    'sqlite3': 'commonjs sqlite3'
+  },
 
   module: {
     rules: [
