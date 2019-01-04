@@ -1,7 +1,9 @@
 // @flow
 
 import { connect } from 'react-redux';
-import { setPageTypePdf } from '../actions';
+import { putPageType } from '../actions/page';
+import { uploadPdf } from '../actions/pdf';
+import { pageTypes } from '../types';
 import FilePicker from '../components/FilePicker';
 
 const mapStateToProps = (state, ownProps) => ({
@@ -10,7 +12,10 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  setPath: (id: string) => (fileName: string) => dispatch(setPageTypePdf(id, fileName))
+  setPath: (id: number) => (fileName: string) => {
+    dispatch(putPageType(id, pageTypes.pdf));
+    return dispatch(uploadPdf(id, fileName));
+  }
 })
 
 // TODO: combine id param into setPath()

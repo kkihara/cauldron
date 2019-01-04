@@ -74,7 +74,6 @@ export default class PdfPage extends Component<Props> {
     this.linkService.setViewer(this.viewer);
 
     this.container.addEventListener('mouseup', this.onMouseUp);
-
   }
 
   componentDidUpdate() {

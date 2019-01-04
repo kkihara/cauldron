@@ -1,36 +1,28 @@
 // @flow
 
 export type T_Page = {
-  id: string,
-  pageType: string,
-  created: string,
-  title: string
+  id: number,
+  pageType: T_PageTypes,
+  created: number,
+  title: string,
 };
 
-export type T_PagesById = {
-  [page_id: string]: T_Page
+export type T_Tag = {
+  id: number,
+  pageId: number,
+  content: string,
 };
 
-export type T_TagsById = {
-  [page_id: string]: Array<string>
-};
-
-export type T_Highlight = {
-  id: string,
-  encoded: string
-};
-
-export type T_HighlightsById = {
-  [page_id: string]: T_Highlight
+export type T_PdfContent = {
+  pdf: Buffer,
+  highlights: string,
 }
 
-export type T_PdfPath = {
-  id: string,
-  path: string
-};
-
-export type T_PdfPathsById = {
-  [page_id: string]: T_PdfPath
+export type T_CurrentPage = {
+  id: ?number,
+  title: ?string,
+  pageType: T_PageTypes,
+  content: ?T_PdfContent,
 };
 
 export const pageTypes = {
@@ -39,20 +31,3 @@ export const pageTypes = {
 };
 
 export type T_PageTypes = $Keys<typeof pageTypes>;
-
-export const progressTypes = {
-  loading: 'loading',
-  done: 'done'
-};
-
-export type T_ProgressTypes = $Keys<typeof progressTypes>;
-
-// TODO: can type pageType with contents together
-export type T_CurrentPage = {
-  id: string,
-  progress: T_ProgressTypes,
-  pageType: T_PageTypes,
-  contents: {
-    pdfDocument?: string
-  }
-};

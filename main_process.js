@@ -1,10 +1,9 @@
 // @flow
 
-// Basic init
 const electron = require('electron');
-const path = require('path');
-const url = require('url');
-const { app, BrowserWindow } = electron;
+const { app, BrowserWindow, Menu, MenuItem } = electron;
+
+const DEBUG = true;
 
 // Let electron reloads by itself when webpack watches changes in ./app/
 require('electron-reload')(__dirname);
@@ -13,12 +12,28 @@ require('electron-reload')(__dirname);
 let mainWindow;
 
 const createWindow = () => {
-  mainWindow = new BrowserWindow({width: 800, height: 600});
+  mainWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    devTools: DEBUG
+  });
 
   mainWindow.loadURL(`file://${__dirname}/app/index.html`);
-
-  // open dev tools
   mainWindow.webContents.openDevTools();
+
+  // Menu
+  const menu = new electron.Menu();
+  if (DEBUG) {
+    const menuItem = new electron.MenuItem({
+      label: 'Dev Tools',
+      click: () => mainWindow.webContents.openDevTools()
+    });
+    menu.append(menuItem);
+  }
+
+    mainWindow.webContents.on('context-menu', (e, params) => {
+      menu.popup(mainWindow, params.x, params.y);
+    })
 
   mainWindow.on('closed', () => {
     mainWindow = null;

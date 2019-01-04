@@ -4,25 +4,21 @@ import React from 'react';
 import PdfPageContainer from '../containers/PdfPageContainer';
 import UploadPdf from '../containers/UploadPdf';
 import Loading from './Loading';
-import { pageTypes, progressTypes } from '../types';
+import { pageTypes } from '../types';
 import type { T_CurrentPage } from '../types';
 
 type Props = {
-  currentPage: T_CurrentPage
-}
+  ...T_CurrentPage,
+  isLoading: bool,
+};
 
-const PageViewer = ({ currentPage }: Props) => {
-  if (!currentPage) return null;
+const PageViewer = ({ isLoading, id, title, pageType, content }: Props) => {
+  if (!id) return null;
 
-  const { id, progress, pageType, contents } = currentPage;
-  if (progress == progressTypes.loading) {
+  if (isLoading) {
     return <Loading/>;
-  } else if (progress != progressTypes.done) {
-    // TODO: what should happen on unrecognized progress type?
-    throw new Error('Unrecognized progress type: ' + progress);
   }
 
-  // progress == done
   if (pageType == pageTypes.none) {
     return <UploadPdf id={ id }/>;
   } else if (pageType == pageTypes.pdf) {
@@ -31,10 +27,14 @@ const PageViewer = ({ currentPage }: Props) => {
       //     <PdfPageContainer container={ container }/>
       //   </div>
       // </div>
-    return <PdfPageContainer id={ id } pdfDocument={ contents.pdfDocument }/>;
-  } else {
-    throw new Error('Unrecognized page type: ' + pageType);
+    if (!content || !content.pdf) {
+      throw new Error('PageType is pdf but no contents returned.');
+    }
+    return <PdfPageContainer
+      id={ id }
+      pdf={ content.pdf }
+      highlights={ content.highlights }/>;
   }
-}
+};
 
 export default PageViewer;

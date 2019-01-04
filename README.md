@@ -10,41 +10,32 @@ How to store PDFs?
 ![electron-react-webpack](https://github.com/pastahito/electron-react-webpack)
 
 
-## State
+## Document State
 
+page
 ```
 {
-  pagesById: {
-    <id>: {
-      id: string,
-      pageType: string,
-      created: number,
-      title: string
-    }
-  },
-  tagsById: {
-    <id>: [tag: string]
-  },
-  pdfPathsById: {  # TODO: replace this later with a DB query
-    <id>: {
-      id: string,
-      path: string
-    }
-  },
-  currentPage: {
-    id: string,
-    progress: string,
-    pageType: string,
-    contents: {
-      # PDF
-      pdfDocument: string  # base64 encoded string
-    }
-  },
-  highlightsById: {
-    <id>: {
-      id: string,
-      encoded: string  # serialized string of all highlights for id
-    }
-  }
+  id: number,
+  pageType: string,
+  created: number,
+  title: string,
+}
+```
+
+tags
+```
+{
+  id: number,
+  pageId: number,  # foreign key to page
+  content: string
+}
+```
+
+pdf
+```
+{
+  id: number,          # foreign key to page
+  highlights: ?string, # serialized string of all highlights for id
+  content: blob
 }
 ```

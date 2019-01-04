@@ -1,18 +1,18 @@
 // @flow
 
 import { connect } from 'react-redux';
-import { updatePdfHighlight } from '../actions';
+import { putHighlight } from '../actions/pdf';
 import PdfPage from '../components/PdfPage';
 
 // TODO: valdiate state here?
 const mapStateToProps = (state, ownProps) => ({
+  id: ownProps.id,
   pdfDocument: ownProps.pdfDocument,
-  highlights: state.highlightsById[ownProps.id],
-  id: ownProps.id
+  highlights: ownProps.highlights,
 });
 
 const mapDispatchToProps = dispatch => ({
-  updatePdfHighlight: (id: string) => (encoded: string) => dispatch(updatePdfHighlight(id, encoded))
+  updatePdfHighlight: (id: number) => (encoded: string) => dispatch(putHighlight(id, encoded))
 });
 
 const mergeProps = (propsFromState, propsFromDispatch) => ({
