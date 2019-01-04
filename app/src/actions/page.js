@@ -29,8 +29,12 @@ const receiveNewPage = (page: T_Page) => ({
 export const newPage = () => (
   (dispatch: any) => {
     dispatch(requestNewPage());
-    const page = db.insertPage(pageTypes.none, Date.now(), '');
-    return dispatch(receiveNewPage(page));
+    return db.insertPage(
+      pageTypes.none,
+      Date.now(),
+      '',
+      page => dispatch(receiveNewPage(page)),
+    );
   }
 );
 
@@ -47,8 +51,11 @@ const receivePutTitle = (id: number, title: string) => ({
 export const putTitle = (id: number, title: string) => (
   (dispatch: any) => {
     dispatch(requestPutTitle());
-    const page = db.updateTitle(id, title);
-    return dispatch(receivePutTitle(id, title));
+    db.updateTitle(
+      id,
+      title,
+      () => dispatch(receivePutTitle(id, title)),
+    );
   }
 );
 
@@ -66,8 +73,11 @@ export const putPageType = (id: number, pageType: T_PageTypes) => (
   (dispatch: any) => {
     // TODO: error check current pageType is none
     dispatch(requestPutPageType());
-    db.updatePageType(id, pageType);
-    return dispatch(receivePutPageType(id, pageType));
+    db.updatePageType(
+      id,
+      pageType,
+      () => dispatch(receivePutPageType(id, pageType)),
+    );
   }
 );
 
@@ -83,25 +93,31 @@ const receiveFetchAllPages = (pageList: Array<T_Page>) => ({
 export const fetchAllPages = () => (
   (dispatch: any) => {
     dispatch(requestFetchAllPages());
-    const pageList = db.getAllPages();
-    return dispatch(receiveFetchAllPages(pageList));
+    db.getAllPages(
+      pageList => dispatch(receiveFetchAllPages(pageList))
+    );
   }
 );
 
-const requestFetchPage = () => ({
+const requestFetchPage = (id: number) => ({
   type: REQUEST_FETCH_PAGE,
+  id,
 });
 
 const receiveFetchPage = (page: T_CurrentPage) => ({
   type: RECEIVE_FETCH_PAGE,
-  page,
+  ...page,
 });
 
 export const fetchPage = (id: number) => (
   (dispatch: any) => {
-    dispatch(requestFetchPage());
-    const page = db.loadPageById(id);
-    dispatch(fetchTagsByPage(id));
-    return dispatch(receiveFetchPage(page));
+    dispatch(requestFetchPage(id));
+    db.loadPageById(
+      id,
+      page => {
+        dispatch(fetchTagsByPage(id));
+        dispatch(receiveFetchPage(page));
+      },
+    );
   }
 )

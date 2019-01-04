@@ -24,8 +24,11 @@ const receiveAddTag = (pageId: number, tag: T_Tag) => ({
 export const addTag = (pageId: number, content: string) => (
   (dispatch: any) => {
     dispatch(requestAddTag());
-    const tag = db.insertTag(pageId, content);
-    return dispatch(receiveAddTag(pageId, tag));
+    db.insertTag(
+      pageId,
+      content,
+      tag => dispatch(receiveAddTag(pageId, tag)),
+    );
   }
 );
 
@@ -42,8 +45,11 @@ const receiveDeleteTag = (pageId: number, tagId: number) => ({
 export const deleteTag = (pageId: number, tagId: number) => (
   (dispatch: any) => {
     dispatch(requestDeleteTag());
-    db.deleteTag(pageId, tagId);
-    return dispatch(receiveDeleteTag(pageId, tagId));
+    db.deleteTag(
+      pageId,
+      tagId,
+      () => dispatch(receiveDeleteTag(pageId, tagId)),
+    );
   }
 );
 
@@ -59,8 +65,10 @@ const receiveFetchTagsByPage = (pageId: number, tagList: Array<T_Tag>) => ({
 
 export const fetchTagsByPage = (pageId: number) => (
   (dispatch: any) => {
-    dispatch(requestDeleteTag());
-    const tagList = db.getAllTagsByPageId(pageId);
-    return dispatch(receiveFetchTagsByPage(pageId, tagList));
+    dispatch(requestFetchTagsByPage());
+    db.getAllTagsByPageId(
+      pageId,
+      tagList => dispatch(receiveFetchTagsByPage(pageId, tagList)),
+    );
   }
 );

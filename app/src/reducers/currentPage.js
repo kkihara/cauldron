@@ -87,10 +87,10 @@ const pageContents = (
       return {
         ...state,
         isLoading: false,
-        id: action.page.id,
-        title: action.page.title,
-        pageType: action.page.pageType,
-        content: action.page.content,
+        id: action.id,
+        title: action.title,
+        pageType: action.pageType,
+        content: action.content,
       };
     default:
       return state;

@@ -31,9 +31,14 @@ export const uploadPdf = (id: number, path: string) => (
       pdfDocument.getData()
     }).then(pdfData => {
       // TODO: Does TypedArray need to be converted to Buffer?
-      db.insertPdf(id, pdfData);
-      dispatch(putPageType(id, pageTypes.pdf));
-      dispatch(receiveUploadPdf(id, pdfData));
+      db.insertPdf(
+        id,
+        pdfData,
+        () => {
+          dispatch(putPageType(id, pageTypes.pdf));
+          dispatch(receiveUploadPdf(id, pdfData));
+        },
+      );
     }).catch(err => {
       console.log(err);
     })
@@ -54,7 +59,10 @@ export const putHighlight = (id: number, highlights: string) => (
   (dispatch: any) => {
     dispatch(requestPutHighlight());
 
-    db.updateHighlights(id, highlights);
-    return dispatch(receivePutHighlight(id, highlights));
+    db.updateHighlights(
+      id,
+      highlights,
+      () => dispatch(receivePutHighlight(id, highlights)),
+    );
   }
 );

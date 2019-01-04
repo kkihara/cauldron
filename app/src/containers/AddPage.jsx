@@ -17,7 +17,6 @@ const AddPage = ({ dispatch }) => {
             return;
           }
           const page = dispatch(newPage());
-          dispatch(putTitle(page.id, input.value));
           input.value = '';
         }}
       >
