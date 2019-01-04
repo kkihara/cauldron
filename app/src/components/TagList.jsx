@@ -1,9 +1,10 @@
 // @flow
 
 import React from 'react';
+import type { T_Tag } from '../types';
 
 type Props = {
-  tags: Array<string>;
+  tags: Array<T_Tag>;
 };
 
 const TagList = ({ tags }: Props) => (
@@ -19,7 +20,7 @@ const TagList = ({ tags }: Props) => (
           borderStyle: 'solid',
           padding: '10px'
         }}>
-          { tag }
+          { tag.content }
         </p>
       </li>
     )}
