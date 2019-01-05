@@ -44,7 +44,7 @@ type Props = {
 // export default PdfPage;
 function sleep (time) {
   return new Promise((resolve) => setTimeout(resolve, time));
-}
+};
 
 export default class PdfPage extends Component<Props> {
 
@@ -92,6 +92,7 @@ export default class PdfPage extends Component<Props> {
       // }
 
       // TODO: fix this hack.
+      // https://github.com/mozilla/pdf.js/blob/42b7bb47511ca30e55a41c653c6bdc9d841bfb4b/web/base_viewer.js
       // sleep for 1 second and then render highlight since
       // the text layer gets render asynchronously.
       sleep(1000).then(function() { this.renderHighlights() }.bind(this));
