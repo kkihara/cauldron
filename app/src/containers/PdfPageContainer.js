@@ -7,7 +7,7 @@ import PdfPage from '../components/PdfPage';
 // TODO: valdiate state here?
 const mapStateToProps = (state, ownProps) => ({
   id: ownProps.id,
-  pdfDocument: ownProps.pdfDocument,
+  pdfBuffer: ownProps.pdfBuffer,
   highlights: ownProps.highlights,
 });
 
@@ -16,7 +16,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mergeProps = (propsFromState, propsFromDispatch) => ({
-  pdfDocument: propsFromState.pdfDocument,
+  pdfBuffer: propsFromState.pdfBuffer,
   highlights: propsFromState.highlights,
   updatePdfHighlight: propsFromDispatch.updatePdfHighlight(propsFromState.id)
 });

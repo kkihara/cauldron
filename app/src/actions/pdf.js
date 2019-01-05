@@ -28,20 +28,22 @@ export const uploadPdf = (id: number, path: string) => (
     dispatch(requestUploadPdf());
 
     pdfjs.getDocument(path).then(pdfDocument => {
-      pdfDocument.getData()
+      return pdfDocument.getData();
     }).then(pdfData => {
-      // TODO: Does TypedArray need to be converted to Buffer?
+      console.log('pdfdata', pdfData);
       db.insertPdf(
         id,
         pdfData,
         () => {
-          dispatch(putPageType(id, pageTypes.pdf));
+          // TODO: how to await this dispatch?
           dispatch(receiveUploadPdf(id, pdfData));
         },
       );
+    }).then(() => {
+      dispatch(putPageType(id, pageTypes.pdf));
     }).catch(err => {
       console.log(err);
-    })
+    });
   }
 );
 

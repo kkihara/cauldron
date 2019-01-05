@@ -86,7 +86,7 @@ const requestFetchAllPages = () => ({
 });
 
 const receiveFetchAllPages = (pageList: Array<T_Page>) => ({
-  type: RECEIVE_PUT_PAGETYPE,
+  type: RECEIVE_FETCH_ALL_PAGES,
   pageList: pageList,
 });
 

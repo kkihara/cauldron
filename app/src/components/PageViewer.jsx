@@ -22,17 +22,14 @@ const PageViewer = ({ isLoading, id, title, pageType, content }: Props) => {
   if (pageType == pageTypes.none) {
     return <UploadPdf id={ id }/>;
   } else if (pageType == pageTypes.pdf) {
-      // <div ref={ container }>
-      //   <div id='viewer'>
-      //     <PdfPageContainer container={ container }/>
-      //   </div>
-      // </div>
     if (!content || !content.pdf) {
-      throw new Error('PageType is pdf but no contents returned.');
+      // throw new Error('PageType is pdf but no contents returned.');
+      console.log('PageType is pdf but no contents returned.');
+      return <Loading/>;
     }
     return <PdfPageContainer
       id={ id }
-      pdf={ content.pdf }
+      pdfBuffer={ content.pdf }
       highlights={ content.highlights }/>;
   }
 };

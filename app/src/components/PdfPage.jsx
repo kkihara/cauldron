@@ -1,6 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
+import pdfjs from 'pdfjs-dist/webpack';
 import { PDFViewer, PDFLinkService } from "pdfjs-dist/web/pdf_viewer";
 import rangy from 'rangy';
 import 'rangy/lib/rangy-classapplier';
@@ -15,7 +16,7 @@ const clearContainer = (container: HTMLElement) => {
 }
 
 type Props = {
-  pdfDocument: string,
+  pdfBuffer: string,
   highlights: string,
   updatePdfHighlight: any
 }
@@ -41,6 +42,9 @@ type Props = {
 // };
 // 
 // export default PdfPage;
+function sleep (time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
 
 export default class PdfPage extends Component<Props> {
 
@@ -58,28 +62,44 @@ export default class PdfPage extends Component<Props> {
     updatePdfHighlight(this.highlighter.serialize());
   }
 
+  renderHighlights() {
+    const { highlights } = this.props;
+    console.log('renderhighlights', highlights);
+    if (highlights !== '') {
+      this.highlighter.removeAllHighlights();
+      this.highlighter.deserialize(highlights);
+    }
+  }
+
   componentDidMount() {
-    const { pdfDocument } = this.props;
+    const { pdfBuffer, highlights } = this.props;
+    pdfjs.getDocument(pdfBuffer).then(pdfDocument => {
+      this.linkService = new PDFLinkService();
+        // enhanceTextSelection: true,
+      this.viewer = new PDFViewer({
+        container: this.container,
+        removePageBorders: true,
+        linkService: this.linkService
+      });
 
-    this.linkService = new PDFLinkService();
-      // enhanceTextSelection: true,
-    this.viewer = new PDFViewer({
-      container: this.container,
-      removePageBorders: true,
-      linkService: this.linkService
+      this.viewer.setDocument(pdfDocument);
+      this.linkService.setDocument(pdfDocument);
+      this.linkService.setViewer(this.viewer);
+
+      this.container.addEventListener('mouseup', this.onMouseUp);
+      // while (this.viewer._pages.length != pdfDocument.numPages) {
+      //   console.log(this.viewer._pages.length, pdfDocument.numPages);
+      // }
+
+      // TODO: fix this hack.
+      // sleep for 1 second and then render highlight since
+      // the text layer gets render asynchronously.
+      sleep(1000).then(function() { this.renderHighlights() }.bind(this));
     });
-
-    this.viewer.setDocument(pdfDocument);
-    this.linkService.setDocument(pdfDocument);
-    this.linkService.setViewer(this.viewer);
-
-    this.container.addEventListener('mouseup', this.onMouseUp);
   }
 
   componentDidUpdate() {
-    const { highlights } = this.props;
-    this.highlighter.removeAllHighlights();
-    this.highlighter.deserialize(highlights.encoded);
+    this.renderHighlights();
   }
 
   componentWillUnmount() {
