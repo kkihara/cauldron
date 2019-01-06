@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react';
+import moment from 'moment';
 import type { T_Page } from '../types';
 
 type Props = {
@@ -9,9 +10,10 @@ type Props = {
 }
 
 const PageSelector = ({ id, pageType, created, title, onClick }: Props) => (
-  <li onClick={ onClick }>
-    { created } | { title }
-  </li>
+  <tr onClick={ onClick }>
+    <td>{ moment({ created }).format('YYYY-MM-DD HH:mm') }</td>
+    <td>{ title }</td>
+  </tr>
 );
 
 export default PageSelector;

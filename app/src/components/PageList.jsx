@@ -3,6 +3,7 @@
 import React from 'react';
 import PageSelector from './PageSelector';
 import type { T_Page } from '../types';
+import './PageList.css';
 
 type Props = {
   pages: Array<T_Page>;
@@ -10,18 +11,26 @@ type Props = {
 };
 
 const PageList = ({ pages, setPage }: Props) => (
-  <ul>
-    {pages.map(page => (
-      <PageSelector
-        key={ page.id }
-        id={ page.id }
-        pageType={ page.pageType }
-        created={ page.created }
-        title={ page.title }
-        onClick={ () => setPage(page.id) }
-      />
-    ))}
-  </ul>
+  <table>
+    <thead>
+      <tr>
+        <th>Created</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      {pages.map(page => (
+        <PageSelector
+          key={ page.id }
+          id={ page.id }
+          pageType={ page.pageType }
+          created={ page.created }
+          title={ page.title }
+          onClick={ () => setPage(page.id) }
+        />
+      ))}
+    </tbody>
+  </table>
 );
 
 export default PageList;

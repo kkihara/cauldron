@@ -1,0 +1,14 @@
+:global table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+:global td, :global th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+:global tr:nth-child(even) {
+  background-color: #eeeeee;
+}
