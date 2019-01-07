@@ -3,10 +3,12 @@
 const electron = require('electron');
 const { app, BrowserWindow, Menu, MenuItem } = electron;
 
-const DEBUG = true;
+const DEBUG = process.env.NODE_ENV == 'development';
 
 // Let electron reloads by itself when webpack watches changes in ./app/
-require('electron-reload')(__dirname);
+if (DEBUG) {
+  require('electron-reload')(__dirname);
+}
 
 // To avoid being garbage collected
 let mainWindow;
@@ -19,11 +21,11 @@ const createWindow = () => {
   });
 
   mainWindow.loadURL(`file://${__dirname}/app/index.html`);
-  mainWindow.webContents.openDevTools();
 
   // Menu
   const menu = new electron.Menu();
   if (DEBUG) {
+    mainWindow.webContents.openDevTools();
     const menuItem = new electron.MenuItem({
       label: 'Dev Tools',
       click: () => mainWindow.webContents.openDevTools()

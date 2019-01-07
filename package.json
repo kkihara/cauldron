@@ -6,9 +6,20 @@
   "scripts": {
     "bundle": "webpack --mode development",
     "serve": "electron .",
-    "start": "npm-run-all --parallel bundle serve",
+    "start": "cross-env NODE_ENV=development npm-run-all --parallel bundle serve",
     "flow": "flow",
-    "postinstall": "electron-builder install-app-deps"
+    "postinstall": "electron-builder install-app-deps",
+    "release": "electron-builder build --publish never"
+  },
+  "build": {
+    "appId": "com.kkihara.paper",
+    "files": [
+      "app/build/*",
+      "node_modules/**/*",
+      "main_process.js",
+      "app/index.html",
+      "package.json"
+    ]
   },
   "author": "Kenneth Kihara",
   "repository": "kkihara/paper-app",
@@ -18,6 +29,7 @@
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
+    "cross-env": "^5.2.0",
     "css-loader": "^0.28.10",
     "electron": "^1.8.2",
     "electron-builder": "^20.38.4",
