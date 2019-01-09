@@ -8,6 +8,7 @@ import 'rangy/lib/rangy-classapplier';
 import 'rangy/lib/rangy-highlighter';
 import 'rangy/lib/rangy-serializer';
 import './pdf_viewer.css';
+import PdfController from './PdfController';
 
 const clearContainer = (container: HTMLElement) => {
   while (container.lastChild) {
@@ -96,6 +97,7 @@ export default class PdfPage extends Component<Props> {
       // sleep for 1 second and then render highlight since
       // the text layer gets render asynchronously.
       sleep(1000).then(function() { this.renderHighlights() }.bind(this));
+      // this.container.appendChild(<PdfController/>);
     });
   }
 
@@ -110,7 +112,7 @@ export default class PdfPage extends Component<Props> {
   render() {
     return (
       <div ref={ node => this.container = node }>
-        <div id='viewer'></div>
+        <div id='viewer'><PdfController/></div>
       </div>
     )
   }
