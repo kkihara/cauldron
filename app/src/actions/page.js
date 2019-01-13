@@ -26,13 +26,13 @@ const receiveNewPage = (page: T_Page) => ({
   page,
 });
 
-export const newPage = () => (
+export const newPage = (title: string = '<Untitled>') => (
   (dispatch: any) => {
     dispatch(requestNewPage());
     return db.insertPage(
       pageTypes.none,
       Date.now(),
-      '',
+      title,
       page => dispatch(receiveNewPage(page)),
     );
   }

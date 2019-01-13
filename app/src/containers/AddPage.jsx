@@ -16,7 +16,7 @@ const AddPage = ({ dispatch }) => {
           if (!input.value.trim()) {
             return;
           }
-          const page = dispatch(newPage());
+          const page = dispatch(newPage(input.value));
           input.value = '';
         }}
       >
