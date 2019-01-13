@@ -30,7 +30,6 @@ export const uploadPdf = (id: number, path: string) => (
     pdfjs.getDocument(path).then(pdfDocument => {
       return pdfDocument.getData();
     }).then(pdfData => {
-      console.log('pdfdata', pdfData);
       db.insertPdf(
         id,
         pdfData,
