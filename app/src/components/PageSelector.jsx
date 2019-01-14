@@ -9,11 +9,14 @@ type Props = {
   onClick: any
 }
 
-const PageSelector = ({ id, pageType, created, title, onClick }: Props) => (
-  <tr onClick={ onClick }>
-    <td>{ moment({ created }).format('YYYY-MM-DD HH:mm') }</td>
-    <td>{ title }</td>
-  </tr>
-);
+const PageSelector = ({ id, pageType, created, title, onClick }: Props) => {
+  const createdStr = moment(created).format('YYYY-MM-DD HH:mm');
+  return (
+    <tr onClick={ onClick }>
+      <td>{ createdStr }</td>
+      <td>{ title }</td>
+    </tr>
+  );
+};
 
 export default PageSelector;
