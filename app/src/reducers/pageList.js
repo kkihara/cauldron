@@ -5,6 +5,8 @@ import {
   RECEIVE_NEW_PAGE,
   REQUEST_FETCH_ALL_PAGES,
   RECEIVE_FETCH_ALL_PAGES,
+  REQUEST_PUT_TITLE,
+  RECEIVE_PUT_TITLE,
 } from '../actions';
 import type { T_Page } from '../types'
 
@@ -33,6 +35,16 @@ const pageList = (
       return {
         ...state,
         pageList: state.pageList.concat([page]),
+      };
+    case RECEIVE_PUT_TITLE:
+      return {
+        ...state,
+        pageList: state.pageList.map(page => {
+          if (page.id == action.id) {
+            page.title = action.title;
+          }
+          return page;
+        })
       };
     default:
       return state;

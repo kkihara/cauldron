@@ -8,30 +8,61 @@ import { pageTypes } from '../types';
 import type { T_CurrentPage } from '../types';
 
 type Props = {
-  ...T_CurrentPage,
+  page: T_CurrentPage,
+  setTitle: any,
   isLoading: bool,
 };
 
-const PageViewer = ({ isLoading, id, title, pageType, content }: Props) => {
-  if (!id) return null;
+const PageViewer = ({ page, setTitle, isLoading }: Props) => {
+  if (!page.id) {
+    return null;
+  }
 
+  let pageContents;
   if (isLoading) {
-    return <Loading/>;
+    pageContents = <Loading/>;
+  } else if (page.pageType == pageTypes.none) {
+    pageContents = <UploadPdf id={ page.id }/>;
+  } else if (page.pageType == pageTypes.pdf) {
+    if (!page.content || !page.content.pdf) {
+      console.log('PageType is pdf but no contents returned.');
+      pageContents = <Loading/>;
+    }
+    else {
+      pageContents = (
+        <PdfPageContainer
+          id={ page.id }
+          pdfBuffer={ page.content.pdf }
+          highlights={ page.content.highlights }
+        />
+      );
+    }
   }
 
-  if (pageType == pageTypes.none) {
-    return <UploadPdf id={ id }/>;
-  } else if (pageType == pageTypes.pdf) {
-    if (!content || !content.pdf) {
-      // throw new Error('PageType is pdf but no contents returned.');
-      console.log('PageType is pdf but no contents returned.');
-      return <Loading/>;
-    }
-    return <PdfPageContainer
-      id={ id }
-      pdfBuffer={ content.pdf }
-      highlights={ content.highlights }/>;
-  }
+  // let timeout = null;
+  // let title = page.title;
+  const TITLE_TIMEOUT = 500;
+  return (
+    <div>
+      <input
+        type='text'
+        value={ page.title }
+        onChange={ evt => {
+          // TODO: set delay. currently the input value
+          // does not update until after the timeout.
+          // if (timeout) clearTimeout(timeout);
+          // title = evt.target.value;
+          // timeout = setTimeout(() => {
+          //   setTitle(page.id, title);
+          // }, TITLE_TIMEOUT);
+          setTitle(page.id, evt.target.value);
+        }}
+      />
+      <div>
+        { pageContents }
+      </div>
+    </div>
+  );
 };
 
 export default PageViewer;
