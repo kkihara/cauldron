@@ -22,21 +22,6 @@ const createWindow = () => {
 
   mainWindow.loadURL(`file://${__dirname}/app/index.html`);
 
-  // Menu
-  const menu = new electron.Menu();
-  if (DEBUG) {
-    mainWindow.webContents.openDevTools();
-    const menuItem = new electron.MenuItem({
-      label: 'Dev Tools',
-      click: () => mainWindow.webContents.openDevTools()
-    });
-    menu.append(menuItem);
-  }
-
-    mainWindow.webContents.on('context-menu', (e, params) => {
-      menu.popup(mainWindow, params.x, params.y);
-    })
-
   mainWindow.on('closed', () => {
     mainWindow = null;
   });

@@ -12,6 +12,7 @@ import AddPage from './containers/AddPage';
 import AddTag from './containers/AddTag';
 import TagListContainer from './containers/TagListContainer';
 import rootReducer from './reducers';
+import { createContextMenu } from './menu';
 import './App.css';
 import * as actions from './actions';
 
@@ -19,6 +20,8 @@ const store = createStore(
   rootReducer,
   applyMiddleware(thunkMiddleware, logger),
 );
+
+createContextMenu(store);
 
 const App = () => {
 
