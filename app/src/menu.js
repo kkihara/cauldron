@@ -1,6 +1,7 @@
 // @flow
 
 import { remote } from 'electron';
+import { deletePage } from './actions/page';
 const { Menu, MenuItem } = remote;
 
 const DEBUG = process.env.NODE_ENV == 'development';
@@ -11,34 +12,52 @@ type MenuInfo = {
   check: (MenuItem, MouseEvent) => bool,
 }
 
-const menuInfos: Array<MenuInfo> = [
-  {
-    item: new MenuItem({
-      label: 'Dev Tools',
-      click: () => mainWindow.webContents.openDevTools()
-    }),
-    check: (menuItem, evt) => {
-      return DEBUG;
-    }
-  },
-  {
-    item: new MenuItem({
-      label: 'Delete Page',
-      click: () => {
-        console.log('delete page');
-      }
-    }),
-    check: (menuItem, evt) => {
-      return (
-        evt.currentTarget.classList.contains('pageSelector') ||
-        evt.currentTarget.parentElement.classList.contains('pageSelector'));
-    }
-  }
-];
-
 export const createContextMenu = (store: any) => {
   const menu = new Menu();
   mainWindow.webContents.openDevTools();
+
+  let deleteId;
+  const menuInfos: Array<MenuInfo> = [
+    // dev tools
+    {
+      item: new MenuItem({
+        label: 'Dev Tools',
+        click: () => mainWindow.webContents.openDevTools(),
+      }),
+      check: (menuItem, evt) => {
+        return DEBUG;
+      }
+    },
+    // delete page
+    {
+      item: new MenuItem({
+        label: 'Delete Page',
+        click: (menuItem, browserWindow, event) => {
+          // FIXME: kinda hacky. deleteId will be set in check().
+          if (deleteId !== null) {
+            store.dispatch(deletePage(Number(deleteId)));
+            deleteId = null;
+          }
+        },
+      }),
+      check: (menuItem, evt) => {
+        const target = evt.target;
+        if (target instanceof HTMLElement) {
+          if (target.classList.contains('pageSelector')) {
+            deleteId = target.id;
+            return true;
+          }
+
+          if (target.parentElement instanceof HTMLElement &&
+              target.parentElement.classList.contains('pageSelector')) {
+            deleteId = target.parentElement.id;
+            return true;
+          } 
+        }
+        return false;
+      }
+    }
+  ];
 
   menuInfos.map(menuInfo => {
     menu.append(menuInfo.item);

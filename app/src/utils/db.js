@@ -59,19 +59,34 @@ export const insertPage = (
   $title: string,
   callback: ((page: T_Page) => void) = page => {}
 ) => {
-    const resultToPage = result => ({
-      id: result.lastID,
-      pageType: $pageType,
-      created: $created,
-      title: $title,
-    });
+  const resultToPage = result => ({
+    id: result.lastID,
+    pageType: $pageType,
+    created: $created,
+    title: $title,
+  });
   insertPageStmt.run({ $pageType, $created, $title }, function(err) {
     if (err) {
       return console.log(err);
     }
     const page = resultToPage(this);
     callback(page);
-    return page;
+  });
+};
+
+const deletePageStmt = db.prepare(`
+  DELETE FROM ${ PAGE_TABLE_NAME }
+  WHERE id = $id
+`);
+export const deletePage = (
+  $id: number,
+  callback: (() => void) = () => {}
+) => {
+  deletePageStmt.run({ $id }, function(err) {
+    if (err) {
+      return console.log(err);
+    }
+    callback();
   });
 };
 

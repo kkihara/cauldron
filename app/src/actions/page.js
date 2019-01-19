@@ -3,6 +3,8 @@
 import {
   REQUEST_NEW_PAGE,
   RECEIVE_NEW_PAGE,
+  REQUEST_DELETE_PAGE,
+  RECEIVE_DELETE_PAGE,
   REQUEST_PUT_TITLE,
   RECEIVE_PUT_TITLE,
   REQUEST_PUT_PAGETYPE,
@@ -34,6 +36,25 @@ export const newPage = (title: string = '<Untitled>') => (
       Date.now(),
       title,
       page => dispatch(receiveNewPage(page)),
+    );
+  }
+);
+
+const requestDeletePage = () => ({
+  type: REQUEST_DELETE_PAGE,
+});
+
+const receiveDeletePage = (id: number) => ({
+  type: RECEIVE_DELETE_PAGE,
+  id,
+});
+
+export const deletePage = (id: number) => (
+  (dispatch: any) => {
+    dispatch(requestDeletePage());
+    db.deletePage(
+      id,
+      () => dispatch(receiveDeletePage(id)),
     );
   }
 );

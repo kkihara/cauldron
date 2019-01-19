@@ -12,7 +12,7 @@ type Props = {
 const PageSelector = ({ id, pageType, created, title, onClick }: Props) => {
   const createdStr = moment(created).format('YYYY-MM-DD HH:mm');
   return (
-    <tr className='pageSelector' onClick={ onClick }>
+    <tr id={ id } className='pageSelector' onClick={ onClick }>
       <td>{ createdStr }</td>
       <td>{ title }</td>
     </tr>
