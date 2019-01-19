@@ -1,16 +1,44 @@
 // @flow
 
 import React from 'react';
-import PageSelector from './PageSelector';
+import moment from 'moment';
 import type { T_Page } from '../types';
-import './PageList.css';
+import styles from './PageList.css';
 
-type Props = {
+type SelectorProps = {
+  ...T_Page,
+  setPage: any
+}
+
+const PageSelector = ({ id, pageType, created, title, setPage }: SelectorProps) => {
+  const createdStr = moment(created).format('YYYY-MM-DD HH:mm');
+  return (
+    <tr
+      id={ id }
+      className='pageSelector'
+    onClick={ evt => {
+      // clear selectedPage
+      [...document.getElementsByClassName('selectedPage')].forEach(elem =>
+        elem.classList.remove('selectedPage')
+      );
+      // add selectedPage to this element
+      document.getElementById(id.toString()).classList.add('selectedPage');
+      setPage();
+    }}
+    >
+      <td>{ createdStr }</td>
+      <td>{ title }</td>
+    </tr>
+  );
+};
+
+type ListProps = {
   pages: Array<T_Page>;
   setPage: any;
 };
 
-const PageList = ({ pages, setPage }: Props) => (
+
+const PageList = ({ pages, setPage }: ListProps) => (
   <table>
     <thead>
       <tr>
@@ -26,7 +54,7 @@ const PageList = ({ pages, setPage }: Props) => (
           pageType={ page.pageType }
           created={ page.created }
           title={ page.title }
-          onClick={ () => setPage(page.id) }
+          setPage={ () => setPage(page.id) }
         />
       ))}
     </tbody>

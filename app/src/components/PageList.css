@@ -1,6 +1,8 @@
 :global table {
   border-collapse: collapse;
   width: 100%;
+  user-select: none;
+  cursor: default;
 }
 
 :global td, :global th {
@@ -11,4 +13,12 @@
 
 :global tr:nth-child(even) {
   background-color: #eeeeee;
+}
+
+:global(.pageSelector) {
+  user-select: none;
+}
+
+:global(.selectedPage) {
+  background-color: #e0ffff;
 }

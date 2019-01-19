@@ -3,6 +3,7 @@
 import { remote } from 'electron';
 import { deletePage } from './actions/page';
 const { Menu, MenuItem } = remote;
+import pageListStyle from './components/PageList.css';
 
 const DEBUG = process.env.NODE_ENV == 'development';
 const mainWindow = remote.getCurrentWindow();
