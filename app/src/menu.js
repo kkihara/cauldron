@@ -24,14 +24,14 @@ const menuInfos: Array<MenuInfo> = [
   {
     item: new MenuItem({
       label: 'Delete Page',
-      click: (evt: MouseEvent) => {
+      click: () => {
         console.log('delete page');
       }
     }),
     check: (menuItem, evt) => {
       return (
-        evt.target.classList.contains('pageSelector') ||
-        evt.target.parentElement.classList.contains('pageSelector'));
+        evt.currentTarget.classList.contains('pageSelector') ||
+        evt.currentTarget.parentElement.classList.contains('pageSelector'));
     }
   }
 ];
