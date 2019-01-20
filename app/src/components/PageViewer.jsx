@@ -2,6 +2,7 @@
 
 import React from 'react';
 import PdfPageContainer from '../containers/PdfPageContainer';
+import DelayDispatchInput from '../components/DelayDispatchInput';
 import UploadPdf from '../containers/UploadPdf';
 import Loading from './Loading';
 import { pageTypes } from '../types';
@@ -39,29 +40,13 @@ const PageViewer = ({ page, setTitle, isLoading }: Props) => {
     }
   }
 
-  // let timeout = null;
-  // let title = page.title;
-  const TITLE_TIMEOUT = 500;
   return (
-    <div>
-      <input
-        type='text'
-        value={ page.title }
-        onChange={ evt => {
-          // TODO: set delay. currently the input value
-          // does not update until after the timeout.
-          // if (timeout) clearTimeout(timeout);
-          // title = evt.target.value;
-          // timeout = setTimeout(() => {
-          //   setTitle(page.id, title);
-          // }, TITLE_TIMEOUT);
-          setTitle(page.id, evt.target.value);
-        }}
-      />
-      <div>
-        { pageContents }
-      </div>
-    </div>
+    <DelayDispatchInput
+      timeoutLength={ 500 }
+      dispatchFn={ (input: string) => (
+        setTitle(page.id, input)
+      )}
+    />
   );
 };
 

@@ -3,6 +3,7 @@
 /*
  * Page Types
  */
+export const SEARCH_PAGE = 'SEARCH_PAGE';
 export const REQUEST_NEW_PAGE = 'REQUEST_NEW_PAGE';
 export const RECEIVE_NEW_PAGE = 'RECEIVE_NEW_PAGE';
 export const REQUEST_DELETE_PAGE = 'REQUEST_DELETE_PAGE';

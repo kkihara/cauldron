@@ -9,6 +9,7 @@ import SplitPane from 'react-split-pane';
 import PageViewerContainer from './containers/PageViewerContainer';
 import FilteredPageList from './containers/FilteredPageList';
 import AddPage from './containers/AddPage';
+import SearchPages from './containers/SearchPages';
 import AddTag from './containers/AddTag';
 import TagListContainer from './containers/TagListContainer';
 import rootReducer from './reducers';
@@ -34,7 +35,10 @@ const App = () => {
             defaultSize={ 100 }
             pane2Style={{ overflow: 'auto' }}
         >
-          <div><AddPage/></div>
+          <div>
+            <AddPage/>
+            <SearchPages/>
+          </div>
           <div><FilteredPageList/></div>
         </SplitPane>
         <SplitPane

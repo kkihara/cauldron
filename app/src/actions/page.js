@@ -13,6 +13,7 @@ import {
   RECEIVE_FETCH_ALL_PAGES,
   REQUEST_FETCH_PAGE,
   RECEIVE_FETCH_PAGE,
+  SEARCH_PAGE,
 } from './';
 import { fetchTagsByPage } from '../actions/tag';
 import { pageTypes } from '../types';
@@ -141,4 +142,9 @@ export const fetchPage = (id: number) => (
       },
     );
   }
-)
+);
+
+export const searchPages = (query: string) => ({
+  type: SEARCH_PAGE,
+  query
+});
