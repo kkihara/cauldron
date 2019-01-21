@@ -4,9 +4,14 @@
  * TODO: ERROR IF INSERT RETURNS ERR OR NULL ID
  */
 const sqlite3 = require('sqlite3').verbose();
+import { remote } from 'electron';
+import path from 'path';
 import type { T_Page, T_PageTypes, T_CurrentPage, T_Tag } from '../types';
 
-const DB_PATH = ':memory:';
+const PROD_PATH = path.join(remote.app.getAppPath(), 'app.db');
+console.log(PROD_PATH);
+const DEV_PATH = ':memory:';
+const DB_PATH = process.env.NODE_ENV == 'development' ? DEV_PATH : PROD_PATH;
 const PAGE_TABLE_NAME = 'page';
 const TAG_TABLE_NAME = 'tag';
 const PDF_TABLE_NAME = 'pdf';

@@ -15,7 +15,6 @@ type MenuInfo = {
 
 export const createContextMenu = (store: any) => {
   const menu = new Menu();
-  mainWindow.webContents.openDevTools();
 
   let deleteId;
   const menuInfos: Array<MenuInfo> = [
@@ -65,7 +64,6 @@ export const createContextMenu = (store: any) => {
   });
 
   document.addEventListener('contextmenu', (evt: MouseEvent) => {
-    console.log(evt);
     menuInfos.map(menuInfo => {
       const menuItem = menuInfo.item;
       menuItem.visible = menuInfo.check(menuItem, evt);
