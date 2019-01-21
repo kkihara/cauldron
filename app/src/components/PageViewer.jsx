@@ -41,12 +41,15 @@ const PageViewer = ({ page, setTitle, isLoading }: Props) => {
   }
 
   return (
-    <DelayDispatchInput
-      timeoutLength={ 500 }
-      dispatchFn={ (input: string) => (
-        setTitle(page.id, input)
-      )}
-    />
+    <div>
+      <DelayDispatchInput
+        timeoutLength={ 500 }
+        dispatchFn={ (input: string) => (
+          setTitle(page.id, input)
+        )}
+      />
+      { pageContents }
+    </div>
   );
 };
 
