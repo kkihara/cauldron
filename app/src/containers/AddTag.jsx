@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { addTag } from '../actions/tag';
 
 const mapStateToProps = state => ({
-  id: state.currentPage.pageContents.id || null
+  id: state.currentPage.id || null
 })
 
 const AddTag = ({ id, dispatch }) => {

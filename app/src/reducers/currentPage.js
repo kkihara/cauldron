@@ -1,6 +1,5 @@
 // @flow
 
-import { combineReducers } from 'redux';
 import {
   REQUEST_PUT_TITLE,
   RECEIVE_PUT_TITLE,
@@ -12,15 +11,9 @@ import {
   RECEIVE_PUT_HIGHLIGHTS,
   REQUEST_FETCH_PAGE,
   RECEIVE_FETCH_PAGE,
-  REQUEST_ADD_TAG,
-  RECEIVE_ADD_TAG,
-  REQUEST_DELETE_TAG,
-  RECEIVE_DELETE_TAG,
-  REQUEST_FETCH_TAGS_BY_PAGE,
-  RECEIVE_FETCH_TAGS_BY_PAGE,
 } from '../actions';
 import { pageTypes } from '../types';
-import type { T_CurrentPage, T_Tag } from '../types';
+import type { T_CurrentPage } from '../types';
 
 type PageState = {
   ...T_CurrentPage,
@@ -97,49 +90,4 @@ const pageContents = (
   }
 };
 
-type tagListState = {
-  pageId: ?number,
-  tagList: Array<T_Tag>,
-};
-
-const intialTagListState = {
-  pageId: null,
-  tagList: [],
-};
-
-const tagList = (
-  state: tagListState = intialTagListState,
-  action: any,
-): tagListState => {
-  switch (action.type) {
-    case RECEIVE_ADD_TAG:
-      if (action.pageId != state.pageId) return state;
-      const tagList = state.tagList.slice();
-      tagList.push(action.tag);
-      return {
-        ...state,
-        tagList,
-      };
-    case RECEIVE_DELETE_TAG:
-      if (action.pageId != state.pageId) return state;
-      return {
-        ...state,
-        tagList: state.tagList.filter(
-          tag => tag.id != action.tagId
-        )
-      };
-    case RECEIVE_FETCH_TAGS_BY_PAGE:
-      if (action.pageId == state.pageId) return state;
-      return {
-        pageId: action.pageId,
-        tagList: action.tagList.slice(),
-      };
-    default:
-      return state;
-  }
-};
-
-export default combineReducers({
-  pageContents,
-  tagList,
-});
+export default pageContents;

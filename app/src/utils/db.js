@@ -187,7 +187,7 @@ export const deleteTag = (
   });
 };
 
-const allTagsStmt = db.prepare(`
+const tagsByPageStmt = db.prepare(`
   SELECT * FROM ${ TAG_TABLE_NAME }
   WHERE pageId = $pageId
 `);
@@ -195,12 +195,30 @@ export const getAllTagsByPageId = (
   $pageId: number,
   callback: ((tagList: Array<T_Tag>) => void) = tagList => {},
 ) => {
-  allTagsStmt.all({ $pageId }, (err, rows) => {
+  tagsByPageStmt.all({ $pageId }, (err, rows) => {
     if (err) {
       return console.log(err);
     }
     callback(rows);
   });
+};
+
+const allTagsStmt = db.prepare(`
+  SELECT * FROM ${ TAG_TABLE_NAME }
+`);
+export const getAllTags = (
+  callback: ((allTags: { [id: number]: Array<T_Tag> }) => void) = allTags => {},
+) => {
+  allTagsStmt.all({}, (err, rows) => {
+    if (err) {
+      return console.log(err);
+    }
+    const allTags = {};
+    rows.map(row => {
+      allTags[row.pageId] = row;
+    });
+    callback(allTags);
+  })
 };
 
 /*
