@@ -1,7 +1,7 @@
 {
-  "name": "paper-app",
-  "version": "1.0.0",
-  "description": "App to annotate papers",
+  "name": "Cauldron",
+  "version": "0.0.1",
+  "description": "App to annotating PDFs",
   "main": "main_process.js",
   "scripts": {
     "bundle": "webpack --mode development",
@@ -13,7 +13,7 @@
     "release": "electron-builder build --publish never"
   },
   "build": {
-    "appId": "com.kkihara.paper",
+    "appId": "com.kkihara.cauldron",
     "files": [
       "app/build/*",
       "node_modules/**/*",
@@ -23,8 +23,7 @@
     ]
   },
   "author": "Kenneth Kihara",
-  "repository": "kkihara/paper-app",
-  "license": "WTFPL",
+  "repository": "kkihara/cauldron",
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
