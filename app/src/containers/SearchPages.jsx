@@ -10,6 +10,9 @@ const SearchPages = ({ dispatch }: any) => {
   let input: { value: string };
   return (
     <DelayDispatchInput
+      id='search-bar'
+      initialValue=''
+      placeholder='Search pages'
       timeoutLength={ 500 }
       dispatchFn={ (input: string) => (
       dispatch(searchPages(input))

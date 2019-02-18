@@ -40,9 +40,14 @@ const PageViewer = ({ page, setTitle, isLoading }: Props) => {
     }
   }
 
+  console.log('pageviewer', page.title)
+
   return (
     <div>
       <DelayDispatchInput
+        id='edit-page-title'
+        initialValue={ (page.title) ? page.title : '' }
+        placeholder=''
         timeoutLength={ 500 }
         dispatchFn={ (input: string) => (
           setTitle(page.id, input)

@@ -3,21 +3,40 @@
 import React, { Component } from 'react';
 
 type Props = {
+  id: string,
+  initialValue: string,
+  placeholder: string,
   dispatchFn: (string) => void,
   timeoutLength: number,
 }
 
 type State = {
+  id: string,
   value: string,
+  placeholder: string,
 }
 
 export default class DelayDispatchInput extends Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    this.state = { value: '' };
+    this.state = {
+      id: props.id,
+      value: props.initialValue,
+      placeholder: props.placeholder,
+    };
     this.handleChange = this.handleChange.bind(this);
     this.timeout = null;
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.initialValue != this.props.initialValue) {
+      this.setState({
+        id: this.props.id,
+        value: this.props.initialValue,
+        placeholder: this.props.placeholder,
+      });
+    }
   }
 
   handleChange(event: Event) {
@@ -31,12 +50,14 @@ export default class DelayDispatchInput extends Component<Props, State> {
   }
 
   render() {
-    const { value } = this.state;
+    const { id, value, placeholder } = this.state;
     return (
       <div>
         <input
+          id={ id }
           type='text'
           value={ value }
+          placeholder={ placeholder }
           onChange={ this.handleChange } />
       </div>
     );
