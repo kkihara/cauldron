@@ -40,8 +40,6 @@ const PageViewer = ({ page, setTitle, isLoading }: Props) => {
     }
   }
 
-  console.log('pageviewer', page.title)
-
   return (
     <div>
       <DelayDispatchInput
