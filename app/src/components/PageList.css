@@ -1,24 +1,23 @@
-:global table {
+.page-table {
   border-collapse: collapse;
   width: 100%;
   user-select: none;
   cursor: default;
 }
 
-:global td, :global th {
+.page-row {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
 }
 
-:global tr:nth-child(even) {
+.even-page {
+}
+
+.odd-page {
   background-color: #eeeeee;
 }
 
-:global(.pageSelector) {
-  user-select: none;
-}
-
-:global(.selectedPage) {
+.selected-page {
   background-color: #e0ffff;
 }

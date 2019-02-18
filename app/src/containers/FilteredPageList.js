@@ -33,7 +33,8 @@ const filterPages = state => {
 };
 
 const mapStateToProps = state => ({
-  pages: filterPages(state)
+  pages: filterPages(state),
+  currentId: state.currentPage.id,
 });
 
 const mapDispatchToProps = dispatch => ({
