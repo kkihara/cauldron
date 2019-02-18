@@ -15,7 +15,6 @@ import TagListContainer from './containers/TagListContainer';
 import rootReducer from './reducers';
 import { createContextMenu } from './menu';
 import { restoreState } from './utils';
-import './App.css';
 
 const store = createStore(
   rootReducer,
