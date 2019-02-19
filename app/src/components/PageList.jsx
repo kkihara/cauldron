@@ -1,9 +1,9 @@
 // @flow
 
 import React from 'react';
+import styled from 'styled-components';
 import moment from 'moment';
 import type { T_Page } from '../types';
-import styles from './PageList.css';
 
 type SelectorProps = {
   ...T_Page,
@@ -12,9 +12,18 @@ type SelectorProps = {
   setPage: any,
 };
 
-const evenRowStyle = {
-  backgroundColor: '#eeeeee',
-};
+const SelectorRow = styled.tr`
+  background-color: ${ props => props.color };
+`;
+const selectedColor = '#e0ffff';
+const evenColor = '#ffffff';
+const oddColor = '#eeeeee';
+
+const Cell = styled.td`
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+`;
 
 const PageSelector = ({
     id,
@@ -26,19 +35,19 @@ const PageSelector = ({
     index,
 }: SelectorProps) => {
   const createdStr = moment(created).format('YYYY-MM-DD HH:mm');
-  let selectorStyle;
-  if (id == currentId) { selectorStyle = 'selected-page' }
-  else if (index % 2 == 0) { selectorStyle = 'even-page' }
-  else { selectorStyle = 'odd-page' }
+  let color;
+  if (id == currentId) { color = selectedColor; }
+  else if (index % 2 == 0) { color = evenColor; }
+  else { color = oddColor; }
   return (
-    <tr
+    <SelectorRow
       id={ id }
-      className={ styles[selectorStyle] }
       onClick={ () => setPage() }
+      color={ color }
     >
-      <td className={ styles['page-row'] }>{ createdStr }</td>
-      <td className={ styles['page-row'] }>{ title }</td>
-    </tr>
+      <Cell>{ createdStr }</Cell>
+      <Cell>{ title }</Cell>
+    </SelectorRow>
   );
 };
 
@@ -48,13 +57,26 @@ type ListProps = {
   setPage: any,
 };
 
+const Table = styled.table`
+  border-collapse: collapse;
+  width: 100%;
+  user-select: none;
+  cursor: default;
+  font-size: small;
+`;
+
+const TableHeader = styled.th`
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+`;
 
 const PageList = ({ pages, currentId, setPage }: ListProps) => (
-  <table className={ styles['page-table'] }>
+  <Table>
     <thead>
       <tr>
-        <th className={ styles['page-row'] }>Created</th>
-        <th className={ styles['page-row'] }>Title</th>
+        <TableHeader>Created</TableHeader>
+        <TableHeader>Title</TableHeader>
       </tr>
     </thead>
     <tbody>
@@ -71,7 +93,7 @@ const PageList = ({ pages, currentId, setPage }: ListProps) => (
         />
       ))}
     </tbody>
-  </table>
+  </Table>
 );
 
 export default PageList;
