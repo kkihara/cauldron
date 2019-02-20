@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react';
+import styled from 'styled-components';
 import PdfPageContainer from '../containers/PdfPageContainer';
 import DelayDispatchInput from '../components/DelayDispatchInput';
 import UploadPdf from '../containers/UploadPdf';
@@ -13,6 +14,14 @@ type Props = {
   setTitle: any,
   isLoading: bool,
 };
+
+const EditPageTable = styled(DelayDispatchInput)`
+  width: 100%;
+  padding: 6px 10px;
+  margin: 0 0 10px 0;
+  font-size: 15px;
+  font-family: sans-serif;
+`;
 
 const PageViewer = ({ page, setTitle, isLoading }: Props) => {
   if (!page.id) {
@@ -42,7 +51,7 @@ const PageViewer = ({ page, setTitle, isLoading }: Props) => {
 
   return (
     <div>
-      <DelayDispatchInput
+      <EditPageTable
         id='edit-page-title'
         initialValue={ (page.title) ? page.title : '' }
         placeholder=''

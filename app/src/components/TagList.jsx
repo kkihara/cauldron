@@ -1,11 +1,24 @@
 // @flow
 
 import React from 'react';
+import styled from 'styled-components';
 import type { T_Tag } from '../types';
 
 type Props = {
   tags: Array<T_Tag>;
 };
+
+const TagElement = styled.li`
+  float: left;
+  padding: 5px;
+`;
+
+const Tag = styled.p`
+  border-radius: 10px / 7px;
+  border-color: #000000;
+  border-style: solid;
+  padding: 10px;
+`;
 
 const TagList = ({ tags }: Props) => (
   <ul style={{
@@ -13,16 +26,11 @@ const TagList = ({ tags }: Props) => (
     margin: '0px'
   }}>
     {tags.map((tag, idx) =>
-      <li key={ idx } style={{ float: 'left', padding: '5px' }}>
-        <p style={{
-          borderRadius: '10px / 7px',
-          borderColor: '#000000',
-          borderStyle: 'solid',
-          padding: '10px'
-        }}>
+      <TagElement>
+        <Tag>
           { tag.content }
-        </p>
-      </li>
+        </Tag>
+      </TagElement>
     )}
   </ul>
 );

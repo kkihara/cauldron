@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 
 type Props = {
   id: string,
+  className: string,
   initialValue: string,
   placeholder: string,
   dispatchFn: (string) => void,
@@ -11,9 +12,7 @@ type Props = {
 }
 
 type State = {
-  id: string,
   value: string,
-  placeholder: string,
 }
 
 export default class DelayDispatchInput extends Component<Props, State> {
@@ -21,9 +20,7 @@ export default class DelayDispatchInput extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      id: props.id,
       value: props.initialValue,
-      placeholder: props.placeholder,
     };
     this.handleChange = this.handleChange.bind(this);
     this.timeout = null;
@@ -32,9 +29,7 @@ export default class DelayDispatchInput extends Component<Props, State> {
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.initialValue != this.props.initialValue) {
       this.setState({
-        id: this.props.id,
         value: this.props.initialValue,
-        placeholder: this.props.placeholder,
       });
     }
   }
@@ -50,11 +45,13 @@ export default class DelayDispatchInput extends Component<Props, State> {
   }
 
   render() {
-    const { id, value, placeholder } = this.state;
+    const { id, placeholder, className } = this.props;
+    const { value } = this.state;
     return (
       <div>
         <input
           id={ id }
+          className={ className }
           type='text'
           value={ value }
           placeholder={ placeholder }
