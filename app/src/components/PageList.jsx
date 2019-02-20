@@ -23,6 +23,8 @@ const Cell = styled.td`
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 const PageSelector = ({
