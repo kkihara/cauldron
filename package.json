@@ -1,6 +1,6 @@
 {
   "name": "Cauldron",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "App to annotating PDFs",
   "main": "main_process.js",
   "scripts": {
