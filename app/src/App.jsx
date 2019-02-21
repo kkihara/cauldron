@@ -37,9 +37,11 @@ const App = () => {
         >
           <div>
             <AddPage/>
-            <SearchPages/>
           </div>
-          <div><FilteredPageList/></div>
+          <div>
+            <SearchPages/>
+            <FilteredPageList/>
+          </div>
         </SplitPane>
         <SplitPane
             split='horizontal'

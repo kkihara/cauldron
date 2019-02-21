@@ -12,6 +12,11 @@ type Props = {
   search: any,
 };
 
+const StickyDiv = styled.div`
+  position: sticky;
+  top: 0;
+`;
+
 const Search = styled(DelayDispatchInput)`
   background-image: url(${img});
   background-position: 6px 6px;
@@ -19,19 +24,21 @@ const Search = styled(DelayDispatchInput)`
   height: 33px;
   width: 100%;
   padding-left: 33px;
-  font-size: 12px;
+  font-size: 10px;
   font-family: sans-serif;
 `;
 
 const SearchBar = ({ query, search }: Props) => {
   let input: { value: string };
   return (
-    <Search
-      id='search-bar'
-      initialValue={ query }
-      placeholder='Search pages'
-      timeoutLength={ 500 }
-      dispatchFn={ search }/>
+    <StickyDiv>
+      <Search
+        id='search-bar'
+        initialValue={ query }
+        placeholder='Search pages'
+        timeoutLength={ 500 }
+        dispatchFn={ search }/>
+    </StickyDiv>
   );
 };
 
