@@ -9,7 +9,7 @@ type Props = {
   id: string,
   text: string,
   setPath: any
-}
+};
 
 const readFile = (callback: any) => {
   dialog.showOpenDialog((fileNames) => {

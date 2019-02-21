@@ -5,8 +5,14 @@ import styled from 'styled-components';
 import type { T_Tag } from '../types';
 
 type Props = {
-  tags: Array<T_Tag>;
+  tags: Array<T_Tag>,
+  searchTag: any,
 };
+
+const List = styled.ul`
+  list-style-type: none;
+  margin: 0px;
+`;
 
 const TagElement = styled.li`
   float: left;
@@ -20,19 +26,16 @@ const Tag = styled.p`
   padding: 10px;
 `;
 
-const TagList = ({ tags }: Props) => (
-  <ul style={{
-    listStyleType: 'none',
-    margin: '0px'
-  }}>
+const TagList = ({ tags, searchTag }: Props) => (
+  <List>
     {tags.map((tag, idx) =>
-      <TagElement>
-        <Tag>
+      <TagElement key={ idx }>
+        <Tag onClick={ () => searchTag(tag.content) }>
           { tag.content }
         </Tag>
       </TagElement>
     )}
-  </ul>
+  </List>
 );
 
 export default TagList;

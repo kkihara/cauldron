@@ -14,6 +14,7 @@ import {
   REQUEST_FETCH_PAGE,
   RECEIVE_FETCH_PAGE,
   SEARCH_PAGE,
+  APPEND_SEARCH,
 } from './';
 import { fetchTagsByPage } from '../actions/tag';
 import { pageTypes } from '../types';
@@ -146,5 +147,10 @@ export const fetchPage = (id: number) => (
 
 export const searchPages = (query: string) => ({
   type: SEARCH_PAGE,
+  query
+});
+
+export const appendToSearch = (query: string) => ({
+  type: APPEND_SEARCH,
   query
 });

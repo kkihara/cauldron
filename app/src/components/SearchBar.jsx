@@ -7,7 +7,12 @@ import { searchPages } from '../actions/page';
 import DelayDispatchInput from '../components/DelayDispatchInput';
 import img from '../../assets/search-icon.png';
 
-const SearchBar = styled(DelayDispatchInput)`
+type Props = {
+  query: string,
+  search: any,
+};
+
+const Search = styled(DelayDispatchInput)`
   background-image: url(${img});
   background-position: 6px 6px;
   background-repeat: no-repeat;
@@ -18,19 +23,16 @@ const SearchBar = styled(DelayDispatchInput)`
   font-family: sans-serif;
 `;
 
-
-const SearchPages = ({ dispatch }: any) => {
+const SearchBar = ({ query, search }: Props) => {
   let input: { value: string };
   return (
-    <SearchBar
+    <Search
       id='search-bar'
-      initialValue=''
+      initialValue={ query }
       placeholder='Search pages'
       timeoutLength={ 500 }
-      dispatchFn={ (input: string) => (
-      dispatch(searchPages(input))
-    )}/>
+      dispatchFn={ search }/>
   );
 };
 
-export default connect()(SearchPages);
+export default SearchBar;

@@ -10,6 +10,7 @@ import {
   REQUEST_PUT_TITLE,
   RECEIVE_PUT_TITLE,
   SEARCH_PAGE,
+  APPEND_SEARCH,
 } from '../actions';
 import type { T_Page } from '../types';
 
@@ -62,6 +63,12 @@ const pageList = (
       return {
         ...state,
         query: action.query,
+      }
+    case APPEND_SEARCH:
+      const newQuery = (state.query == '') ? action.query : state.query + ' ' + action.query;
+      return {
+        ...state,
+        query: newQuery,
       }
     default:
       return state;
