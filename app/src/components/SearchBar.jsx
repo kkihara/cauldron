@@ -19,7 +19,7 @@ const StickyDiv = styled.div`
 
 const Search = styled(DelayDispatchInput)`
   background-image: url(${img});
-  background-position: 6px 6px;
+  background-position: 4px 4px;
   background-repeat: no-repeat;
   height: 33px;
   width: 100%;
@@ -34,6 +34,7 @@ const SearchBar = ({ query, search }: Props) => {
     <StickyDiv>
       <Search
         id='search-bar'
+        type='search'
         initialValue={ query }
         placeholder='Search pages'
         timeoutLength={ 500 }

@@ -50,19 +50,15 @@ export default class PdfPage extends Component<Props> {
   componentDidMount() {
     const { pdfBuffer, highlights } = this.props;
     pdfjs.getDocument(pdfBuffer).then(pdfDocument => {
-      this.linkService = new PDFLinkService();
       this.eventBus = new EventBus();
         // enhanceTextSelection: true,
       this.viewer = new PDFViewer({
         container: this.container,
         removePageBorders: true,
-        linkService: this.linkService,
         eventBus: this.eventBus
       });
 
       this.viewer.setDocument(pdfDocument);
-      this.linkService.setDocument(pdfDocument);
-      this.linkService.setViewer(this.viewer);
 
       this.container.addEventListener('mouseup', this.onMouseUp);
 

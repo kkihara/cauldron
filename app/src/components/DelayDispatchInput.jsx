@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 
 type Props = {
   id: string,
+  type: ?string,
   className: string,
   initialValue: string,
   placeholder: string,
@@ -45,14 +46,14 @@ export default class DelayDispatchInput extends Component<Props, State> {
   }
 
   render() {
-    const { id, placeholder, className } = this.props;
+    const { id, type, placeholder, className } = this.props;
     const { value } = this.state;
     return (
       <div>
         <input
           id={ id }
           className={ className }
-          type='text'
+          type={ type || 'text' }
           value={ value }
           placeholder={ placeholder }
           onChange={ this.handleChange } />
