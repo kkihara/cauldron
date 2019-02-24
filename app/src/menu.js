@@ -41,14 +41,16 @@ export const createContextMenu = (store: any) => {
       }),
       check: (menuItem, evt) => {
         const target = evt.target;
+        console.log(target);
         if (target instanceof HTMLElement) {
-          if (target.classList.contains('pageSelector')) {
+          if (target.tagName == 'TR' && target.hasAttribute('id')) {
             deleteId = target.id;
             return true;
           }
 
           if (target.parentElement instanceof HTMLElement &&
-              target.parentElement.classList.contains('pageSelector')) {
+              target.parentElement.tagName == 'TR' &&
+              target.parentElement.hasAttribute('id')) {
             deleteId = target.parentElement.id;
             return true;
           } 
