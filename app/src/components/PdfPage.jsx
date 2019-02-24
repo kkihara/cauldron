@@ -33,9 +33,13 @@ export default class PdfPage extends Component<Props> {
     this.onMouseUp = this.onMouseUp.bind(this);
   }
 
-  onMouseUp() {
+  onMouseUp(evt) {
     const { updatePdfHighlight } = this.props;
-    this.highlighter.highlightSelection('highlight');
+    if (evt.altKey) {
+      this.highlighter.unhighlightSelection();
+    } else {
+      this.highlighter.highlightSelection('highlight');
+    }
     updatePdfHighlight(this.highlighter.serialize());
   }
 
