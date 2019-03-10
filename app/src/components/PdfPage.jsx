@@ -53,7 +53,7 @@ export default class PdfPage extends Component<Props> {
 
   componentDidMount() {
     const { pdfBuffer, highlights } = this.props;
-    pdfjs.getDocument(pdfBuffer).then(pdfDocument => {
+    pdfjs.getDocument({data: pdfBuffer, disableFontFace: false}).then(pdfDocument => {
       this.eventBus = new EventBus();
         // enhanceTextSelection: true,
       this.viewer = new PDFViewer({
