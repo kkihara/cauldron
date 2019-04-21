@@ -3,6 +3,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import type { T_Tag } from '../types';
+import img from '../../assets/delete-icon-1.png';
 
 type Props = {
   tags: Array<T_Tag>,
@@ -15,24 +16,39 @@ const List = styled.ul`
 `;
 
 const TagElement = styled.li`
-  float: left;
-  padding: 5px;
+  display: inline-block;
+  padding: 2px;
+  cursor: pointer;
 `;
 
 const Tag = styled.p`
   border-radius: 10px / 7px;
   border-color: #000000;
   border-style: solid;
-  padding: 10px;
+  padding: 7px;
+  list-style-position: inside;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 50px;
+  font-size: 12px;
+`;
+
+const RemoveButton = styled.img`
+  height: 10px;
+  width: 10px;
+  padding-left: 2px;
+  float: left;
 `;
 
 const TagList = ({ tags, searchTag }: Props) => (
   <List>
     {tags.map((tag, idx) =>
-      <TagElement key={ idx }>
-        <Tag onClick={ () => searchTag(tag.content) }>
+      <TagElement key={ idx } onClick={ () => searchTag(tag.content) }>
+        <Tag>
           { tag.content }
         </Tag>
+        <RemoveButton src={ img }/>
       </TagElement>
     )}
   </List>

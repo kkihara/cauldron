@@ -18,7 +18,7 @@ const StickyDiv = styled.div`
 `;
 
 const Search = styled(DelayDispatchInput)`
-  background-image: url(${img});
+  background-image: url(${ img });
   background-position: 4px 4px;
   background-repeat: no-repeat;
   height: 33px;

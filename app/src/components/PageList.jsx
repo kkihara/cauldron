@@ -13,6 +13,7 @@ type SelectorProps = {
 };
 
 const SelectorRow = styled.tr`
+  cursor: pointer;
   background-color: ${ props => props.color };
 `;
 const selectedColor = '#e0ffff';
