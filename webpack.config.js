@@ -4,8 +4,6 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
 
-  watch: true,
-
   target: 'electron-renderer',
 
   entry: './app/src/renderer_process.js',

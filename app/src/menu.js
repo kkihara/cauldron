@@ -4,8 +4,7 @@ import { remote } from 'electron';
 import { deletePage } from './actions/page';
 const { Menu, MenuItem } = remote;
 
-// const DEBUG = process.env.NODE_ENV == 'development';
-const DEBUG = true;
+const DEBUG = process.env.NODE_ENV == 'development';
 const mainWindow = remote.getCurrentWindow();
 
 type MenuInfo = {
