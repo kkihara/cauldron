@@ -3,7 +3,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import type { T_Tag } from '../types';
-import img from '../../assets/delete-icon-1.png';
+import img from '../../assets/delete-icon.png';
 
 type Props = {
   tags: Array<T_Tag>,
