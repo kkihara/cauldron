@@ -5,7 +5,8 @@ import PageViewer from '../components/PageViewer';
 import { putTitle } from '../actions/page';
 
 const mapStateToProps = state => ({
-  page: state.currentPage
+  page: state.currentPage,
+  view: state.currentView.value,
 });
 
 const mapDispatchToProps = dispatch => ({

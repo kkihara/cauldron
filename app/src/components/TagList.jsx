@@ -2,6 +2,7 @@
 
 import React from 'react';
 import styled from 'styled-components';
+import AddTag from '../containers/AddTag';
 import type { T_Tag } from '../types';
 import img from '../../assets/delete-icon.png';
 
@@ -41,17 +42,26 @@ const RemoveButton = styled.img`
   float: left;
 `;
 
-const TagList = ({ tags, searchTag }: Props) => (
-  <List>
-    {tags.map((tag, idx) =>
-      <TagElement key={ idx } onClick={ () => searchTag(tag.content) }>
-        <Tag>
-          { tag.content }
-        </Tag>
-        <RemoveButton src={ img }/>
-      </TagElement>
-    )}
-  </List>
-);
+const TagList = ({ tags, isHome, searchTag }: Props) => {
+  if (isHome) {
+    return (
+      <div>
+        <AddTag/>
+        <List>
+          {tags.map((tag, idx) =>
+            <TagElement key={ idx } onClick={ () => searchTag(tag.content) }>
+              <Tag>
+                { tag.content }
+              </Tag>
+              <RemoveButton src={ img }/>
+            </TagElement>
+          )}
+        </List>
+      </div>
+    )
+  } else {
+    return null;
+  }
+};
 
 export default TagList;

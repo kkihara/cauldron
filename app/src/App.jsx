@@ -9,8 +9,9 @@ import SplitPane from 'react-split-pane';
 import PageViewerContainer from './containers/PageViewerContainer';
 import FilteredPageList from './containers/FilteredPageList';
 import AddPage from './containers/AddPage';
+import ArxivView from './containers/ArxivView';
+import HomeView from './containers/HomeView';
 import SearchPages from './containers/SearchPages';
-import AddTag from './containers/AddTag';
 import TagListContainer from './containers/TagListContainer';
 import rootReducer from './reducers';
 import { createContextMenu } from './menu';
@@ -38,6 +39,8 @@ const App = () => {
         >
           <div>
             <AddPage/>
+            <HomeView/>
+            <ArxivView/>
           </div>
           <div>
             <SearchPages/>
@@ -52,7 +55,6 @@ const App = () => {
             pane2Style={{ overflow: 'auto' }}
         >
           <div>
-            <AddTag/>
             <TagListContainer/>
           </div>
           <div>

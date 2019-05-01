@@ -27,7 +27,18 @@ export type T_CurrentPage = {
 
 export const pageTypes = {
   pdf: 'pdf',
-  none: 'none'
+  none: 'none',
 };
 
 export type T_PageTypes = $Keys<typeof pageTypes>;
+
+export const viewTypes = {
+  home: 'home',
+  arxiv: 'arxiv',
+};
+
+export type T_ViewTypes = $Keys<typeof viewTypes>;
+
+export type T_CurrentView = {
+  value: T_ViewTypes,
+};
