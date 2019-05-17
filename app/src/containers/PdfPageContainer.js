@@ -16,6 +16,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mergeProps = (propsFromState, propsFromDispatch) => ({
+  id: propsFromState.id,
   pdfBuffer: propsFromState.pdfBuffer,
   highlights: propsFromState.highlights,
   updatePdfHighlight: propsFromDispatch.updatePdfHighlight(propsFromState.id)

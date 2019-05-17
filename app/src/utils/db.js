@@ -215,7 +215,11 @@ export const getAllTags = (
     }
     const allTags = {};
     rows.map(row => {
-      allTags[row.pageId] = row;
+      if (row.pageId in allTags) {
+        allTags[row.pageId].push(row);
+      } else {
+        allTags[row.pageId] = [row];
+      }
     });
     callback(allTags);
   })

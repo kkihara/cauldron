@@ -14,6 +14,7 @@ import './pdf_viewer.css';
 import PdfController from './PdfController';
 
 type Props = {
+  id: number,
   pdfBuffer: string,
   highlights: string,
   updatePdfHighlight: any
@@ -31,6 +32,29 @@ export default class PdfPage extends Component<Props> {
     this.highlighter = rangy.createHighlighter();
     this.highlighter.addClassApplier(rangy.createClassApplier('highlight'));
     this.onMouseUp = this.onMouseUp.bind(this);
+    this.renderPDF = this.renderPDF.bind(this);
+  }
+
+  renderPDF(pdfBuffer: string) {
+    document.getElementById('viewer').innerHTML = '';
+    pdfjs.getDocument({data: pdfBuffer, disableFontFace: false}).then(pdfDocument => {
+      this.eventBus = new EventBus();
+        // enhanceTextSelection: true,
+      this.viewer = new PDFViewer({
+        container: this.container,
+        removePageBorders: true,
+        eventBus: this.eventBus
+      });
+
+      this.viewer.setDocument(pdfDocument);
+
+      this.container.addEventListener('mouseup', this.onMouseUp);
+
+      // render highlights
+      // this event will call renderhighlights for each page but
+      // 'pagesloaded' event is too early :/
+      this.eventBus.on('textlayerrendered', function() { this.renderHighlights() }.bind(this));
+    });
   }
 
   onMouseUp(evt) {
@@ -52,29 +76,17 @@ export default class PdfPage extends Component<Props> {
   }
 
   componentDidMount() {
-    const { pdfBuffer, highlights } = this.props;
-    pdfjs.getDocument({data: pdfBuffer, disableFontFace: false}).then(pdfDocument => {
-      this.eventBus = new EventBus();
-        // enhanceTextSelection: true,
-      this.viewer = new PDFViewer({
-        container: this.container,
-        removePageBorders: true,
-        eventBus: this.eventBus
-      });
-
-      this.viewer.setDocument(pdfDocument);
-
-      this.container.addEventListener('mouseup', this.onMouseUp);
-
-      // render highlights
-      // this event will call renderhighlights for each page but
-      // 'pagesloaded' event is too early :/
-      this.eventBus.on('textlayerrendered', function() { this.renderHighlights() }.bind(this));
-    });
+    const { pdfBuffer } = this.props;
+    this.renderPDF(pdfBuffer);
   }
 
-  componentDidUpdate() {
-    this.renderHighlights();
+  componentDidUpdate(prevProps) {
+    const { id, pdfBuffer } = this.props;
+    if (prevProps.id != id) {
+      this.renderPDF(pdfBuffer);
+    } else {
+      this.renderHighlights();
+    }
   }
 
   componentWillUnmount() {

@@ -4,7 +4,7 @@ import React from 'react';
 import styled from 'styled-components';
 import AddTag from '../containers/AddTag';
 import type { T_Tag } from '../types';
-import img from '../../assets/delete-icon.png';
+// import img from '../../assets/delete-icon.png';
 
 type Props = {
   tags: Array<T_Tag>,
@@ -35,12 +35,12 @@ const Tag = styled.p`
   font-size: 12px;
 `;
 
-const RemoveButton = styled.img`
-  height: 10px;
-  width: 10px;
-  padding-left: 2px;
-  float: left;
-`;
+// const RemoveButton = styled.img`
+//   height: 10px;
+//   width: 10px;
+//   padding-left: 2px;
+//   float: left;
+// `;
 
 const TagList = ({ tags, isHome, searchTag }: Props) => {
   if (isHome) {
@@ -53,7 +53,6 @@ const TagList = ({ tags, isHome, searchTag }: Props) => {
               <Tag>
                 { tag.content }
               </Tag>
-              <RemoveButton src={ img }/>
             </TagElement>
           )}
         </List>
