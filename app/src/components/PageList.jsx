@@ -2,6 +2,11 @@
 
 import React from 'react';
 import styled from 'styled-components';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 import moment from 'moment';
 import type { T_Page } from '../types';
 
@@ -11,22 +16,6 @@ type SelectorProps = {
   index: number,
   setPage: any,
 };
-
-const SelectorRow = styled.tr`
-  cursor: pointer;
-  background-color: ${ props => props.color };
-`;
-const selectedColor = '#e0ffff';
-const evenColor = '#ffffff';
-const oddColor = '#eeeeee';
-
-const Cell = styled.td`
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-`;
 
 const PageSelector = ({
     id,
@@ -38,19 +27,14 @@ const PageSelector = ({
     index,
 }: SelectorProps) => {
   const createdStr = moment(created).format('YYYY-MM-DD HH:mm');
-  let color;
-  if (id == currentId) { color = selectedColor; }
-  else if (index % 2 == 0) { color = evenColor; }
-  else { color = oddColor; }
   return (
-    <SelectorRow
-      id={ id }
+    <TableRow
       onClick={ () => setPage() }
-      color={ color }
+      selected={ id == currentId }
     >
-      <Cell>{ createdStr }</Cell>
-      <Cell>{ title }</Cell>
-    </SelectorRow>
+      <TableCell>{ createdStr }</TableCell>
+      <TableCell>{ title }</TableCell>
+    </TableRow>
   );
 };
 
@@ -60,29 +44,15 @@ type ListProps = {
   setPage: any,
 };
 
-const Table = styled.table`
-  border-collapse: collapse;
-  width: 100%;
-  user-select: none;
-  cursor: default;
-  font-size: small;
-`;
-
-const TableHeader = styled.th`
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-`;
-
 const PageList = ({ pages, currentId, setPage }: ListProps) => (
   <Table>
-    <thead>
-      <tr>
-        <TableHeader>Created</TableHeader>
-        <TableHeader>Title</TableHeader>
-      </tr>
-    </thead>
-    <tbody>
+    <TableHead>
+      <TableRow>
+        <TableCell>Created</TableCell>
+        <TableCell>Title</TableCell>
+      </TableRow>
+    </TableHead>
+    <TableBody>
       {pages.map((page, index) => (
         <PageSelector
           key={ page.id }
@@ -95,7 +65,7 @@ const PageList = ({ pages, currentId, setPage }: ListProps) => (
           index={ index }
         />
       ))}
-    </tbody>
+    </TableBody>
   </Table>
 );
 
