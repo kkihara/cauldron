@@ -13,15 +13,14 @@ import 'rangy/lib/rangy-serializer';
 import './pdf_viewer.css';
 import PdfController from './PdfController';
 
+// Do not change this. This is specific to pdfjs and rangy serialization.
+const VIEWER_ID = 'viewer';
+
 type Props = {
   id: number,
   pdfBuffer: string,
   highlights: string,
   updatePdfHighlight: any
-};
-
-function sleep (time) {
-  return new Promise((resolve) => setTimeout(resolve, time));
 };
 
 export default class PdfPage extends Component<Props> {
@@ -36,7 +35,7 @@ export default class PdfPage extends Component<Props> {
   }
 
   renderPDF(pdfBuffer: string) {
-    document.getElementById('viewer').innerHTML = '';
+    document.getElementById(VIEWER_ID).innerHTML = '';
     pdfjs.getDocument({data: pdfBuffer, disableFontFace: false}).then(pdfDocument => {
       this.eventBus = new EventBus();
         // enhanceTextSelection: true,
@@ -62,7 +61,7 @@ export default class PdfPage extends Component<Props> {
     if (evt.altKey) {
       this.highlighter.unhighlightSelection();
     } else {
-      this.highlighter.highlightSelection('highlight');
+      this.highlighter.highlightSelection('highlight', { containerElementId: VIEWER_ID });
     }
     updatePdfHighlight(this.highlighter.serialize());
   }
@@ -97,7 +96,7 @@ export default class PdfPage extends Component<Props> {
   render() {
     return (
       <div ref={ node => this.container = node }>
-        <div id='viewer'><PdfController/></div>
+        <div id={ VIEWER_ID }><PdfController/></div>
       </div>
     )
   }

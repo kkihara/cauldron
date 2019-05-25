@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { searchPages } from '../actions/page';
 import DelayDispatchInput from '../components/DelayDispatchInput';
-import img from '../../assets/search-icon.png';
+// import img from '../../assets/search-icon.png';
 
 type Props = {
   query: string,
@@ -17,14 +17,13 @@ const StickyDiv = styled.div`
   top: 0;
 `;
 
+  // background-image: url(${ img });
+  // background-position: 4px 4px;
+  // background-repeat: no-repeat;
+  // height: 33px;
 const Search = styled(DelayDispatchInput)`
-  background-image: url(${ img });
-  background-position: 4px 4px;
-  background-repeat: no-repeat;
-  height: 33px;
   width: 100%;
-  padding-left: 33px;
-  font-size: 10px;
+  font-size: 15px;
   font-family: sans-serif;
 `;
 

@@ -22,8 +22,7 @@ const tagList = (
     case RECEIVE_ADD_TAG:
       let addTagList = state[action.pageId];
       if (!addTagList) {
-        console.log('Could not find tagList for pageId: ' + action.pageId);
-        return state;
+        addTagList = [];
       }
       addTagList = addTagList.slice();
       addTagList.push(action.tag);
