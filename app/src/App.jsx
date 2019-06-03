@@ -5,7 +5,7 @@ import thunkMiddleware from 'redux-thunk';
 import logger from 'redux-logger';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
-import SplitPane from 'react-split-pane';
+import Grid from '@material-ui/core/Grid';
 import PageViewerContainer from './containers/PageViewerContainer';
 import FilteredPageList from './containers/FilteredPageList';
 import AddPage from './containers/AddPage';
@@ -29,39 +29,23 @@ const App = () => {
 
   return (
     <Provider store={ store }>
-      <SplitPane split='vertical' minSize={ 200 } defaultSize={ 200 }>
-        <SplitPane
-            split='horizontal'
-            minSize={ 100 }
-            maxSize={ 100 }
-            defaultSize={ 100 }
-            pane2Style={{ overflow: 'auto' }}
-        >
-          <div>
-            <AddPage/>
-            <HomeView/>
-            <ArxivView/>
-          </div>
-          <div>
-            <SearchPages/>
-            <FilteredPageList/>
-          </div>
-        </SplitPane>
-        <SplitPane
-            split='horizontal'
-            maxSize={ 200 }
-            defaultSize={ 100 }
-            pane1Style={{ overflow: 'auto' }}
-            pane2Style={{ overflow: 'auto' }}
-        >
-          <div>
-            <TagListContainer/>
-          </div>
-          <div>
-            <PageViewerContainer/>
-          </div>
-        </SplitPane>
-      </SplitPane>
+      <Grid container spacing={ 1 }>
+        <Grid item xs={ 3 }>
+          <AddPage/>
+          <HomeView/>
+          <ArxivView/>
+        </Grid>
+        <Grid item xs={ 9 }>
+          <TagListContainer/>
+        </Grid>
+        <Grid item xs={ 3 }>
+          <SearchPages/>
+          <FilteredPageList/>
+        </Grid>
+        <Grid item xs={ 9 }>
+          <PageViewerContainer/>
+        </Grid>
+      </Grid>
     </Provider>
   )
 }
