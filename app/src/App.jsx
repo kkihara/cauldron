@@ -5,6 +5,7 @@ import thunkMiddleware from 'redux-thunk';
 import logger from 'redux-logger';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
+import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import PageViewerContainer from './containers/PageViewerContainer';
 import FilteredPageList from './containers/FilteredPageList';
@@ -31,19 +32,27 @@ const App = () => {
     <Provider store={ store }>
       <Grid container spacing={ 1 }>
         <Grid item xs={ 3 }>
-          <AddPage/>
-          <HomeView/>
-          <ArxivView/>
+          <Paper>
+            <AddPage/>
+            <HomeView/>
+            <ArxivView/>
+          </Paper>
         </Grid>
         <Grid item xs={ 9 }>
-          <TagListContainer/>
+          <Paper>
+            <TagListContainer/>
+          </Paper>
         </Grid>
         <Grid item xs={ 3 }>
-          <SearchPages/>
-          <FilteredPageList/>
+          <Paper>
+            <SearchPages/>
+            <FilteredPageList/>
+          </Paper>
         </Grid>
         <Grid item xs={ 9 }>
-          <PageViewerContainer/>
+          <Paper>
+            <PageViewerContainer/>
+          </Paper>
         </Grid>
       </Grid>
     </Provider>
