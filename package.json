@@ -1,7 +1,7 @@
 {
   "name": "Cauldron",
-  "version": "0.0.0",
-  "description": "App to annotating PDFs",
+  "version": "0.1",
+  "description": "App to annotating and organizing PDFs",
   "main": "main_process.js",
   "scripts": {
     "bundle": "webpack --watch --mode development",
