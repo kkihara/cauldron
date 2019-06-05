@@ -1,11 +1,10 @@
 // @flow
 
 import React from 'react';
-import styled from 'styled-components';
+import { withStyles } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
 import AddTag from '../containers/AddTag';
 import type { T_Tag } from '../types';
-// import img from '../../assets/delete-icon.png';
 
 type Props = {
   tags: Array<T_Tag>,
@@ -14,13 +13,19 @@ type Props = {
   deleteTag: any,
 };
 
+const StyledChip = withStyles({
+  root: {
+    margin: '3px'
+  }
+})(({ classes, color, ...other }) => <Chip className={ classes.root } { ...other } />);
+
 const TagList = ({ tags, isHome, searchTag, deleteTag }: Props) => {
   if (isHome) {
     return (
       <div>
         <AddTag/>
         {tags.map((tag, idx) =>
-          <Chip
+          <StyledChip
             key={ idx }
             label={ tag.content }
             onClick={ () => searchTag(tag.content) }
