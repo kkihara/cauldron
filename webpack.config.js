@@ -1,6 +1,5 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-// const externals = require('./app/package.json').dependencies;
-  // externals: [ 'commonjs' ] + Object.keys(externals || {}),
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
 
@@ -55,7 +54,10 @@ module.exports = {
       filename: 'bundle.css',
       disable: false,
       allChunks: true
-    })
+    }),
+    new CopyPlugin([
+      { from: __dirname + '/assets/icon.png', to: __dirname  },
+    ]),
   ],
 
   resolve: {
