@@ -32,7 +32,7 @@ const filterPages = state => {
   const filteredPages = pageList.filter(
     page => tags.every(
       searchTag => tagList[page.id].some(
-        pageTag => pageTag.content == searchTag.label
+        pageTag => pageTag.content == searchTag.value
       )
     )
   );

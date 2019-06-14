@@ -72,7 +72,9 @@ const pageList = (
         tagQuery: action.query,
       }
     case APPEND_TAG_SEARCH:
-      const newQuery = state.query ? state.query.concat({ label: action.query }): [{ label: action.query }];
+      const newQuery = state.tagQuery
+        ? state.tagQuery.concat({ label: action.query, value: action.query })
+        : [{ label: action.query, value: action.query }];
       return {
         ...state,
         tagQuery: newQuery,

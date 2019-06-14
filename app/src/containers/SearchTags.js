@@ -8,9 +8,7 @@ import SelectBar from '../components/SelectBar';
 const tagListToOptions = tagList => {
   const tags = [].concat.apply([], Object.values(tagList)); // flatten lists
   const uniqueTags = [...new Set(tags.map(t => t.content))];
-  const ret = uniqueTags.map(t => ({ label: t }));
-  console.log(ret);
-  return ret;
+  return uniqueTags.map(t => ({ label: t, value: t }));
 };
 
 const mapStateToProps = state => ({
