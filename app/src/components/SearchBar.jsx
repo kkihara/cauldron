@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react';
+import Box from '@material-ui/core/Box';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { searchPages } from '../actions/page';
@@ -30,15 +31,16 @@ const Search = styled(DelayDispatchInput)`
 const SearchBar = ({ query, search }: Props) => {
   let input: { value: string };
   return (
-    <StickyDiv>
-      <Search
-        id='search-bar'
-        type='search'
-        initialValue={ query }
-        placeholder='Search pages'
-        timeoutLength={ 500 }
-        dispatchFn={ search }/>
-    </StickyDiv>
+    <Box m={ 1 }>
+      <StickyDiv>
+        <Search
+          id='search-bar'
+          initialValue={ query }
+          placeholder='Search pages'
+          timeoutLength={ 500 }
+          dispatchFn={ search }/>
+      </StickyDiv>
+    </Box>
   );
 };
 
