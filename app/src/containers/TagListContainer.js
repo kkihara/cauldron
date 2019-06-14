@@ -13,7 +13,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  searchTag: (tag: string) => dispatch(appendToTagSearch('#' + tag)),
+  searchTag: (tag: string) => dispatch(appendToTagSearch(tag)),
   deleteTag: (pageId: string, tagId: string) => dispatch(deleteTag(pageId, tagId)),
 });
 

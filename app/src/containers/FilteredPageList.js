@@ -27,16 +27,12 @@ const filterPages = state => {
   const { pageList, query, tagQuery } = state.pageList;
   const tagList = state.tagList;
 
-  const tagQuerys = tagQuery.split(' ').filter(
-    word => word.startsWith('#')
-  ).map(
-    tag => tag.slice(1)
-  );
+  const tags = tagQuery || [];
 
   const filteredPages = pageList.filter(
-    page => tagQuerys.every(
+    page => tags.every(
       searchTag => tagList[page.id].some(
-        pageTag => pageTag.content == searchTag
+        pageTag => pageTag.content == searchTag.label
       )
     )
   );

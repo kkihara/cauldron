@@ -19,11 +19,11 @@ type State = {
   isLoading: bool,
   pageList: Array<T_Page>,
   query: string,
-  tagQuery: string,
+  tagQuery: Array<object>,
 }
 
 const pageList = (
-  state: State = { isLoading: false, pageList: [], query: '', tagQuery: '' },
+  state: State = { isLoading: false, pageList: [], query: '', tagQuery: [] },
   action: any
 ): State => {
   switch (action.type) {
@@ -72,7 +72,7 @@ const pageList = (
         tagQuery: action.query,
       }
     case APPEND_TAG_SEARCH:
-      const newQuery = (state.query == '') ? action.query : state.query + ' ' + action.query;
+      const newQuery = state.query ? state.query.concat({ label: action.query }): [{ label: action.query }];
       return {
         ...state,
         tagQuery: newQuery,
