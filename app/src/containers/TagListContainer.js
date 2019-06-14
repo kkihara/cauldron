@@ -1,7 +1,7 @@
 // @flow
 
 import { connect } from 'react-redux';
-import { appendToSearch } from '../actions/page';
+import { appendToTagSearch } from '../actions/page';
 import { deleteTag } from '../actions/tag';
 import TagList from '../components/TagList';
 import { viewTypes } from '../types';
@@ -13,7 +13,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  searchTag: (tag: string) => dispatch(appendToSearch('#' + tag)),
+  searchTag: (tag: string) => dispatch(appendToTagSearch('#' + tag)),
   deleteTag: (pageId: string, tagId: string) => dispatch(deleteTag(pageId, tagId)),
 });
 

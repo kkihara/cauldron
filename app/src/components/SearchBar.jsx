@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { searchPages } from '../actions/page';
 import DelayDispatchInput from '../components/DelayDispatchInput';
-// import img from '../../assets/search-icon.png';
 
 type Props = {
   query: string,
@@ -28,15 +27,14 @@ const Search = styled(DelayDispatchInput)`
   font-family: sans-serif;
 `;
 
-const SearchBar = ({ query, search }: Props) => {
-  let input: { value: string };
+const SearchBar = ({ id, placeholder, query, search }: Props) => {
   return (
     <Box m={ 1 }>
       <StickyDiv>
         <Search
-          id='search-bar'
+          id={ id }
           initialValue={ query }
-          placeholder='Search pages'
+          placeholder={ placeholder }
           timeoutLength={ 500 }
           dispatchFn={ search }/>
       </StickyDiv>

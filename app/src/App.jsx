@@ -13,6 +13,7 @@ import AddPage from './containers/AddPage';
 import ArxivView from './containers/ArxivView';
 import HomeView from './containers/HomeView';
 import SearchPages from './containers/SearchPages';
+import SearchTags from './containers/SearchTags';
 import TagListContainer from './containers/TagListContainer';
 import rootReducer from './reducers';
 import { createContextMenu } from './menu';
@@ -46,6 +47,7 @@ const App = () => {
         <Grid item xs={ 3 }>
           <Paper>
             <SearchPages/>
+            <SearchTags/>
             <FilteredPageList/>
           </Paper>
         </Grid>

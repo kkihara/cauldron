@@ -24,20 +24,16 @@ const fuseOptions = {
 };
 
 const filterPages = state => {
-  const { pageList, query } = state.pageList;
+  const { pageList, query, tagQuery } = state.pageList;
   const tagList = state.tagList;
 
-  if (query.length == 0 || !query.trim()) {
-    return pageList.slice();
-  }
-
-  const tagQuerys = query.split(' ').filter(
+  const tagQuerys = tagQuery.split(' ').filter(
     word => word.startsWith('#')
   ).map(
     tag => tag.slice(1)
   );
 
-  const queryList = pageList.filter(
+  const filteredPages = pageList.filter(
     page => tagQuerys.every(
       searchTag => tagList[page.id].some(
         pageTag => pageTag.content == searchTag
@@ -45,15 +41,12 @@ const filterPages = state => {
     )
   );
 
-  const searchQuery = query.split(' ').filter(
-    word => !word.startsWith('#')
-  ).join(' ');
-
-  if (searchQuery.length == 0 || !searchQuery.trim()) {
-    return queryList;
+  if (query.length == 0 || !query.trim()) {
+    return filteredPages.slice();
   }
-  const fuse = new Fuse(queryList, fuseOptions);
-  return fuse.search(searchQuery);
+
+  const fuse = new Fuse(filteredPages, fuseOptions);
+  return fuse.search(query);
 };
 
 const mapStateToProps = state => ({

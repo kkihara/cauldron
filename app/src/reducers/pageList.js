@@ -10,7 +10,8 @@ import {
   REQUEST_PUT_TITLE,
   RECEIVE_PUT_TITLE,
   SEARCH_PAGE,
-  APPEND_SEARCH,
+  SEARCH_TAGS,
+  APPEND_TAG_SEARCH,
 } from '../actions';
 import type { T_Page } from '../types';
 
@@ -18,10 +19,11 @@ type State = {
   isLoading: bool,
   pageList: Array<T_Page>,
   query: string,
+  tagQuery: string,
 }
 
 const pageList = (
-  state: State = { isLoading: false, pageList: [], query: '' },
+  state: State = { isLoading: false, pageList: [], query: '', tagQuery: '' },
   action: any
 ): State => {
   switch (action.type) {
@@ -64,11 +66,16 @@ const pageList = (
         ...state,
         query: action.query,
       }
-    case APPEND_SEARCH:
+    case SEARCH_TAGS:
+      return {
+        ...state,
+        tagQuery: action.query,
+      }
+    case APPEND_TAG_SEARCH:
       const newQuery = (state.query == '') ? action.query : state.query + ' ' + action.query;
       return {
         ...state,
-        query: newQuery,
+        tagQuery: newQuery,
       }
     default:
       return state;

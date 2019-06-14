@@ -1,17 +1,17 @@
 // @flow
 
 import { connect } from 'react-redux';
-import { searchPages } from '../actions/page';
+import { searchTags } from '../actions/page';
 import SearchBar from '../components/SearchBar';
 
 const mapStateToProps = state => ({
-  id: 'search-pages',
-  placeholder: 'Search Pages',
-  query: state.pageList.query,
+  id: 'search-tags',
+  placeholder: 'Search Tags',
+  query: state.pageList.tagQuery,
 });
 
 const mapDispatchToProps = dispatch => ({
-  search: (query: string) => dispatch(searchPages(query)),
+  search: (query: string) => dispatch(searchTags(query)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
