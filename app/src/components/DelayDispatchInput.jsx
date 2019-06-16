@@ -51,7 +51,7 @@ export default class DelayDispatchInput extends Component<Props, State> {
     const { value } = this.state;
     return (
       <div>
-        <input
+        <TextField
           id={ id }
           className={ className }
           type={ type || 'text' }
