@@ -17,7 +17,7 @@ import {
   SEARCH_TAGS,
   APPEND_TAG_SEARCH,
 } from './';
-import { fetchTagsByPage } from '../actions/tag';
+import { addTag, fetchTagsByPage } from '../actions/tag';
 import { pageTypes } from '../types';
 import type { T_Page, T_PageTypes, T_CurrentPage } from '../types';
 import * as db from '../utils/db';
@@ -34,11 +34,15 @@ const receiveNewPage = (page: T_Page) => ({
 export const newPage = (title: string = '<Untitled>') => (
   (dispatch: any) => {
     dispatch(requestNewPage());
+    // All new pages are tagged with "unannotated"
     return db.insertPage(
       pageTypes.none,
       Date.now(),
       title,
-      page => dispatch(receiveNewPage(page)),
+      page => {
+        dispatch(receiveNewPage(page));
+        dispatch(addTag(page.id, 'unannotated'));
+      },
     );
   }
 );
