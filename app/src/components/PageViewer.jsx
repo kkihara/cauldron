@@ -16,6 +16,12 @@ type Props = {
   isLoading: bool,
 };
 
+const StickyDiv = styled.div`
+  position: sticky;
+  top: 0;
+  z-index: 100;
+`;
+
 const EditPageTable = styled(DelayDispatchInput)`
   width: 100%;
   padding: 6px 10px;
@@ -64,15 +70,17 @@ const PageViewer = ({ page, view, setTitle, isLoading }: Props) => {
 
     return (
       <div>
-        <EditPageTable
-          id='edit-page-title'
-          initialValue={ (page.title) ? page.title : '' }
-          placeholder=''
-          timeoutLength={ 500 }
-          dispatchFn={ (input: string) => (
-            setTitle(page.id, input)
-          )}
-        />
+        <StickyDiv>
+          <EditPageTable
+            id='edit-page-title'
+            initialValue={ (page.title) ? page.title : '' }
+            placeholder=''
+            timeoutLength={ 500 }
+            dispatchFn={ (input: string) => (
+              setTitle(page.id, input)
+            )}
+          />
+        </StickyDiv>
         { pageContents }
       </div>
     );

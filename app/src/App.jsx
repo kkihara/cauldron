@@ -28,31 +28,30 @@ restoreState(store);
 createContextMenu(store);
 
 const App = () => {
-
   return (
     <Provider store={ store }>
       <Grid container spacing={ 1 }>
         <Grid item xs={ 3 }>
-          <Paper>
+          <Paper style={{ height: '10vh' }}>
             <AddPage/>
             <HomeView/>
             <ArxivView/>
           </Paper>
         </Grid>
         <Grid item xs={ 9 }>
-          <Paper>
+          <Paper style={{ height: '10vh', overflow: 'auto' }}>
             <TagListContainer/>
           </Paper>
         </Grid>
         <Grid item xs={ 3 }>
-          <Paper>
+          <Paper style={{ height: '85vh', overflow: 'auto' }}>
             <SearchPages/>
             <SearchTags/>
             <FilteredPageList/>
           </Paper>
         </Grid>
         <Grid item xs={ 9 }>
-          <Paper>
+          <Paper style={{ height: '85vh', overflow: 'auto' }}>
             <PageViewerContainer/>
           </Paper>
         </Grid>

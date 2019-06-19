@@ -52,6 +52,7 @@ export default class DelayDispatchInput extends Component<Props, State> {
     return (
       <div>
         <TextField
+          style={{ background: '#fff' }}
           id={ id }
           className={ className }
           type={ type || 'text' }

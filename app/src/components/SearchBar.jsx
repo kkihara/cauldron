@@ -29,16 +29,14 @@ const Search = styled(DelayDispatchInput)`
 
 const SearchBar = ({ id, placeholder, query, search }: Props) => {
   return (
-    <Box m={ 1 }>
-      <StickyDiv>
-        <Search
-          id={ id }
-          initialValue={ query }
-          placeholder={ placeholder }
-          timeoutLength={ 500 }
-          dispatchFn={ search }/>
-      </StickyDiv>
-    </Box>
+    <StickyDiv>
+      <Search
+        id={ id }
+        initialValue={ query }
+        placeholder={ placeholder }
+        timeoutLength={ 500 }
+        dispatchFn={ search }/>
+    </StickyDiv>
   );
 };
 
