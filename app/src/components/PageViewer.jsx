@@ -54,7 +54,7 @@ const PageViewer = ({ page, view, setTitle, isLoading }: Props) => {
       pageContents = <UploadPdf id={ page.id }/>;
     } else if (page.pageType == pageTypes.pdf) {
       if (!page.content || !page.content.pdf) {
-        console.log('PageType is pdf but no contents returned.');
+        console.error('PageType is pdf but no contents returned.');
         pageContents = <Loading/>;
       }
       else {

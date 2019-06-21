@@ -51,6 +51,7 @@
     "@material-ui/core": "^4.0.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "firebase": "^6.2.0",
     "fuse.js": "^3.3.0",
     "js-yaml": "^3.13.1",
     "moment": "^2.23.0",

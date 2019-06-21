@@ -7,8 +7,6 @@ import {
   RECEIVE_DELETE_TAG,
   REQUEST_FETCH_TAGS_BY_PAGE,
   RECEIVE_FETCH_TAGS_BY_PAGE,
-  REQUEST_FETCH_ALL_TAGS,
-  RECEIVE_FETCH_ALL_TAGS,
 } from './';
 import * as db from '../utils/db';
 import type { T_Tag } from '../types';
@@ -71,24 +69,6 @@ export const fetchTagsByPage = (pageId: number) => (
     db.getAllTagsByPageId(
       pageId,
       tagList => dispatch(receiveFetchTagsByPage(pageId, tagList)),
-    );
-  }
-);
-
-const requestFetchAllTags = () => ({
-  type: REQUEST_FETCH_ALL_TAGS,
-});
-
-const receiveFetchAllTags = (allTags: { [id: number]: Array<T_Tag> }) => ({
-  type: RECEIVE_FETCH_ALL_TAGS,
-  allTags,
-});
-
-export const fetchAllTags = () => (
-  (dispatch: any) => {
-    dispatch(requestFetchAllTags());
-    db.getAllTags(
-      allTags => dispatch(receiveFetchAllTags(allTags)),
     );
   }
 );
