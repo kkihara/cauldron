@@ -41,7 +41,6 @@ export const createContextMenu = (store: any) => {
       }),
       check: (menuItem, evt) => {
         const target = evt.target;
-        console.log(target);
         if (target instanceof HTMLElement) {
           if (target.tagName == 'TR' && target.hasAttribute('id')) {
             deleteId = target.id;

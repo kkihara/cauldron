@@ -29,6 +29,7 @@ const PageSelector = ({
   const createdStr = moment(created).format('YYYY-MM-DD HH:mm');
   return (
     <TableRow
+      id={ id }
       onClick={ () => setPage() }
       selected={ id == currentId }
     >
