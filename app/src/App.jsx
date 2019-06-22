@@ -34,8 +34,6 @@ const App = () => {
         <Grid item xs={ 3 }>
           <Paper style={{ height: '10vh' }}>
             <AddPage/>
-            <HomeView/>
-            <ArxivView/>
           </Paper>
         </Grid>
         <Grid item xs={ 9 }>
