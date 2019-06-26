@@ -5,8 +5,6 @@ import {
   RECEIVE_ADD_TAG,
   REQUEST_DELETE_TAG,
   RECEIVE_DELETE_TAG,
-  REQUEST_FETCH_TAGS_BY_PAGE,
-  RECEIVE_FETCH_TAGS_BY_PAGE,
 } from './';
 import * as db from '../utils/db';
 import type { T_Tag } from '../types';
@@ -15,19 +13,19 @@ const requestAddTag = () => ({
   type: REQUEST_ADD_TAG,
 });
 
-const receiveAddTag = (pageId: number, tag: T_Tag) => ({
+const receiveAddTag = (id: string, tag: string) => ({
   type: RECEIVE_ADD_TAG,
-  pageId,
-  tag: tag,
+  id,
+  tag,
 });
 
-export const addTag = (pageId: number, content: string) => (
+export const addTag = (id: string, content: string) => (
   (dispatch: any) => {
     dispatch(requestAddTag());
     db.insertTag(
-      pageId,
+      id,
       content,
-      tag => dispatch(receiveAddTag(pageId, tag)),
+      tag => dispatch(receiveAddTag(id, tag)),
     );
   }
 );
@@ -36,39 +34,19 @@ const requestDeleteTag = () => ({
   type: REQUEST_DELETE_TAG,
 });
 
-const receiveDeleteTag = (pageId: number, tagId: number) => ({
+const receiveDeleteTag = (id: string, tag: string) => ({
   type: RECEIVE_DELETE_TAG,
-  pageId,
-  tagId,
+  id,
+  tag,
 });
 
-export const deleteTag = (pageId: number, tagId: number) => (
+export const deleteTag = (id: string, tag: string) => (
   (dispatch: any) => {
     dispatch(requestDeleteTag());
     db.deleteTag(
-      pageId,
-      tagId,
-      () => dispatch(receiveDeleteTag(pageId, tagId)),
-    );
-  }
-);
-
-const requestFetchTagsByPage = () => ({
-  type: REQUEST_FETCH_TAGS_BY_PAGE,
-});
-
-const receiveFetchTagsByPage = (pageId: number, tagList: Array<T_Tag>) => ({
-  type: RECEIVE_FETCH_TAGS_BY_PAGE,
-  pageId,
-  tagList,
-});
-
-export const fetchTagsByPage = (pageId: number) => (
-  (dispatch: any) => {
-    dispatch(requestFetchTagsByPage());
-    db.getAllTagsByPageId(
-      pageId,
-      tagList => dispatch(receiveFetchTagsByPage(pageId, tagList)),
+      id,
+      tag,
+      () => dispatch(receiveDeleteTag(id, tag)),
     );
   }
 );

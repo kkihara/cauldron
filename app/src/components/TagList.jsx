@@ -7,7 +7,7 @@ import AddTag from '../containers/AddTag';
 import type { T_Tag } from '../types';
 
 type Props = {
-  tags: Array<T_Tag>,
+  tags: Array<string>,
   isHome: bool,
   searchTag: any,
   deleteTag: any,
@@ -21,15 +21,16 @@ const StyledChip = withStyles({
 
 const TagList = ({ tags, isHome, searchTag, deleteTag }: Props) => {
   if (isHome) {
+    console.log(tags);
     return (
       <div>
         <AddTag/>
         {tags.map((tag, idx) =>
           <StyledChip
             key={ idx }
-            label={ tag.content }
-            onClick={ () => searchTag(tag.content) }
-            onDelete={ () => deleteTag(tag.id) }
+            label={ tag }
+            onClick={ () => searchTag(tag) }
+            onDelete={ () => deleteTag(tag) }
             clickable={ true }
           />
         )}

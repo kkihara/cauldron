@@ -1,25 +1,28 @@
 // @flow
 
+import pdfjs from 'pdfjs-dist/webpack';
+import { ipcRenderer, remote } from 'electron';
 import firebase from 'firebase/app';
 import 'firebase/firestore';  // required
-import config from './config';
+import 'firebase/storage';    // required
 import { pageTypes } from '../types';
+const config = remote.require('./config');
 
 const DEBUG = process.env.NODE_ENV == 'development';
 const PAGES_COLLECTION = DEBUG ? 'test_pages' : 'pages';
-const PDF_COLLECTION = DEBUG ? 'test_pdf' : 'pdf';
 
 firebase.initializeApp({
-  apiKey: "AIzaSyD-tvEcmriuuEt8akCBfQ0JHASQUc64a2Y",
-  authDomain: "cauldron-27ea7.firebaseapp.com",
-  databaseURL: "https://cauldron-27ea7.firebaseio.com",
-  projectId: "cauldron-27ea7",
-  storageBucket: "cauldron-27ea7.appspot.com",
-  messagingSenderId: "245912371016",
-  appId: "1:245912371016:web:b01e7a2b53d148fe"
+  apiKey: config.firebase.apiKey,
+  authDomain: config.firebase.authDomain,
+  databaseURL: config.firebase.databaseURL,
+  projectId: config.firebase.projectId,
+  storageBucket: config.firebase.storageBucket,
+  messagingSenderId: config.firebase.messagingSenderId,
+  appId: config.firebase.appId,
 });
 
 const db = firebase.firestore();
+const storageRef = firebase.storage().ref();
 
 /*
  * Page Collection
@@ -37,16 +40,14 @@ export const insertPage = (
     title,
     tags: [],
   }).then(ref => {
-    console.log(ref);
     const page = {
       id: ref.id,
+      tags: [],
       pageType,
       created,
       title,
     };
     callback(page);
-  }).catch(err => {
-    console.error(err);
   });
 };
 
@@ -99,21 +100,29 @@ export const loadPageById = (
   id: string,
   callback: (page: T_CurrentPage) => void = page => {},
 ) => {
+  console.log('loading page id', id);
   db.collection(PAGES_COLLECTION).doc(id).get().then(doc => {
     if (doc.exists) {
       const page = {
         id,
         ...doc.data(),
       }
+      console.log('loading page', page);
 
       if (page.pageType == pageTypes.pdf) {
-        db.collection(PAGES_COLLECTION).doc(id)
-          .collection(PDF_COLLECTION).limit(1).get().then(querySnapshot => {
-            querySnapshot.forEach(pdfDoc => {
-              page.content = pdfDoc.data();
-              callback(page);
-            });
+        console.log('loading PDF');
+        ipcRenderer.send('maybe-download', { pdfPath: page.pdfPath });
+        ipcRenderer.once('download-complete', (event, fullPdfPath) => {
+          pdfjs.getDocument(fullPdfPath).then(pdfDocument => {
+            return pdfDocument.getData();
+          }).then(pdfData => {
+            page.content = {
+              pdf: pdfData,
+              highlights: page.highlights,
+            };
+            callback(page);
           });
+        });
       } else {
         callback(page);
       };
@@ -152,7 +161,7 @@ export const deleteTag = (
 };
 
 export const getAllTagsByPageId = (
-  id: number,
+  id: string,
   callback: ((tagList: Array<string>) => void) = tagList => {},
 ) => {
   db.collection(PAGES_COLLECTION).doc(id).get().then(doc => {
@@ -166,14 +175,16 @@ export const getAllTagsByPageId = (
 
 export const insertPdf = (
   id: string,
-  pdf: Buffer,
+  buffer: Buffer,
   callback: (() => void) = () => {},
 ) => {
-  db.collection(PAGES_COLLECTION).doc(id).collection(PDF_COLLECTION).add({
-    highlights: '',
-    pdf,
-  }).then(ref => {
-    callback();
+  const fileRef = storageRef.child('pdfs/' + id + '.pdf');
+  fileRef.put(buffer).then(snapshot => {
+    db.collection(PAGES_COLLECTION).doc(id).update({
+      pdfPath: snapshot.ref.fullPath,
+      highlights: '',
+      pageType: pageTypes.pdf,
+    });
   });
 };
 
@@ -182,7 +193,7 @@ export const updateHighlights = (
   highlights: string,
   callback: (() => void) = () => {},
 ) => {
-  db.collection(PAGES_COLLECTION).doc(id).collection(PDF_COLLECTION).update({
+  db.collection(PAGES_COLLECTION).doc(id).update({
     highlights,
   }).then(ref => {
     callback();

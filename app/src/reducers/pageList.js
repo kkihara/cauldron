@@ -9,6 +9,10 @@ import {
   RECEIVE_FETCH_ALL_PAGES,
   REQUEST_PUT_TITLE,
   RECEIVE_PUT_TITLE,
+  REQUEST_ADD_TAG,
+  RECEIVE_ADD_TAG,
+  REQUEST_DELETE_TAG,
+  RECEIVE_DELETE_TAG,
   SEARCH_PAGE,
   SEARCH_TAGS,
   APPEND_TAG_SEARCH,
@@ -59,8 +63,30 @@ const pageList = (
             page.title = action.title;
           }
           return page;
-        })
+        }),
       };
+    case RECEIVE_ADD_TAG:
+      return {
+        ...state,
+        pageList: state.pageList.map(page => {
+          if (page.id == action.id) {
+            page.tags = [...new Set(page.tags.concat(action.tag))];
+          }
+          return page;
+        }),
+      }
+    case RECEIVE_DELETE_TAG:
+      return {
+        ...state,
+        pageList: state.pageList.map(page => {
+          if (page.id == action.id) {
+            page.tags = page.tags.filter(tag => {
+              return tag != action.tag;
+            });
+          }
+          return page;
+        }),
+      }
     case SEARCH_PAGE:
       return {
         ...state,

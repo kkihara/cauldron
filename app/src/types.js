@@ -5,6 +5,7 @@ export type T_Page = {
   pageType: T_PageTypes,
   created: number,
   title: string,
+  tags: Array<string>,
 };
 
 export type T_Tag = {
