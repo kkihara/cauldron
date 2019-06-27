@@ -5,16 +5,21 @@ import { searchTags } from '../actions/page';
 import SearchBar from '../components/SearchBar';
 import SelectBar from '../components/SelectBar';
 
-const tagListToOptions = tagList => {
-  const tags = [].concat.apply([], Object.values(tagList)); // flatten lists
-  const uniqueTags = [...new Set(tags.map(t => t.content))];
+const pageListToOptions = pageList => {
+  const tags = [];
+  pageList.forEach(page => {
+    if (page.tags) {
+      tags.push(...page.tags);
+    }
+  });
+  const uniqueTags = [...new Set(tags)];
   return uniqueTags.map(t => ({ label: t, value: t }));
 };
 
 const mapStateToProps = state => ({
   id: 'search-tags',
   placeholder: 'Search Tags',
-  options: tagListToOptions(state.tagList),
+  options: pageListToOptions(state.pageList.pageList),
   query: state.pageList.tagQuery,
 });
 

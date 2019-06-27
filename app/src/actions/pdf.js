@@ -38,8 +38,6 @@ export const uploadPdf = (id: number, path: string) => (
           dispatch(receiveUploadPdf(id, pdfData));
         },
       );
-    }).then(() => {
-      dispatch(putPageType(id, pageTypes.pdf));
     }).catch(err => {
       console.log(err);
     });

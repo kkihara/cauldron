@@ -25,14 +25,13 @@ const fuseOptions = {
 
 const filterPages = state => {
   const { pageList, query, tagQuery } = state.pageList;
-  const tagList = state.tagList;
 
   const tags = tagQuery || [];
 
   const filteredPages = pageList.filter(
     page => tags.every(
-      searchTag => tagList[page.id].some(
-        pageTag => pageTag.content == searchTag.value
+      searchTag => page.tags.some(
+        pageTag => pageTag == searchTag.value
       )
     )
   );

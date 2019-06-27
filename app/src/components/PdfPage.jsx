@@ -42,7 +42,7 @@ export default class PdfPage extends Component<Props> {
       this.viewer = new PDFViewer({
         container: this.container,
         removePageBorders: true,
-        eventBus: this.eventBus
+        eventBus: this.eventBus,
       });
 
       this.viewer.setDocument(pdfDocument);

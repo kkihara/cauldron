@@ -51,12 +51,12 @@ const requestDeletePage = () => ({
   type: REQUEST_DELETE_PAGE,
 });
 
-const receiveDeletePage = (id: number) => ({
+const receiveDeletePage = (id: string) => ({
   type: RECEIVE_DELETE_PAGE,
   id,
 });
 
-export const deletePage = (id: number) => (
+export const deletePage = (id: string) => (
   (dispatch: any) => {
     dispatch(requestDeletePage());
     db.deletePage(
@@ -70,13 +70,13 @@ const requestPutTitle = () => ({
   type: REQUEST_PUT_TITLE,
 });
 
-const receivePutTitle = (id: number, title: string) => ({
+const receivePutTitle = (id: string, title: string) => ({
   type: RECEIVE_PUT_TITLE,
   id,
   title,
 });
 
-export const putTitle = (id: number, title: string) => (
+export const putTitle = (id: string, title: string) => (
   (dispatch: any) => {
     dispatch(requestPutTitle());
     db.updateTitle(
@@ -91,13 +91,13 @@ const requestPutPageType = () => ({
   type: REQUEST_PUT_PAGETYPE,
 });
 
-const receivePutPageType = (id: number, pageType: T_PageTypes) => ({
+const receivePutPageType = (id: string, pageType: T_PageTypes) => ({
   type: RECEIVE_PUT_PAGETYPE,
   id,
   pageType,
 });
 
-export const putPageType = (id: number, pageType: T_PageTypes) => (
+export const putPageType = (id: string, pageType: T_PageTypes) => (
   (dispatch: any) => {
     // TODO: error check current pageType is none
     dispatch(requestPutPageType());
@@ -127,7 +127,7 @@ export const fetchAllPages = () => (
   }
 );
 
-const requestFetchPage = (id: number) => ({
+const requestFetchPage = (id: string) => ({
   type: REQUEST_FETCH_PAGE,
   id,
 });
@@ -137,13 +137,12 @@ const receiveFetchPage = (page: T_CurrentPage) => ({
   ...page,
 });
 
-export const fetchPage = (id: number) => (
+export const fetchPage = (id: string) => (
   (dispatch: any) => {
     dispatch(requestFetchPage(id));
     db.loadPageById(
       id,
       page => {
-        dispatch(fetchTagsByPage(id));
         dispatch(receiveFetchPage(page));
       },
     );

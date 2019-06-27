@@ -11,11 +11,6 @@ module.exports = {
     path: __dirname + '/app/build',
     publicPath: 'build/',
     filename: 'bundle.js',
-    libraryTarget: 'commonjs2'
-  },
-
-  externals: {
-    'sqlite3': 'commonjs sqlite3'
   },
 
   module: {

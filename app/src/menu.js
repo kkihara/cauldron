@@ -34,7 +34,7 @@ export const createContextMenu = (store: any) => {
         click: (menuItem, browserWindow, event) => {
           // FIXME: kinda hacky. deleteId will be set in check().
           if (deleteId !== null) {
-            store.dispatch(deletePage(Number(deleteId)));
+            store.dispatch(deletePage(deleteId));
             deleteId = null;
           }
         },
