@@ -19,6 +19,7 @@
       "app/build/*",
       "node_modules/**/*",
       "main_process.js",
+      "config.js",
       "app/index.html",
       "package.json"
     ]
