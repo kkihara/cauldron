@@ -1,6 +1,8 @@
 // @flow
 
 import React from 'react';
+import Button from '@material-ui/core/Button';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import fs from 'fs';
 import { remote } from 'electron';
 const dialog = remote.dialog;
@@ -23,9 +25,11 @@ const readFile = (callback: any) => {
 };
 
 const FilePicker = ({ id, text, setPath }: Props) => (
-  <button onClick={ () => readFile(setPath(id)) }>
+  <Button variant="contained" size="small" onClick={ () => readFile(setPath(id))}
+  >
     { text }
-  </button>
+    <CloudUploadIcon/>
+  </Button>
 );
 
 export default FilePicker;

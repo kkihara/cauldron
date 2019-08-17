@@ -32,12 +32,12 @@ const App = () => {
     <Provider store={ store }>
       <Grid container spacing={ 1 }>
         <Grid item xs={ 3 }>
-          <Paper style={{ height: '10vh' }}>
+          <Paper style={{ height: '12vh' }}>
             <AddPage/>
           </Paper>
         </Grid>
         <Grid item xs={ 9 }>
-          <Paper style={{ height: '10vh', overflow: 'auto' }}>
+          <Paper style={{ height: '12vh', overflow: 'auto' }}>
             <TagListContainer/>
           </Paper>
         </Grid>
