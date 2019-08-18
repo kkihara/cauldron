@@ -16,6 +16,8 @@ import {
   SEARCH_PAGE,
   SEARCH_TAGS,
   APPEND_TAG_SEARCH,
+  TOGGLE_SORT,
+  PUSH_SORT_COLUMN,
 } from '../actions';
 import type { T_Page } from '../types';
 
@@ -24,10 +26,22 @@ type State = {
   pageList: Array<T_Page>,
   query: string,
   tagQuery: Array<object>,
-}
+  columnCompare: { [column]: any },
+  columnSort: Array<string>,
+};
+
+const lessThan = (a, b) => a < b ? -1 : (a > b ? 1 : 0);
+const greaterThan = (a, b) => a < b ? 1 : (a > b ? -1 : 0);
 
 const pageList = (
-  state: State = { isLoading: false, pageList: [], query: '', tagQuery: [] },
+  state: State = {
+    isLoading: false,
+    pageList: [],
+    query: '',
+    tagQuery: [],
+    columnCompare: { 'created': lessThan, 'title': lessThan },
+    columnSort: [ 'created', 'title' ],
+  },
   action: any
 ): State => {
   switch (action.type) {
@@ -74,7 +88,7 @@ const pageList = (
           }
           return page;
         }),
-      }
+      };
     case RECEIVE_DELETE_TAG:
       return {
         ...state,
@@ -86,17 +100,17 @@ const pageList = (
           }
           return page;
         }),
-      }
+      };
     case SEARCH_PAGE:
       return {
         ...state,
         query: action.query,
-      }
+      };
     case SEARCH_TAGS:
       return {
         ...state,
         tagQuery: action.query,
-      }
+      };
     case APPEND_TAG_SEARCH:
       const newQuery = state.tagQuery
         ? state.tagQuery.concat({ label: action.query, value: action.query })
@@ -104,6 +118,22 @@ const pageList = (
       return {
         ...state,
         tagQuery: newQuery,
+      };
+    case TOGGLE_SORT:
+      let newFunc = state.columnCompare[action.column] == lessThan ? greaterThan : lessThan;
+      return {
+        ...state,
+        columnCompare: {
+          ...state.columnCompare,
+          [action.column]: newFunc,
+        },
+      };
+    case PUSH_SORT_COLUMN:
+      let newArr = state.columnSort.filter(x => x != action.column);
+      newArr.unshift(action.column);
+      return {
+        ...state,
+        columnSort: newArr,
       }
     default:
       return state;

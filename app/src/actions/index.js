@@ -3,6 +3,8 @@
 /*
  * Page Types
  */
+export const PUSH_SORT_COLUMN = 'PUSH_SORT_COLUMN';
+export const TOGGLE_SORT = 'TOGGLE_SORT';
 export const SEARCH_PAGE = 'SEARCH_PAGE';
 export const SEARCH_TAGS = 'SEARCH_TAGS';
 export const APPEND_TAG_SEARCH = 'APPEND_TAG_SEARCH';

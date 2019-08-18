@@ -16,6 +16,8 @@ import {
   SEARCH_PAGE,
   SEARCH_TAGS,
   APPEND_TAG_SEARCH,
+  TOGGLE_SORT,
+  PUSH_SORT_COLUMN,
 } from './';
 import { addTag, fetchTagsByPage } from '../actions/tag';
 import { pageTypes } from '../types';
@@ -162,5 +164,15 @@ export const searchTags = (query: string) => ({
 
 export const appendToTagSearch = (query: string) => ({
   type: APPEND_TAG_SEARCH,
-  query
+  query,
+});
+
+export const toggleSort = (column: string) => ({
+  type: TOGGLE_SORT,
+  column,
+});
+
+export const pushSortColumn = (column: string) => ({
+  type: PUSH_SORT_COLUMN,
+  column,
 });

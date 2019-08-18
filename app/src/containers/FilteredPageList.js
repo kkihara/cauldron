@@ -3,7 +3,7 @@
 import Fuse from 'fuse.js';
 import { connect } from 'react-redux';
 import PageList from '../components/PageList';
-import { fetchPage } from '../actions/page';
+import { fetchPage, toggleSort, pushSortColumn } from '../actions/page';
 
 const fuseOptions = {
   caseSensitive: false,
@@ -24,7 +24,17 @@ const fuseOptions = {
 };
 
 const filterPages = state => {
-  const { pageList, query, tagQuery } = state.pageList;
+  const { pageList, query, tagQuery, columnCompare, columnSort } = state.pageList;
+
+  const compare = (a, b) => {
+    for (const column of columnSort) {
+      const val = columnCompare[column](a[column], b[column]);
+      console.log(column, val);
+      if (val < 0) return -1;
+      if (val > 0) return 1;
+    }
+    return 0;
+  };
 
   const tags = tagQuery || [];
 
@@ -37,11 +47,16 @@ const filterPages = state => {
   );
 
   if (query.length == 0 || !query.trim()) {
-    return filteredPages.slice();
+    const result = filteredPages.slice();
+    result.sort(compare);
+    return result;
   }
 
   const fuse = new Fuse(filteredPages, fuseOptions);
-  return fuse.search(query);
+  const queriedPages = fuse.search(query);
+
+  const sortedPages = queriedPages.sort(compare);
+  return sortedPages;
 };
 
 const mapStateToProps = state => ({
@@ -50,7 +65,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setPage: (id: number) => dispatch(fetchPage(id))
+  setPage: (id: number) => dispatch(fetchPage(id)),
+  toggleColumn: (column: string) => {
+    dispatch(toggleSort(column));
+    dispatch(pushSortColumn(column));
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PageList);

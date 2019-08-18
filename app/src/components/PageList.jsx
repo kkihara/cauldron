@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
 import styled from 'styled-components';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -16,6 +17,12 @@ type SelectorProps = {
   index: number,
   setPage: any,
 };
+
+const Cell = withStyles({
+  root: {
+    cursor: 'pointer',
+  },
+})(TableCell);
 
 const PageSelector = ({
     id,
@@ -33,8 +40,8 @@ const PageSelector = ({
       onClick={ () => setPage() }
       selected={ id == currentId }
     >
-      <TableCell>{ createdStr }</TableCell>
-      <TableCell>{ title }</TableCell>
+      <Cell>{ createdStr }</Cell>
+      <Cell>{ title }</Cell>
     </TableRow>
   );
 };
@@ -45,12 +52,12 @@ type ListProps = {
   setPage: any,
 };
 
-const PageList = ({ pages, currentId, setPage }: ListProps) => (
+const PageList = ({ pages, currentId, setPage, toggleColumn }: ListProps) => (
   <Table>
     <TableHead>
       <TableRow>
-        <TableCell>Created</TableCell>
-        <TableCell>Title</TableCell>
+        <Cell onClick={ () => toggleColumn('created') }>Created</Cell>
+        <Cell onClick={ () => toggleColumn('title') }>Title</Cell>
       </TableRow>
     </TableHead>
     <TableBody>

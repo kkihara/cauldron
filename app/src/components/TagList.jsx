@@ -21,7 +21,6 @@ const StyledChip = withStyles({
 
 const TagList = ({ tags, isHome, searchTag, deleteTag }: Props) => {
   if (isHome) {
-    console.log(tags);
     return (
       <div>
         <AddTag/>
