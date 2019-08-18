@@ -22,13 +22,10 @@ const mapStateToProps = state => ({
 
 var inputState = '';
 const handleInputChange = (newValue: string, action: { action: string }) => {
-  console.log('abc', action, newValue);
-  const inputValue = newValue.replace(/\W/g, '');
   if (action.action == 'input-change') {
-    console.log('updating inputState', action, inputValue);
-    inputState = inputValue;
+    inputState = newValue;
   }
-  return inputValue;
+  return newValue;
 };
 
 const handleChange = (newValue, action) => {
