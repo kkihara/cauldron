@@ -2,10 +2,18 @@
 
 import React from 'react';
 import CreatableSelect from 'react-select/creatable';
+import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { addTag } from '../actions/tag';
 import { pageListToOptions } from '../utils';
+
+const StyledButton = withStyles({
+  root: {
+    textTransform: 'none',
+  },
+})(Button);
+
 
 const mapStateToProps = state => ({
   id: state.currentPage.id || null,
@@ -66,7 +74,7 @@ const AddTag = ({ id, options, dispatch }) => {
           onInputChange={ handleInputChange }
           onChange={ handleChange }
         />
-        <Button variant="contained" size="small" type="submit">New Tag</Button>
+        <StyledButton variant="contained" size="small" type="submit">New Tag</StyledButton>
       </form>
     </div>
   )

@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import fs from 'fs';
@@ -12,6 +13,12 @@ type Props = {
   text: string,
   setPath: any
 };
+
+const StyledButton = withStyles({
+  root: {
+    textTransform: 'none',
+  },
+})(Button);
 
 const readFile = (callback: any) => {
   dialog.showOpenDialog((fileNames) => {
@@ -25,11 +32,11 @@ const readFile = (callback: any) => {
 };
 
 const FilePicker = ({ id, text, setPath }: Props) => (
-  <Button variant="contained" size="small" onClick={ () => readFile(setPath(id))}
+  <StyledButton variant="contained" size="small" onClick={ () => readFile(setPath(id))}
   >
     { text }
     <CloudUploadIcon/>
-  </Button>
+  </StyledButton>
 );
 
 export default FilePicker;
