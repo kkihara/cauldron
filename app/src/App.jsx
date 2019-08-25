@@ -17,15 +17,16 @@ import SearchTags from './containers/SearchTags';
 import TagListContainer from './containers/TagListContainer';
 import rootReducer from './reducers';
 import { createContextMenu } from './menu';
-import { restoreState } from './utils';
+import { restoreState, setGlobalStore } from './utils';
 
 const store = createStore(
   rootReducer,
   applyMiddleware(thunkMiddleware, logger),
 );
 
-restoreState(store);
-createContextMenu(store);
+setGlobalStore(store);
+// restoreState();
+createContextMenu();
 
 const App = () => {
   return (

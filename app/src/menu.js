@@ -2,6 +2,7 @@
 
 import { remote } from 'electron';
 import { deletePage } from './actions/page';
+import { getGlobalStore } from './utils';
 const { Menu, MenuItem } = remote;
 
 const DEBUG = process.env.NODE_ENV == 'development';
@@ -12,7 +13,7 @@ type MenuInfo = {
   check: (MenuItem, MouseEvent) => bool,
 }
 
-export const createContextMenu = (store: any) => {
+export const createContextMenu = () => {
   const menu = new Menu();
 
   let deleteId;
@@ -34,7 +35,7 @@ export const createContextMenu = (store: any) => {
         click: (menuItem, browserWindow, event) => {
           // FIXME: kinda hacky. deleteId will be set in check().
           if (deleteId !== null) {
-            store.dispatch(deletePage(deleteId));
+            getGlobalStore().dispatch(deletePage(deleteId));
             deleteId = null;
           }
         },

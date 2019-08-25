@@ -4,8 +4,17 @@ import * as db from './db';
 import { fetchAllPages } from '../actions/page';
 
 
-export const restoreState = (store: any) => {
-  store.dispatch(fetchAllPages());
+let _store;
+export const setGlobalStore = (store: any) => {
+  _store = store;
+};
+
+export const getGlobalStore = () => {
+  return _store;
+};
+
+export const restoreState = () => {
+  _store.dispatch(fetchAllPages());
 };
 
 export const pageListToOptions = pageList => {

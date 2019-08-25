@@ -3,9 +3,11 @@
 import pdfjs from 'pdfjs-dist/webpack';
 import { ipcRenderer, remote } from 'electron';
 import firebase from 'firebase/app';
+import 'firebase/auth';    // required
 import 'firebase/firestore';  // required
 import 'firebase/storage';    // required
 import { pageTypes } from '../types';
+import { restoreState } from '.';
 const config = remote.require('./config');
 
 const DEBUG = process.env.NODE_ENV == 'development';
@@ -19,6 +21,15 @@ firebase.initializeApp({
   storageBucket: config.firebase.storageBucket,
   messagingSenderId: config.firebase.messagingSenderId,
   appId: config.firebase.appId,
+});
+
+firebase.auth().signInWithEmailAndPassword(config.email, config.password).catch(err => console.log(err));
+firebase.auth().onAuthStateChanged(user => {
+  if (user) {  // user signed in
+    restoreState();
+  } else {     // user signed out
+
+  }
 });
 
 const db = firebase.firestore();
