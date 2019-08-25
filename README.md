@@ -85,4 +85,4 @@ the `config.json`. The final `config.json` should look like this:
 }
 ```
 
-Finally, from the project dashboard Database > Data, create a called `pages`.
+Finally, from the project dashboard Database > Data, create a collection called `pages`.
