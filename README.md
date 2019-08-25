@@ -79,7 +79,9 @@ the `config.json`. The final `config.json` should look like this:
     "storageBucket": "<project-id>.appspot.com",
     "messagingSenderId": "123456789",
     "appId": "1:123456789:web:123456789"
-  }
+  },
+  "email": "email",
+  "password": "password"
 }
 ```
 
