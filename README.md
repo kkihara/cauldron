@@ -11,12 +11,12 @@ Built in electron + react + redux.
 This app requires the user to host their own firebase project. Installation involves
 setting up a firebase project and putting the keys in the correct place.
 
-## From .dmg
+## Install From .dmg
 
 Download the latest .dmg from [here](https://github.com/kkihara/cauldron/releases/tag/v0.5.0).
 Double click and drag to `Applications` to install.
 
-Continue to Setting up Environment.
+Continue to Setting up Firebase.
 
 ## Build from source
 
@@ -27,9 +27,9 @@ npm run release
 open dist/Cauldron-vX.X.X.dmg
 ```
 
-Continue to Setting up Environment.
+Continue to Setting up Firebase.
 
-## Setting up Environment
+## Setting up Firebase
 
 Setup a firebase account and create a new project. https://firebase.google.com/
 
