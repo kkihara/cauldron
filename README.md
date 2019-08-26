@@ -40,10 +40,10 @@ mkdir -p ~/.config/cauldron
 
 From the project dashboard go to
 Settings (cog button) > Project Settings > General, add a web app.
-Copy the config json into `~/.config/cauldron/config.json` into the key `firebase`.
+Copy the config values to json into `~/.config/cauldron/config.json` into the key `firebase`.
 ```
 {
-  "firebase": { // config goes here }
+  "firebase": { // config values goes here }
 }
 ```
 
