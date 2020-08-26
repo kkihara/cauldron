@@ -2,6 +2,7 @@
 
 import React from 'react';
 import styled from 'styled-components';
+import Slider from '@material-ui/core/Slider';
 import PdfPageContainer from '../containers/PdfPageContainer';
 import DelayDispatchInput from '../components/DelayDispatchInput';
 import UploadPdf from '../containers/UploadPdf';
@@ -30,7 +31,22 @@ const EditPageTable = styled(DelayDispatchInput)`
   font-family: sans-serif;
 `;
 
-const PageViewer = ({ page, view, setTitle, isLoading }: Props) => {
+const Toolbar = styled.div`
+  width: 100%;
+  text-align: center;
+  border-bottom: 2px solid;
+  opacity: 1.0;
+  background-color: rgb(255,255,255);
+`;
+
+const ZoomDiv = styled.div`
+  width: 15%;
+  position: relative; 
+  left: 50%;
+  transform: translateX(-50%);
+`;
+
+const PageViewer = ({ page, view, setTitle, isLoading, setZoom }: Props) => {
 
   /*
    * Arxiv View
@@ -80,6 +96,17 @@ const PageViewer = ({ page, view, setTitle, isLoading }: Props) => {
               setTitle(page.id, input)
             )}
           />
+          <Toolbar>
+            <ZoomDiv>
+              Zoom:
+              <Slider
+                defaultValue={50}
+                onChange={ (event, newValue) => (
+                  setZoom(newValue)
+                )}
+              />
+            </ZoomDiv>
+          </Toolbar>
         </StickyDiv>
         { pageContents }
       </div>

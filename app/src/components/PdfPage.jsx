@@ -20,7 +20,8 @@ type Props = {
   id: number,
   pdfBuffer: string,
   highlights: string,
-  updatePdfHighlight: any
+  updatePdfHighlight: any,
+  zoomLevel: number,
 };
 
 export default class PdfPage extends Component<Props> {
@@ -35,6 +36,7 @@ export default class PdfPage extends Component<Props> {
   }
 
   renderPDF(pdfBuffer: string) {
+    const { zoomLevel } = this.props;
     document.getElementById(VIEWER_ID).innerHTML = '';
     pdfjs.getDocument({data: pdfBuffer, disableFontFace: false}).then(pdfDocument => {
       this.eventBus = new EventBus();
@@ -44,6 +46,10 @@ export default class PdfPage extends Component<Props> {
         removePageBorders: true,
         eventBus: this.eventBus,
       });
+      this.viewer._currentScale = (zoomLevel / 100) + 0.5;
+      console.log(this.viewer);
+      // this.viewer.currentScale = 1.5;
+      // this.viewer.scaleValue = 1.5;
 
       this.viewer.setDocument(pdfDocument);
 
@@ -80,8 +86,8 @@ export default class PdfPage extends Component<Props> {
   }
 
   componentDidUpdate(prevProps) {
-    const { id, pdfBuffer } = this.props;
-    if (prevProps.id != id) {
+    const { id, pdfBuffer, zoomLevel } = this.props;
+    if (prevProps.id != id || prevProps.zoomLevel != zoomLevel) {
       this.renderPDF(pdfBuffer);
     } else {
       this.renderHighlights();

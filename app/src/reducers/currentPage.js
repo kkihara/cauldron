@@ -11,6 +11,7 @@ import {
   RECEIVE_PUT_HIGHLIGHTS,
   REQUEST_FETCH_PAGE,
   RECEIVE_FETCH_PAGE,
+  ZOOM_LEVEL,
 } from '../actions';
 import { pageTypes } from '../types';
 import type { T_CurrentPage } from '../types';
@@ -26,6 +27,7 @@ const initialPageState: PageState = {
   title: null,
   pageType: pageTypes.none,
   content: null,
+  zoomLevel: 50,
 };
 
 const pageContents = (
@@ -85,6 +87,11 @@ const pageContents = (
         pageType: action.pageType,
         content: action.content,
       };
+    case ZOOM_LEVEL:
+      return {
+        ...state,
+        zoomLevel: action.zoom,
+      }
     default:
       return state;
   }

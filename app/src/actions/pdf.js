@@ -6,6 +6,7 @@ REQUEST_UPLOAD_PDF,
 RECEIVE_UPLOAD_PDF,
 REQUEST_PUT_HIGHLIGHTS,
 RECEIVE_PUT_HIGHLIGHTS,
+ZOOM_LEVEL,
 } from './';
 import * as db from '../utils/db';
 import { putPageType } from './page';
@@ -65,3 +66,8 @@ export const putHighlight = (id: number, highlights: string) => (
     );
   }
 );
+
+export const zoomLevel = (zoom: number) => ({
+  type: ZOOM_LEVEL,
+  zoom,
+})

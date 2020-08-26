@@ -9,6 +9,7 @@ const mapStateToProps = (state, ownProps) => ({
   id: ownProps.id,
   pdfBuffer: ownProps.pdfBuffer,
   highlights: ownProps.highlights,
+  zoomLevel: state.currentPage.zoomLevel,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -19,6 +20,7 @@ const mergeProps = (propsFromState, propsFromDispatch) => ({
   id: propsFromState.id,
   pdfBuffer: propsFromState.pdfBuffer,
   highlights: propsFromState.highlights,
+  zoomLevel: propsFromState.zoomLevel,
   updatePdfHighlight: propsFromDispatch.updatePdfHighlight(propsFromState.id)
 });
 
